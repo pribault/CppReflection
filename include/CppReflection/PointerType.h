@@ -66,6 +66,8 @@ namespace	CppReflection
 			*************
 			*/
 
+			virtual bool	isPointer() const;
+
 			virtual void*	create(void) const;
 			virtual void	initialize(void* instance) const;
 

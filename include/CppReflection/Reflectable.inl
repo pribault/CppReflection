@@ -30,6 +30,15 @@
  */
 
 /*
+**************
+** includes **
+**************
+*/
+
+// stl
+#include <initializer_list>
+
+/*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
@@ -38,7 +47,7 @@
 template	<typename ... Parents>
 void		CppReflection::addParents(IReflectableType* type)
 {
-	std::initializer_list<IReflectableType*> parents = {TypeManager<Parents>::findType()...};
-	for (IReflectableType* parent : parents)
+	std::initializer_list<IType*> parents = {TypeManager::findType<Parents>()...};
+	for (IType* parent : parents)
 		type->addParent(parent);
 }

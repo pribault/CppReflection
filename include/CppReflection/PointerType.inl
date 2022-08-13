@@ -57,6 +57,12 @@ CppReflection::PointerType<T>::~PointerType(void)
 }
 
 template	<typename T>
+bool	CppReflection::PointerType<T>::isPointer() const
+{
+	return true;
+}
+
+template	<typename T>
 void*		CppReflection::PointerType<T>::create(void) const
 {
 	void**	result;

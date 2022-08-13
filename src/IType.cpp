@@ -60,6 +60,16 @@ IType::~IType(void)
 {
 }
 
+bool					IType::isPointer() const
+{
+	return false;
+}
+
+bool					IType::isReflectable() const
+{
+	return false;
+}
+
 const std::string&		IType::getName(void) const
 {
 	return (_name);

@@ -67,7 +67,12 @@ IReflectableType::~IReflectableType(void)
 {
 }
 
-void							IReflectableType::addParent(IReflectableType* parent)
+bool	IReflectableType::isReflectable() const
+{
+	return true;
+}
+
+void							IReflectableType::addParent(IType* parent)
 {
 	_parents.push_back(parent);
 }
@@ -76,7 +81,7 @@ void							IReflectableType::removeParent(size_t index)
 {
 	if (index < _parents.size())
 		return ;
-	std::vector<IReflectableType*>::iterator iterator = _parents.begin() + index;
+	std::vector<IType*>::iterator iterator = _parents.begin() + index;
 	_parents.erase(iterator);
 }
 
@@ -85,7 +90,7 @@ size_t							IReflectableType::getNbParents(void) const
 	return (_parents.size());
 }
 
-IReflectableType* 				IReflectableType::getParent(size_t index) const
+IType* 							IReflectableType::getParent(size_t index) const
 {
 	if (index < _parents.size())
 		return (_parents[index]);

@@ -70,6 +70,9 @@ namespace	CppReflection
 			IType(const std::string& name, size_t size, const std::type_info* typeInfo);
 			virtual ~IType(void);
 
+			virtual bool			isPointer() const;
+			virtual bool			isReflectable() const;
+
 			// getters
 			const std::string&		getName(void) const;
 			size_t					getSize(void) const;

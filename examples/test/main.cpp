@@ -66,25 +66,35 @@ class	Point : public Reflectable
 		int	y;
 };
 
+class	Rectangle : public Point
+{
+	public:
+		START_REFLECTION(Rectangle, Point)
+		REFLECT_ATTRIBUTE(w)
+		REFLECT_ATTRIBUTE(h)
+		END_REFLECTION()
+
+		int	w;
+		int	h;
+};
+
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
 
-int	main(int argc, char** argv)
+void	addIndentation(size_t indentation)
 {
-	// initialize object
-	Point	point;
-	
-	point.x = 42;
-	point.y = -66;
+	for (size_t i = 0; i < indentation; i++)
+		std::cout << "  ";
+}
 
-	// get object type
-	const IReflectableType*	type = point.getType();
-
+void	debugType(const IReflectableType* type, size_t indentation)
+{
 	// print object type
-	std::cout << type->getName() << ":" << std::endl;
+	addIndentation(indentation);
+	std::cout << type->getName() << " (size=" << type->getSize() << "):" << std::endl;
 
 	// iterate over attributes
 	for (size_t i = 0; i < type->getNbAttributes(); i++)
@@ -92,7 +102,40 @@ int	main(int argc, char** argv)
 		Attribute* attribute = type->getAttribute(i);
 
 		// print attribute type, name, offset and size
+		addIndentation(indentation + 1);
 		std::cout << " - " << attribute->getType()->getName() << " '" << attribute->getName() << "' (offset=" << attribute->getOffset() << ", size=" << attribute->getType()->getSize() << ")" << std::endl;
 	}
+
+	// iterate over parents
+	if (type->getNbParents())
+	{
+		addIndentation(indentation + 1);
+		std::cout << "parents:" << std::endl;
+	}
+	for (size_t i = 0; i < type->getNbParents(); i++)
+	{
+		IType* parent = type->getParent(i);
+
+		// If type is reflectable debug it too
+		if (parent->isReflectable())
+			debugType(static_cast<IReflectableType*>(parent), indentation + 2);
+	}
+}
+
+int		main(int argc, char** argv)
+{
+	// initialize object
+	Rectangle	rectangle;
+
+	rectangle.x = 42;
+	rectangle.y = -66;
+	rectangle.w = 1920;
+	rectangle.h = -1080;
+
+	// get object type
+	const IReflectableType* type = rectangle.getType();
+
+	debugType(type, 0);
+
 	return 0;
 }

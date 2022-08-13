@@ -83,11 +83,13 @@ namespace	CppReflection
 			IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo);
 			virtual ~IReflectableType(void);
 
+			virtual bool			isReflectable() const;
+
 			// parents
-			void					addParent(IReflectableType* parent);
+			void					addParent(IType* parent);
 			void					removeParent(size_t index);
 			size_t					getNbParents(void) const;
-			IReflectableType*		getParent(size_t index) const;
+			IType*					getParent(size_t index) const;
 
 			// attributes
 			void					addAttribute(Attribute* attribute);
@@ -126,8 +128,8 @@ namespace	CppReflection
 			****************
 			*/
 
-			std::vector<IReflectableType*>	_parents;
-			std::vector<Attribute*>			_attributes;
+			std::vector<IType*>		_parents;
+			std::vector<Attribute*>	_attributes;
 
 	};
 }
