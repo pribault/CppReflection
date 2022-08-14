@@ -21,62 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: PointerType.inl
- * Created: 13th August 2022 4:13:00 pm
+ * File: ReflectableReader.cpp
+ * Created: 14th August 2022 6:23:38 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 4:13:02 pm
+ * Last Modified: 14th August 2022 6:23:40 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
+#include "CppReflection/ReflectableReader.h"
+
 /*
-***********************************************************************************
-************************************ ATTRIBUTES ***********************************
-***********************************************************************************
+****************
+** namespaces **
+****************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullptr;
+using namespace	CppReflection;
 
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
-
-template	<typename T>
-CppReflection::PointerType<T>::PointerType()
-	: IPointerType(typeid(T*).name(), sizeof(T*), &typeid(T*), TypeManager::findType<T>())
-{
-}
-
-template	<typename T>
-CppReflection::PointerType<T>::~PointerType()
-{
-}
-
-template	<typename T>
-void*		CppReflection::PointerType<T>::create() const
-{
-	void**	result;
-
-	result = new void*();
-	*result = _subType->create();
-	return (result);
-}
-
-template	<typename T>
-void		CppReflection::PointerType<T>::initialize(void* instance) const
-{
-	T**		value = (T**)instance;
-
-	*value = nullptr;
-}
-
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::get()
-{
-	if (!_instance)
-		_instance = new PointerType<T>();
-	return _instance;
-}

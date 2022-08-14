@@ -8,7 +8,14 @@ includeDir = os.path.join(rootDir, "include")
 srcDir = os.path.join(rootDir, "src")
 buildDir = os.path.join(rootDir, "build")
 
+if "VCPKG_PATH" not in os.environ:
+	print("environment variable VCPKG_PATH not set")
+	vcpkgPath = ""
+else:
+	vcpkgPath = os.environ["VCPKG_PATH"]
+
 print("root: %s" % rootDir)
 print("script: %s" % scriptDir)
 print("include: %s" % includeDir)
 print("sources: %s" % srcDir)
+print("vcpkg: %s" % vcpkgPath)

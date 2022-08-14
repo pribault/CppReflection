@@ -54,24 +54,24 @@ CppReflection::ReflectableType<T>*		CppReflection::ReflectableType<T>::_instance
 */
 
 template	<typename T>
-CppReflection::ReflectableType<T>::ReflectableType(void) :
-	IReflectableType(typeid(T).name(), sizeof(T), &typeid(T))
+CppReflection::ReflectableType<T>::ReflectableType()
+	: IReflectableType(typeid(T).name(), sizeof(T), &typeid(T))
 {
 }
 
 template	<typename T>
-CppReflection::ReflectableType<T>::~ReflectableType(void)
+CppReflection::ReflectableType<T>::~ReflectableType()
 {
 }
 
 template	<typename T>
-void*		CppReflection::ReflectableType<T>::create(void) const
+void*		CppReflection::ReflectableType<T>::create() const
 {
 	return (new T());
 }
 
 template	<typename T>
-CppReflection::ReflectableType<T>*	CppReflection::ReflectableType<T>::get(void)
+CppReflection::ReflectableType<T>*	CppReflection::ReflectableType<T>::get()
 {
 	if (_instance == nullptr)
 	{

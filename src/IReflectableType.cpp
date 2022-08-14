@@ -54,16 +54,16 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-IReflectableType::IReflectableType(void)
+IReflectableType::IReflectableType()
 {
 }
 
-IReflectableType::IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo) :
-	IType(name, size, typeInfo)
+IReflectableType::IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo)
+	: IType(name, size, typeInfo)
 {
 }
 
-IReflectableType::~IReflectableType(void)
+IReflectableType::~IReflectableType()
 {
 }
 
@@ -85,12 +85,12 @@ void							IReflectableType::removeParent(size_t index)
 	_parents.erase(iterator);
 }
 
-size_t							IReflectableType::getNbParents(void) const
+size_t							IReflectableType::getNbParents() const
 {
 	return (_parents.size());
 }
 
-IType* 							IReflectableType::getParent(size_t index) const
+const IType* 					IReflectableType::getParent(size_t index) const
 {
 	if (index < _parents.size())
 		return (_parents[index]);
@@ -110,12 +110,12 @@ void							IReflectableType::removeAttribute(size_t index)
 	_attributes.erase(iterator);
 }
 
-size_t							IReflectableType::getNbAttributes(void) const
+size_t							IReflectableType::getNbAttributes() const
 {
 	return (_attributes.size());
 }
 
-Attribute*						IReflectableType::getAttribute(size_t index) const
+const Attribute*				IReflectableType::getAttribute(size_t index) const
 {
 	if (index < _attributes.size())
 		return (_attributes[index]);

@@ -44,25 +44,27 @@ CppReflection::Type<T>*	CppReflection::Type<T>::_instance = nullptr;
 ********************************************************************************
 */
 
+// default
+
 template	<typename T>
-CppReflection::Type<T>::Type(void) :
-	IType(typeid(T).name(), sizeof(T), &typeid(T))
+CppReflection::Type<T>::Type()
+	: IType(typeid(T).name(), sizeof(T), &typeid(T))
 {
 }
 
 template	<typename T>
-CppReflection::Type<T>::~Type(void)
+CppReflection::Type<T>::~Type()
 {
 }
 
 template	<typename T>
-void*		CppReflection::Type<T>::create(void) const
+void*		CppReflection::Type<T>::create() const
 {
 	return (new T);
 }
 
 template	<typename T>
-CppReflection::Type<T>*	CppReflection::Type<T>::get(void)
+CppReflection::Type<T>*	CppReflection::Type<T>::get()
 {
 	if (!_instance)
 		_instance = new Type<T>();

@@ -53,15 +53,15 @@ TypeManager*	TypeManager::_instance = nullptr;
 ********************************************************************************
 */
 
-TypeManager::TypeManager(void)
+TypeManager::TypeManager()
 {
 }
 
-TypeManager::~TypeManager(void)
+TypeManager::~TypeManager()
 {
 }
 
-TypeManager*	TypeManager::get(void)
+TypeManager*	TypeManager::get()
 {
 	if (!_instance)
 		_instance = new TypeManager();

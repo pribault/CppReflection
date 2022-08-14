@@ -38,7 +38,7 @@
 */
 
 // CppReflection
-#include "CppReflection/IType.h"
+#include <CppReflection/IType.h>
 
 /*
 **********************
@@ -66,9 +66,9 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*	create(void) const;
+			virtual void*	create() const;
 
-			static Type<T>*	get(void);
+			static Type<T>*	get();
 
 		/*
 		************************************************************************
@@ -84,8 +84,8 @@ namespace	CppReflection
 			*************
 			*/
 
-			Type(void);
-			virtual ~Type(void);
+			Type();
+			virtual ~Type();
 
 			/*
 			****************
@@ -98,4 +98,4 @@ namespace	CppReflection
 	};
 }
 
-#include "CppReflection/Type.inl"
+#include <CppReflection/Type.inl>

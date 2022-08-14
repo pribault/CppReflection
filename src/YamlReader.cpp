@@ -21,46 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: TypeManager.inl
- * Created: 13th August 2022 3:53:16 pm
+ * File: YamlReader.cpp
+ * Created: 14th August 2022 6:30:29 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 3:53:17 pm
+ * Last Modified: 14th August 2022 6:30:39 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
-
-/*
-**************
-** includes **
-**************
-*/
-
-// CppReflection
-#include "CppReflection/PointerType.h"
-#include "CppReflection/Type.h"
-#include "CppReflection/ReflectableType.h"
-
-// stl
-#include <type_traits>
-
-/*
-********************************************************************************
-************************************ METHODS ***********************************
-********************************************************************************
-*/
-
-template		<typename T>
-typename std::enable_if<IF_POINTER, CppReflection::IType*>::type						CppReflection::TypeManager::findType()
-{
-	return (PointerType<typename std::remove_pointer<T>::type>::get());
-}
-template		<typename T>
-typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, CppReflection::IType*>::type	CppReflection::TypeManager::findType()
-{
-	return (ReflectableType<T>::get());
-}
-template		<typename T>
-typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, CppReflection::IType*>::type	CppReflection::TypeManager::findType()
-{
-	return (Type<T>::get());
-}

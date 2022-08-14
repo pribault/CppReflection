@@ -21,22 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: PointerType.inl
- * Created: 13th August 2022 4:13:00 pm
+ * File: ReflectableWriter.cpp
+ * Created: 14th August 2022 6:23:32 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 4:13:02 pm
+ * Last Modified: 14th August 2022 6:23:43 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
+#include "CppReflection/ReflectableWriter.h"
+
 /*
-***********************************************************************************
-************************************ ATTRIBUTES ***********************************
-***********************************************************************************
+****************
+** namespaces **
+****************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullptr;
+using namespace	CppReflection;
 
 /*
 ********************************************************************************
@@ -44,39 +45,25 @@ CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullpt
 ********************************************************************************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>::PointerType()
-	: IPointerType(typeid(T*).name(), sizeof(T*), &typeid(T*), TypeManager::findType<T>())
+ReflectableWriter::ReflectableWriter()
 {
 }
 
-template	<typename T>
-CppReflection::PointerType<T>::~PointerType()
+ReflectableWriter::~ReflectableWriter()
 {
 }
 
-template	<typename T>
-void*		CppReflection::PointerType<T>::create() const
+void	ReflectableWriter::write(std::ostream& outStream, const Reflectable* reflectable, bool writeType) const
 {
-	void**	result;
-
-	result = new void*();
-	*result = _subType->create();
-	return (result);
+	write(outStream, *reflectable, writeType);
 }
 
-template	<typename T>
-void		CppReflection::PointerType<T>::initialize(void* instance) const
+void	ReflectableWriter::write(std::string& output, const Reflectable* reflectable, bool writeType) const
 {
-	T**		value = (T**)instance;
-
-	*value = nullptr;
+	write(output, *reflectable, writeType);
 }
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::get()
+void	ReflectableWriter::write(const std::string& fileName, bool truncate, const Reflectable* reflectable, bool writeType) const
 {
-	if (!_instance)
-		_instance = new PointerType<T>();
-	return _instance;
+	write(fileName, truncate, *reflectable, writeType);
 }

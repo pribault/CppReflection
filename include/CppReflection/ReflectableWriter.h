@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: TypeManager.h
- * Created: 13th August 2022 2:57:50 pm
+ * File: ReflectableWriter.h
+ * Created: 14th August 2022 6:04:43 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:47 pm
+ * Last Modified: 14th August 2022 6:05:03 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -37,20 +37,8 @@
 **************
 */
 
-// CppReflection
-#include <CppReflection/IType.h>
-
 // stl
-#include <type_traits>
-
-/*
-************
-** macros **
-************
-*/
-
-#define IF_REFLECTABLE	std::is_base_of<CppReflection::Reflectable, T>::value
-#define IF_POINTER		std::is_pointer<T>::value
+#include <iostream>
 
 /*
 ****************
@@ -71,7 +59,7 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
-	class	TypeManager
+	class	ReflectableWriter
 	{
 
 		/*
@@ -88,14 +76,32 @@ namespace	CppReflection
 			*************
 			*/
 
-			static TypeManager*	get();
+			// Convenience methods to handle both references and pointers
+			void			write(std::ostream& outStream, const Reflectable* reflectable, bool writeType = true) const;
+			void			write(std::string& output, const Reflectable* reflectable, bool writeType = true) const;
+			void			write(const std::string& fileName, bool truncate, const Reflectable* reflectable, bool writeType = true) const;
 
-			template		<typename T>
-			static typename std::enable_if<IF_POINTER, IType*>::type						findType();
-			template		<typename T>
-			static typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, IType*>::type		findType();
-			template		<typename T>
-			static typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, IType*>::type	findType();
+			// Virtual methods writers will have to implement
+			virtual void	write(std::ostream& outStream, const Reflectable& reflectable, bool writeType = true) const = 0;
+			virtual void	write(std::string& output, const Reflectable& reflectable, bool writeType = true) const = 0;
+			virtual void	write(const std::string& fileName, bool truncate, const Reflectable& reflectable, bool writeType = true) const = 0;
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			ReflectableWriter();
+			virtual ~ReflectableWriter();
 
 		/*
 		************************************************************************
@@ -106,23 +112,9 @@ namespace	CppReflection
 		private:
 
 			/*
-			*************
-			** methods **
-			*************
-			*/
-
-			TypeManager();
-			~TypeManager();
-
-			/*
 			****************
 			** attributes **
 			****************
 			*/
-
-			static TypeManager*	_instance;
-
 	};
 }
-
-#include <CppReflection/TypeManager.inl>

@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: TypeManager.h
- * Created: 13th August 2022 2:57:50 pm
+ * File: YamlWriter.h
+ * Created: 14th August 2022 6:28:33 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:47 pm
+ * Last Modified: 14th August 2022 6:28:43 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,19 +38,7 @@
 */
 
 // CppReflection
-#include <CppReflection/IType.h>
-
-// stl
-#include <type_traits>
-
-/*
-************
-** macros **
-************
-*/
-
-#define IF_REFLECTABLE	std::is_base_of<CppReflection::Reflectable, T>::value
-#define IF_POINTER		std::is_pointer<T>::value
+#include <CppReflection/ReflectableWriter.h>
 
 /*
 ****************
@@ -58,9 +46,16 @@
 ****************
 */
 
+namespace	YAML
+{
+	class	Emitter;
+}
+
 namespace	CppReflection
 {
-	class	Reflectable;
+	class	Attribute;
+	class	IType;
+	class	IReflectableType;
 }
 
 /*
@@ -71,7 +66,7 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
-	class	TypeManager
+	class	YamlWriter : public ReflectableWriter
 	{
 
 		/*
@@ -88,14 +83,28 @@ namespace	CppReflection
 			*************
 			*/
 
-			static TypeManager*	get();
+			static YamlWriter*	get();
 
-			template		<typename T>
-			static typename std::enable_if<IF_POINTER, IType*>::type						findType();
-			template		<typename T>
-			static typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, IType*>::type		findType();
-			template		<typename T>
-			static typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, IType*>::type	findType();
+			virtual void	write(std::ostream& outStream, const Reflectable& reflectable, bool writeType = true) const;
+			virtual void	write(std::string& output, const Reflectable& reflectable, bool writeType = true) const;
+			virtual void	write(const std::string& fileName, bool truncate, const Reflectable& reflectable, bool writeType = true) const;
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			YamlWriter();
+			virtual ~YamlWriter();
 
 		/*
 		************************************************************************
@@ -111,8 +120,10 @@ namespace	CppReflection
 			*************
 			*/
 
-			TypeManager();
-			~TypeManager();
+			void	writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, bool writeType) const;
+			void	writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, const IReflectableType& type, bool writeType) const;
+			void	writeAttribute(YAML::Emitter& emitter, const void* value, const IType& type, bool writeType) const;
+			void	writeType(YAML::Emitter& emitter, const IType& type) const;
 
 			/*
 			****************
@@ -120,9 +131,7 @@ namespace	CppReflection
 			****************
 			*/
 
-			static TypeManager*	_instance;
+			static YamlWriter*	_instance;
 
 	};
 }
-
-#include <CppReflection/TypeManager.inl>

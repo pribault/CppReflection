@@ -38,7 +38,7 @@
 */
 
 // CppReflection
-#include "CppReflection/IType.h"
+#include <CppReflection/IType.h>
 
 // stl
 #include <vector>
@@ -81,21 +81,21 @@ namespace	CppReflection
 			*/
 
 			IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo);
-			virtual ~IReflectableType(void);
+			virtual ~IReflectableType();
 
 			virtual bool			isReflectable() const;
 
 			// parents
 			void					addParent(IType* parent);
 			void					removeParent(size_t index);
-			size_t					getNbParents(void) const;
-			IType*					getParent(size_t index) const;
+			size_t					getNbParents() const;
+			const IType*			getParent(size_t index) const;
 
 			// attributes
 			void					addAttribute(Attribute* attribute);
 			void					removeAttribute(size_t index);
-			size_t					getNbAttributes(void) const;
-			Attribute*				getAttribute(size_t index) const;
+			size_t					getNbAttributes() const;
+			const Attribute*		getAttribute(size_t index) const;
 			size_t					findAttribute(const std::string& name) const;
 
 		/*
@@ -112,7 +112,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IReflectableType(void);
+			IReflectableType();
 
 		/*
 		************************************************************************

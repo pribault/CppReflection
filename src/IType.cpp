@@ -90,12 +90,12 @@ void					IType::initialize(void* instance) const
 	// do nothing by default
 }
 
-bool					IType::operator==(const IType& other)
+bool					IType::operator==(const IType& other) const
 {
-	return (getTypeInfo() == other.getTypeInfo());
+	return (*getTypeInfo() == *other.getTypeInfo());
 }
 
-bool					IType::operator!=(const IType& other)
+bool					IType::operator!=(const IType& other) const
 {
-	return (getTypeInfo() != other.getTypeInfo());
+	return (*getTypeInfo() != *other.getTypeInfo());
 }

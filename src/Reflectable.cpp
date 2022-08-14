@@ -29,7 +29,7 @@
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include <CppReflection/Reflectable.h>
+#include "CppReflection/Reflectable.h"
 
 /*
 ****************
@@ -45,10 +45,10 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-Reflectable::Reflectable(void)
+Reflectable::Reflectable()
 {
 }
 
-Reflectable::~Reflectable(void)
+Reflectable::~Reflectable()
 {
 }
