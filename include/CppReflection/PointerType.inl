@@ -70,7 +70,8 @@ void		CppReflection::PointerType<T>::initialize(void* instance) const
 {
 	T**		value = (T**)instance;
 
-	*value = nullptr;
+	*value = new T();
+	_subType->initialize(*value);
 }
 
 template	<typename T>

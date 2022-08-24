@@ -74,10 +74,20 @@ class	Rectangle : public Point
 		START_REFLECTION(Rectangle, Point)
 		REFLECT_ATTRIBUTE(w)
 		REFLECT_ATTRIBUTE(h)
+		REFLECT_ATTRIBUTE(test)
+		REFLECT_ATTRIBUTE(test2)
+		REFLECT_ATTRIBUTE(test3)
+		REFLECT_ATTRIBUTE(test4)
+		REFLECT_ATTRIBUTE(test5)
 		END_REFLECTION()
 
 		int	w;
 		int	h;
+		std::vector<int>			test;
+		std::map<std::string, int>	test2;
+		int*						test3;
+		int*						test4;
+		Point						test5;
 };
 
 /*
@@ -95,8 +105,16 @@ int		main(int argc, char** argv)
 	rectangle.y = -66;
 	rectangle.w = 1920;
 	rectangle.h = -1080;
+	rectangle.test.push_back(1);
+	rectangle.test.push_back(2);
+	rectangle.test.push_back(3);
+	rectangle.test2["Hello"] = 42;
+	rectangle.test2["World"] = 43;
+	rectangle.test2["!"] = 44;
+	rectangle.test3 = new int(-42);
+	rectangle.test4 = nullptr;
 
-	YamlWriter::get()->write(std::cout, rectangle);
+	std::cout << YamlWriter().compute(rectangle) << std::endl;
 
 	return 0;
 }

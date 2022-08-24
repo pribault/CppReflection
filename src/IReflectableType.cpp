@@ -39,6 +39,7 @@
 
 // CppReflection
 #include "CppReflection/Attribute.h"
+#include "CppReflection/Iterator.h"
 
 /*
 ****************
@@ -70,6 +71,29 @@ IReflectableType::~IReflectableType()
 bool	IReflectableType::isReflectable() const
 {
 	return true;
+}
+
+void	IReflectableType::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.beforeReflectable(*(Reflectable*)instance);
+	iterate(iterator, *(Reflectable*)instance);
+	iterator.afterReflectable();
+}
+
+void	IReflectableType::iterate(Iterator& iterator, Reflectable& reflectable) const
+{
+	for (const IType* parent : _parents)
+	{
+		if (parent->isReflectable())
+		{
+			const IReflectableType*	reflectableParent = static_cast<const IReflectableType*>(parent);
+
+			reflectableParent->iterate(iterator, reflectable);
+		}
+	}
+
+	for (const Attribute* attribute : _attributes)
+		iterator.reflectableAttribute(attribute, (void*)((size_t)&reflectable + attribute->getOffset()));
 }
 
 void							IReflectableType::addParent(IType* parent)

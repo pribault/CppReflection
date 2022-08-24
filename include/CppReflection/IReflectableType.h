@@ -85,6 +85,8 @@ namespace	CppReflection
 
 			virtual bool			isReflectable() const;
 
+			virtual void			iterate(Iterator& iterator, void* instance) const;
+
 			// parents
 			void					addParent(IType* parent);
 			void					removeParent(size_t index);
@@ -113,6 +115,8 @@ namespace	CppReflection
 			*/
 
 			IReflectableType();
+
+			void	iterate(Iterator& iterator, Reflectable& instance) const;
 
 		/*
 		************************************************************************

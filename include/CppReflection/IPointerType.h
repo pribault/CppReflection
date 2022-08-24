@@ -71,6 +71,8 @@ namespace	CppReflection
 
 			virtual bool	isPointer() const;
 
+			virtual void	iterate(Iterator& iterator, void* instance) const;
+
 		/*
 		************************************************************************
 		******************************* PROTECTED ******************************

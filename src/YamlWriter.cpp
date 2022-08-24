@@ -22,10 +22,10 @@
  * SOFTWARE.
  * 
  * File: YamlWriter.cpp
- * Created: 14th August 2022 6:30:35 pm
+ * Created: 15th August 2022 12:11:29 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 14th August 2022 6:30:37 pm
+ * Last Modified: 15th August 2022 12:38:34 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,8 +38,6 @@
 */
 
 // CppReflection
-#include "CppReflection/IType.h"
-#include "CppReflection/PointerType.h"
 #include "CppReflection/Reflectable.h"
 
 // yamlcpp
@@ -54,142 +52,121 @@
 using namespace	CppReflection;
 
 /*
-***********************************************************************************
-************************************ ATTRIBUTES ***********************************
-***********************************************************************************
-*/
-
-YamlWriter*	YamlWriter::_instance = nullptr;
-
-/*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
 
 YamlWriter::YamlWriter()
+	: _emitter(nullptr)
 {
 }
 
 YamlWriter::~YamlWriter()
 {
+	if (_emitter)
+	{
+		delete _emitter;
+		_emitter = nullptr;
+	}
 }
 
-YamlWriter*	YamlWriter::get()
+std::string		YamlWriter::compute(const Reflectable& reflectable)
 {
-	if (!_instance)
-		_instance = new YamlWriter();
-	return _instance;
+	if (!_emitter)
+	{
+		_emitter = new YAML::Emitter();
+
+		const IReflectableType*	type = reflectable.getType();
+
+		type->iterate(*this, (void*)&reflectable);
+
+		std::string	result = _emitter->c_str();
+
+		delete _emitter;
+		_emitter = nullptr;
+
+		return result;
+	}
+	return "";
 }
 
-void	YamlWriter::write(std::ostream& outStream, const Reflectable& reflectable, bool writeType) const
+void	YamlWriter::value(const IType* valueType, void* valueInstance)
 {
-	YAML::Emitter	emitter;
-
-	writeReflectable(emitter, reflectable, writeType);
-	outStream << emitter.c_str();
-}
-
-void	YamlWriter::write(std::string& output, const Reflectable& reflectable, bool writeType) const
-{
-	YAML::Emitter	emitter;
-
-	writeReflectable(emitter, reflectable, writeType);
-	output = emitter.c_str();
-}
-
-void	YamlWriter::write(const std::string& fileName, bool truncate, const Reflectable& reflectable, bool writeType) const
-{
-	YAML::Emitter	emitter;
-
-	writeReflectable(emitter, reflectable, writeType);
-	std::FILE*	file;
-	if (truncate)
-		file = std::fopen(fileName.c_str(), "w");
+	if (!valueInstance)
+		*_emitter << YAML::Null;
+	else if (*valueType == *TypeManager::findType<std::string>())
+		*_emitter << *(std::string*)valueInstance;
+	else if (*valueType == *TypeManager::findType<uint8_t>())
+		*_emitter << *(uint8_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<uint16_t>())
+		*_emitter << *(uint16_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<uint32_t>())
+		*_emitter << *(uint32_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<uint64_t>())
+		*_emitter << *(uint64_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<int8_t>())
+		*_emitter << *(int8_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<int16_t>())
+		*_emitter << *(int16_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<int32_t>())
+		*_emitter << *(int32_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<int64_t>())
+		*_emitter << *(int64_t*)valueInstance;
 	else
-		file = std::fopen(fileName.c_str(), "a");
-	if (file)
-	{
-		std::string	result(emitter.c_str());
-
-		std::fwrite(result.c_str(), sizeof(char), result.size(), file);
-		std::fclose(file);
-	}
+		*_emitter << YAML::Null;
 }
 
-void	YamlWriter::writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, bool writeType) const
+void	YamlWriter::beforeReflectable(Reflectable& reflectable)
 {
-	const IReflectableType*	type = reflectable.getType();
-
-	emitter << YAML::BeginMap;
-
-	writeReflectable(emitter, reflectable, *type, writeType);
-
-	emitter << YAML::EndMap;
+	*_emitter << YAML::BeginMap;
+	*_emitter << YAML::Key << "type";
+	*_emitter << YAML::Value << reflectable.getType()->getName();
 }
 
-void	YamlWriter::writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, const IReflectableType& type, bool writeType) const
+void	YamlWriter::reflectableAttribute(const Attribute* attribute, void* attributeInstance)
 {
-	if (writeType)
-		this->writeType(emitter, type);
+	const IType*	type = attribute->getType();
 
-	for (size_t i = 0; i < type.getNbParents(); i++)
-	{
-		const IType*	parent = type.getParent(i);
-		if (parent->isReflectable())
-		{
-			const IReflectableType* reflectableParent = static_cast<const IReflectableType*>(parent);
-			writeReflectable(emitter, reflectable, *reflectableParent, false);
-		}
-	}
-
-	for (size_t i = 0; i < type.getNbAttributes(); i++)
-	{
-		const Attribute*	attribute = type.getAttribute(i);
-
-		emitter << YAML::Key << attribute->getName();
-		writeAttribute(emitter, (const void*)((size_t)&reflectable + attribute->getOffset()), *attribute->getType(), false);
-	}
+	*_emitter << YAML::Key << attribute->getName();
+	*_emitter << YAML::Value;
+	type->iterate(*this, attributeInstance);
 }
 
-void	YamlWriter::writeType(YAML::Emitter& emitter, const IType& type) const
+void	YamlWriter::afterReflectable()
 {
-	emitter << YAML::Key << "type";
-	emitter << YAML::Value << type.getName();
+	*_emitter << YAML::EndMap;
 }
 
-void	YamlWriter::writeAttribute(YAML::Emitter& emitter, const void* value, const IType& type, bool writeType) const
+void	YamlWriter::beforeList()
 {
-	if (type == *TypeManager::findType<std::string>())
-		emitter << YAML::Value << *(const std::string*)value;
-	else if (type == *TypeManager::findType<bool>())
-		emitter << YAML::Value << *(const bool*)value;
-	else if (type == *TypeManager::findType<uint8_t>())
-		emitter << YAML::Value << *(const uint8_t*)value;
-	else if (type == *TypeManager::findType<uint16_t>())
-		emitter << YAML::Value << *(const uint16_t*)value;
-	else if (type == *TypeManager::findType<uint32_t>())
-		emitter << YAML::Value << *(const uint32_t*)value;
-	else if (type == *TypeManager::findType<uint64_t>())
-		emitter << YAML::Value << *(const uint64_t*)value;
-	else if (type == *TypeManager::findType<int8_t>())
-		emitter << YAML::Value << *(const int8_t*)value;
-	else if (type == *TypeManager::findType<int16_t>())
-		emitter << YAML::Value << *(const int16_t*)value;
-	else if (type == *TypeManager::findType<int32_t>())
-		emitter << YAML::Value << *(const int32_t*)value;
-	else if (type == *TypeManager::findType<int64_t>())
-		emitter << YAML::Value << *(const int64_t*)value;
-	else if (type.isReflectable())
-		writeReflectable(emitter, *(const Reflectable*)value, writeType);
-	else if (type.isPointer())
-	{
-		const IPointerType&	pointerType = (const IPointerType&)type;
-		if (*(void**)value)
-			writeAttribute(emitter, *(void**)value, *pointerType.getSubType(), true);
-		else
-			emitter << YAML::Value << YAML::Null;
-	}
-	else
-		emitter << YAML::Value << YAML::Null;
+	*_emitter << YAML::BeginSeq;
+}
+
+void	YamlWriter::listValue(const IType* valueType, void* valueInstance)
+{
+	valueType->iterate(*this, valueInstance);
+}
+
+void	YamlWriter::afterList()
+{
+	*_emitter << YAML::EndSeq;
+}
+
+void	YamlWriter::beforeMap()
+{
+	*_emitter << YAML::BeginMap;
+}
+
+void	YamlWriter::mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance)
+{
+	*_emitter << YAML::Key;
+	keyType->iterate(*this, keyInstance);
+	*_emitter << YAML::Value;
+	valueType->iterate(*this, valueInstance);
+}
+
+void	YamlWriter::afterMap()
+{
+	*_emitter << YAML::EndMap;
 }

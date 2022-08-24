@@ -38,6 +38,12 @@
 template	<typename T>
 CppReflection::Type<T>*	CppReflection::Type<T>::_instance = nullptr;
 
+template	<typename T>
+CppReflection::Type<std::vector<T>>*	CppReflection::Type<std::vector<T>>::_instance = nullptr;
+
+template	<typename K, typename V>
+CppReflection::Type<std::map<K, V>>*	CppReflection::Type<std::map<K, V>>::_instance = nullptr;
+
 /*
 ********************************************************************************
 ************************************ METHODS ***********************************
@@ -69,4 +75,89 @@ CppReflection::Type<T>*	CppReflection::Type<T>::get()
 	if (!_instance)
 		_instance = new Type<T>();
 	return _instance;
+}
+
+template	<typename T>
+void	CppReflection::Type<T>::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.value(this, instance);
+}
+
+// vector
+
+template	<typename T>
+CppReflection::Type<std::vector<T>>::Type()
+	: IType(typeid(std::vector<T>).name(), sizeof(std::vector<T>), &typeid(std::vector<T>))
+	, _subType(TypeManager::findType<T>())
+{
+}
+
+template	<typename T>
+CppReflection::Type<std::vector<T>>::~Type()
+{
+}
+
+template	<typename T>
+void*		CppReflection::Type<std::vector<T>>::create() const
+{
+	return (new std::vector<T>());
+}
+
+template	<typename T>
+CppReflection::Type<std::vector<T>>*	CppReflection::Type<std::vector<T>>::get()
+{
+	if (!_instance)
+		_instance = new Type<std::vector<T>>();
+	return _instance;
+}
+
+template	<typename T>
+void	CppReflection::Type<std::vector<T>>::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.beforeList();
+	std::vector<T>*	vector = (std::vector<T>*)instance;
+	for (const T& value : *vector)
+		iterator.listValue(_subType, (void*)&value);
+	iterator.afterList();
+}
+
+// map
+
+template	<typename K, typename V>
+CppReflection::Type<std::map<K, V>>::Type()
+	: IType(typeid(std::map<K, V>).name(), sizeof(std::map<K, V>), &typeid(std::map<K, V>))
+	, _keyType(TypeManager::findType<K>())
+	, _valueType(TypeManager::findType<V>())
+{
+}
+
+template	<typename K, typename V>
+CppReflection::Type<std::map<K, V>>::~Type()
+{
+}
+
+template	<typename K, typename V>
+void*		CppReflection::Type<std::map<K, V>>::create() const
+{
+	return (new std::map<K, V>());
+}
+
+template	<typename K, typename V>
+CppReflection::Type<std::map<K, V>>*	CppReflection::Type<std::map<K, V>>::get()
+{
+	if (!_instance)
+		_instance = new Type<std::map<K, V>>();
+	return _instance;
+}
+
+template	<typename K, typename V>
+void	CppReflection::Type<std::map<K, V>>::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.beforeMap();
+	std::map<K, V>*	map = (std::map<K, V>*)instance;
+	for (const std::pair<K, V>& pair : *map)
+	{
+		iterator.mapPair(_keyType, (void*)&pair.first, _valueType, (void*)&pair.second);
+	}
+	iterator.afterMap();
 }

@@ -40,6 +40,10 @@
 // CppReflection
 #include <CppReflection/IType.h>
 
+// stl
+#include <map>
+#include <vector>
+
 /*
 **********************
 ** class definition **
@@ -70,6 +74,8 @@ namespace	CppReflection
 
 			static Type<T>*	get();
 
+			virtual void	iterate(Iterator& iterator, void* instance) const;
+
 		/*
 		************************************************************************
 		******************************** PRIVATE *******************************
@@ -94,6 +100,113 @@ namespace	CppReflection
 			*/
 
 			static Type<T>*	_instance;
+
+	};
+
+	template	<typename T>
+	class		Type<std::vector<T>> : public IType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::vector<T>>*	get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::vector<T>>*	_instance;
+
+			const IType*					_subType;
+
+	};
+
+	template	<typename K, typename V>
+	class		Type<std::map<K, V>> : public IType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::map<K, V>>*	get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::map<K, V>>*	_instance;
+
+			const IType*					_keyType;
+			const IType*					_valueType;
 
 	};
 }

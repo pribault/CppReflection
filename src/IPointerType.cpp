@@ -32,6 +32,15 @@
 #include "CppReflection/IPointerType.h"
 
 /*
+**************
+** includes **
+**************
+*/
+
+// CppReflection
+#include "CppReflection/Iterator.h"
+
+/*
 ****************
 ** namespaces **
 ****************
@@ -62,6 +71,11 @@ IPointerType::~IPointerType()
 bool			IPointerType::isPointer() const
 {
 	return true;
+}
+
+void			IPointerType::iterate(Iterator& iterator, void* instance) const
+{
+	_subType->iterate(iterator, *(void**)instance);
 }
 
 const IType*	IPointerType::getSubType() const

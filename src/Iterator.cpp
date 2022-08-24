@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: ReflectableWriter.cpp
- * Created: 14th August 2022 6:23:32 pm
+ * File: Iterator.cpp
+ * Created: 15th August 2022 12:10:54 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 14th August 2022 6:23:43 pm
+ * Last Modified: 15th August 2022 12:34:34 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include "CppReflection/ReflectableWriter.h"
+#include "CppReflection/Iterator.h"
 
 /*
 ****************
@@ -45,25 +45,50 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-ReflectableWriter::ReflectableWriter()
+Iterator::Iterator()
 {
 }
 
-ReflectableWriter::~ReflectableWriter()
+Iterator::~Iterator()
 {
 }
 
-void	ReflectableWriter::write(std::ostream& outStream, const Reflectable* reflectable, bool writeType) const
+void	Iterator::value(const IType* valueType, void* valueInstance)
 {
-	write(outStream, *reflectable, writeType);
 }
 
-void	ReflectableWriter::write(std::string& output, const Reflectable* reflectable, bool writeType) const
+void	Iterator::beforeReflectable(Reflectable& reflectable)
 {
-	write(output, *reflectable, writeType);
 }
 
-void	ReflectableWriter::write(const std::string& fileName, bool truncate, const Reflectable* reflectable, bool writeType) const
+void	Iterator::reflectableAttribute(const Attribute* attribute, void* attributeInstance)
 {
-	write(fileName, truncate, *reflectable, writeType);
+}
+
+void	Iterator::afterReflectable()
+{
+}
+
+void	Iterator::beforeList()
+{
+}
+
+void	Iterator::listValue(const IType* valueType, void* valueInstance)
+{
+}
+
+void	Iterator::afterList()
+{
+}
+
+void	Iterator::beforeMap()
+{
+}
+
+void	Iterator::mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance)
+{
+}
+
+void	Iterator::afterMap()
+{
 }

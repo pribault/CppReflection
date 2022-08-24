@@ -43,6 +43,17 @@
 #include <vector>
 
 /*
+****************
+** class used **
+****************
+*/
+
+namespace	CppReflection
+{
+	class	Iterator;
+}
+
+/*
 **********************
 ** class definition **
 **********************
@@ -81,17 +92,11 @@ namespace	CppReflection
 			virtual void*			create() const = 0;
 			virtual void			initialize(void* instance) const;
 
+			virtual void			iterate(Iterator& iterator, void* instance) const = 0;
+
 			// operators
 			bool					operator==(const IType& other) const;
 			bool					operator!=(const IType& other) const;
-
-		/*
-		************************************************************************
-		******************************* PROTECTED ******************************
-		************************************************************************
-		*/
-
-		protected:
 
 			/*
 			*************

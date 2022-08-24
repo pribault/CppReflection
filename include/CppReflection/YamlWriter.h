@@ -22,10 +22,10 @@
  * SOFTWARE.
  * 
  * File: YamlWriter.h
- * Created: 14th August 2022 6:28:33 pm
+ * Created: 15th August 2022 12:11:15 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 14th August 2022 6:28:43 pm
+ * Last Modified: 15th August 2022 12:38:27 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,7 +38,10 @@
 */
 
 // CppReflection
-#include <CppReflection/ReflectableWriter.h>
+#include <CppReflection/Iterator.h>
+
+// stl
+#include <string>
 
 /*
 ****************
@@ -46,16 +49,14 @@
 ****************
 */
 
+namespace	CppReflection
+{
+	class	Reflectable;
+}
+
 namespace	YAML
 {
 	class	Emitter;
-}
-
-namespace	CppReflection
-{
-	class	Attribute;
-	class	IType;
-	class	IReflectableType;
 }
 
 /*
@@ -66,7 +67,7 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
-	class	YamlWriter : public ReflectableWriter
+	class	YamlWriter : public Iterator
 	{
 
 		/*
@@ -83,28 +84,24 @@ namespace	CppReflection
 			*************
 			*/
 
-			static YamlWriter*	get();
-
-			virtual void	write(std::ostream& outStream, const Reflectable& reflectable, bool writeType = true) const;
-			virtual void	write(std::string& output, const Reflectable& reflectable, bool writeType = true) const;
-			virtual void	write(const std::string& fileName, bool truncate, const Reflectable& reflectable, bool writeType = true) const;
-
-		/*
-		************************************************************************
-		******************************* PROTECTED ******************************
-		************************************************************************
-		*/
-
-		protected:
-
-			/*
-			*************
-			** methods **
-			*************
-			*/
-
 			YamlWriter();
-			virtual ~YamlWriter();
+			~YamlWriter();
+
+			std::string		compute(const Reflectable& reflectable);
+
+			virtual void	value(const IType* valueType, void* valueInstance);
+
+			virtual void	beforeReflectable(Reflectable& reflectable);
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
+			virtual void	afterReflectable();
+
+			virtual void	beforeList();
+			virtual void	listValue(const IType* valueType, void* valueInstance);
+			virtual void	afterList();
+
+			virtual void	beforeMap();
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
+			virtual void	afterMap();
 
 		/*
 		************************************************************************
@@ -115,23 +112,12 @@ namespace	CppReflection
 		private:
 
 			/*
-			*************
-			** methods **
-			*************
-			*/
-
-			void	writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, bool writeType) const;
-			void	writeReflectable(YAML::Emitter& emitter, const Reflectable& reflectable, const IReflectableType& type, bool writeType) const;
-			void	writeAttribute(YAML::Emitter& emitter, const void* value, const IType& type, bool writeType) const;
-			void	writeType(YAML::Emitter& emitter, const IType& type) const;
-
-			/*
 			****************
 			** attributes **
 			****************
 			*/
 
-			static YamlWriter*	_instance;
+			YAML::Emitter*	_emitter;
 
 	};
 }

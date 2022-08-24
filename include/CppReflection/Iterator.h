@@ -21,24 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: ReflectableWriter.h
- * Created: 14th August 2022 6:04:43 pm
+ * File: Iterator.h
+ * Created: 15th August 2022 12:10:21 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 14th August 2022 6:05:03 pm
+ * Last Modified: 15th August 2022 12:10:23 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
 #pragma once
-
-/*
-**************
-** includes **
-**************
-*/
-
-// stl
-#include <iostream>
 
 /*
 ****************
@@ -48,6 +39,8 @@
 
 namespace	CppReflection
 {
+	class	Attribute;
+	class	IType;
 	class	Reflectable;
 }
 
@@ -59,7 +52,7 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
-	class	ReflectableWriter
+	class	Iterator
 	{
 
 		/*
@@ -76,45 +69,22 @@ namespace	CppReflection
 			*************
 			*/
 
-			// Convenience methods to handle both references and pointers
-			void			write(std::ostream& outStream, const Reflectable* reflectable, bool writeType = true) const;
-			void			write(std::string& output, const Reflectable* reflectable, bool writeType = true) const;
-			void			write(const std::string& fileName, bool truncate, const Reflectable* reflectable, bool writeType = true) const;
+			Iterator();
+			~Iterator();
 
-			// Virtual methods writers will have to implement
-			virtual void	write(std::ostream& outStream, const Reflectable& reflectable, bool writeType = true) const = 0;
-			virtual void	write(std::string& output, const Reflectable& reflectable, bool writeType = true) const = 0;
-			virtual void	write(const std::string& fileName, bool truncate, const Reflectable& reflectable, bool writeType = true) const = 0;
+			virtual void	value(const IType* valueType, void* valueInstance);
 
-		/*
-		************************************************************************
-		******************************* PROTECTED ******************************
-		************************************************************************
-		*/
+			virtual void	beforeReflectable(Reflectable& reflectable);
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
+			virtual void	afterReflectable();
 
-		protected:
+			virtual void	beforeList();
+			virtual void	listValue(const IType* valueType, void* valueInstance);
+			virtual void	afterList();
 
-			/*
-			*************
-			** methods **
-			*************
-			*/
+			virtual void	beforeMap();
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
+			virtual void	afterMap();
 
-			ReflectableWriter();
-			virtual ~ReflectableWriter();
-
-		/*
-		************************************************************************
-		******************************** PRIVATE *******************************
-		************************************************************************
-		*/
-
-		private:
-
-			/*
-			****************
-			** attributes **
-			****************
-			*/
 	};
 }
