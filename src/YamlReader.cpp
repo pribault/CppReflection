@@ -86,6 +86,7 @@ Reflectable*	YamlReader::load(const std::string& input)
 
 	_stack.push_back(new YAML::Node(root));
 	type->iterate(*this, result);
+	delete _stack.back();
 	_stack.pop_back();
 
 	return result;
@@ -253,6 +254,7 @@ void	YamlReader::reflectableAttribute(const Attribute* attribute, void* attribut
 		pointerType->initialize(attributeInstance);
 	}
 	type->iterate(*this, attributeInstance);
+	delete _stack.back();
 	_stack.pop_back();
 }
 
@@ -260,43 +262,68 @@ void	YamlReader::afterReflectable()
 {
 }
 
-void	YamlReader::beforeList()
+#include <iostream>
+
+void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 {
+	const YAML::Node&		node = *_stack.back();
+	YAML::const_iterator	it;
+	const IType*			valueType = listType->getSubType();
+	void*					valueInstance = nullptr;
+
+	std::vector<YAML::Node> list = node.as<std::vector<YAML::Node>>();
+	for (const YAML::Node& child : list)
+	{
+		_stack.push_back(new YAML::Node(child));
+		valueInstance = valueType->create();
+		valueType->iterate(*this, valueInstance);
+		delete _stack.back();
+		_stack.pop_back();
+
+		listType->insert(listInstance, valueInstance);
+		delete valueInstance;
+	}
 }
 
 void	YamlReader::listValue(const IType* valueType, void* valueInstance)
 {
-	if (valueType->isPointer())
-	{
-		const IPointerType* pointerType = static_cast<const IPointerType*>(valueType);
-		pointerType->initialize(valueInstance);
-	}
-	valueType->iterate(*this, valueInstance);
 }
 
 void	YamlReader::afterList()
 {
 }
 
-void	YamlReader::beforeMap()
+void	YamlReader::beforeMap(const IMapType* mapType, void* mapInstance)
 {
+	const YAML::Node&		node = *_stack.back();
+	YAML::const_iterator	it;
+	const IType*			keyType = mapType->getKeyType();
+	const IType*			valueType = mapType->getValueType();
+	void*					keyInstance = nullptr;
+	void*					valueInstance = nullptr;
+
+	for (it = node.begin(); it != node.end(); it++)
+	{
+		_stack.push_back(new YAML::Node(it->first));
+		keyInstance = keyType->create();
+		keyType->iterate(*this, keyInstance);
+		delete _stack.back();
+		_stack.pop_back();
+
+		_stack.push_back(new YAML::Node(it->second));
+		valueInstance = valueType->create();
+		valueType->iterate(*this, valueInstance);
+		delete _stack.back();
+		_stack.pop_back();
+
+		mapType->insert(mapInstance, keyInstance, valueInstance);
+		delete keyInstance;
+		delete valueInstance;
+	}
 }
 
 void	YamlReader::mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance)
 {
-	if (keyType->isPointer())
-	{
-		const IPointerType* pointerType = static_cast<const IPointerType*>(keyType);
-		pointerType->initialize(valueInstance);
-	}
-	keyType->iterate(*this, keyInstance);
-
-	if (valueType->isPointer())
-	{
-		const IPointerType* pointerType = static_cast<const IPointerType*>(valueType);
-		pointerType->initialize(valueInstance);
-	}
-	valueType->iterate(*this, valueInstance);
 }
 
 void	YamlReader::afterMap()

@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: YamlReader.h
- * Created: 15th August 2022 12:11:08 am
+ * File: IMapType.h
+ * Created: 21th September 2022 4:48:00 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 15th August 2022 12:36:59 am
+ * Last Modified: 21th September 2022 4:48:00 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,22 +38,7 @@
 */
 
 // CppReflection
-#include <CppReflection/Iterator.h>
-
-// stl
-#include <list>
-#include <string>
-
-/*
-****************
-** class used **
-****************
-*/
-
-namespace	YAML
-{
-	class	Node;
-}
+#include <CppReflection/IType.h>
 
 /*
 **********************
@@ -63,7 +48,7 @@ namespace	YAML
 
 namespace	CppReflection
 {
-	class	YamlReader : public Iterator
+	class		IMapType : public IType
 	{
 
 		/*
@@ -80,24 +65,39 @@ namespace	CppReflection
 			*************
 			*/
 
-			YamlReader();
-			~YamlReader();
+			virtual ~IMapType();
 
-			Reflectable*	load(const std::string& input);
+			const IType*	getKeyType() const;
+			const IType*	getValueType() const;
 
-			virtual void	value(const IType* valueType, void* valueInstance);
+			virtual bool	isMap() const;
 
-			virtual void	beforeReflectable(Reflectable& reflectable);
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
-			virtual void	afterReflectable();
+			virtual void	insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const = 0;
 
-			virtual void	beforeList(const IListType* listType, void* listInstance);
-			virtual void	listValue(const IType* valueType, void* valueInstance);
-			virtual void	afterList();
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
 
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
-			virtual void	afterMap();
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			IMapType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType);
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			IType*	_keyType;
+			IType*	_valueType;
 
 		/*
 		************************************************************************
@@ -108,12 +108,12 @@ namespace	CppReflection
 		private:
 
 			/*
-			****************
-			** attributes **
-			****************
+			*************
+			** methods **
+			*************
 			*/
 
-			std::list<YAML::Node*>	_stack;
+			IMapType();
 
 	};
 }

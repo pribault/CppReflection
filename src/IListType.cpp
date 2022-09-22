@@ -21,15 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: IType.cpp
- * Created: 13th August 2022 2:59:07 pm
+ * File: IListType.cpp
+ * Created: 21th September 2022 4:48:00 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:59:11 pm
+ * Last Modified: 21th September 2022 4:48:00 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include "CppReflection/IType.h"
+#include "CppReflection/IListType.h"
+
+/*
+**************
+** includes **
+**************
+*/
+
+// CppReflection
+#include "CppReflection/Iterator.h"
 
 /*
 ****************
@@ -45,67 +54,26 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-IType::IType(void)
+IListType::IListType()
 {
 }
 
-IType::IType(const std::string& name, size_t size, const std::type_info* typeInfo) :
-	_name(name),
-	_size(size),
-	_typeInfo(typeInfo)
+IListType::IListType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* subType)
+	: IType(name, size, typeInfo)
+	, _subType(subType)
 {
 }
 
-IType::~IType(void)
+IListType::~IListType()
 {
 }
 
-bool					IType::isPointer() const
+bool			IListType::isList() const
 {
-	return false;
+	return true;
 }
 
-bool					IType::isReflectable() const
+const IType*	IListType::getSubType() const
 {
-	return false;
-}
-
-bool					IType::isList() const
-{
-	return false;
-}
-
-bool					IType::isMap() const
-{
-	return false;
-}
-
-const std::string&		IType::getName(void) const
-{
-	return (_name);
-}
-
-size_t					IType::getSize(void) const
-{
-	return (_size);
-}
-
-const std::type_info*	IType::getTypeInfo(void) const
-{
-	return (_typeInfo);
-}
-
-void					IType::initialize(void* instance) const
-{
-	// do nothing by default
-}
-
-bool					IType::operator==(const IType& other) const
-{
-	return (*getTypeInfo() == *other.getTypeInfo());
-}
-
-bool					IType::operator!=(const IType& other) const
-{
-	return (*getTypeInfo() != *other.getTypeInfo());
+	return _subType;
 }

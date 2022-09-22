@@ -95,11 +95,11 @@ namespace	CppReflection
 			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
 			virtual void	afterReflectable();
 
-			virtual void	beforeList();
+			virtual void	beforeList(const IListType* listType, void* listInstance);
 			virtual void	listValue(const IType* valueType, void* valueInstance);
 			virtual void	afterList();
 
-			virtual void	beforeMap();
+			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
 			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
 			virtual void	afterMap();
 

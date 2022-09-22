@@ -38,6 +38,8 @@
 */
 
 // CppReflection
+#include <CppReflection/IListType.h>
+#include <CppReflection/IMapType.h>
 #include <CppReflection/IType.h>
 
 // stl
@@ -104,7 +106,7 @@ namespace	CppReflection
 	};
 
 	template	<typename T>
-	class		Type<std::vector<T>> : public IType
+	class		Type<std::vector<T>> : public IListType
 	{
 
 		/*
@@ -126,6 +128,8 @@ namespace	CppReflection
 			static Type<std::vector<T>>*	get();
 
 			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* instance, const void* valueInstance) const;
 
 		/*
 		************************************************************************
@@ -152,12 +156,10 @@ namespace	CppReflection
 
 			static Type<std::vector<T>>*	_instance;
 
-			const IType*					_subType;
-
 	};
 
 	template	<typename K, typename V>
-	class		Type<std::map<K, V>> : public IType
+	class		Type<std::map<K, V>> : public IMapType
 	{
 
 		/*
@@ -179,6 +181,8 @@ namespace	CppReflection
 			static Type<std::map<K, V>>*	get();
 
 			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const;
 
 		/*
 		************************************************************************
@@ -204,9 +208,6 @@ namespace	CppReflection
 			*/
 
 			static Type<std::map<K, V>>*	_instance;
-
-			const IType*					_keyType;
-			const IType*					_valueType;
 
 	};
 }

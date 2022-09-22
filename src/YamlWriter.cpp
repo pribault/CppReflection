@@ -138,7 +138,7 @@ void	YamlWriter::afterReflectable()
 	*_emitter << YAML::EndMap;
 }
 
-void	YamlWriter::beforeList()
+void	YamlWriter::beforeList(const IListType* listType, void* listInstance)
 {
 	*_emitter << YAML::BeginSeq;
 }
@@ -153,7 +153,7 @@ void	YamlWriter::afterList()
 	*_emitter << YAML::EndSeq;
 }
 
-void	YamlWriter::beforeMap()
+void	YamlWriter::beforeMap(const IMapType* mapType, void* mapInstance)
 {
 	*_emitter << YAML::BeginMap;
 }

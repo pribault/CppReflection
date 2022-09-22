@@ -83,6 +83,8 @@ namespace	CppReflection
 
 			virtual bool			isPointer() const;
 			virtual bool			isReflectable() const;
+			virtual bool			isList() const;
+			virtual bool			isMap() const;
 
 			// getters
 			const std::string&		getName() const;

@@ -69,7 +69,7 @@ void	Iterator::afterReflectable()
 {
 }
 
-void	Iterator::beforeList()
+void	Iterator::beforeList(const IListType* listType, void* listInstance)
 {
 }
 
@@ -81,7 +81,7 @@ void	Iterator::afterList()
 {
 }
 
-void	Iterator::beforeMap()
+void	Iterator::beforeMap(const IMapType* mapType, void* mapInstance)
 {
 }
 

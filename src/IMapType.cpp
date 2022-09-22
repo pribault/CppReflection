@@ -21,15 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: IType.cpp
- * Created: 13th August 2022 2:59:07 pm
+ * File: IMapType.cpp
+ * Created: 21th September 2022 4:48:00 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:59:11 pm
+ * Last Modified: 21th September 2022 4:48:00 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include "CppReflection/IType.h"
+#include "CppReflection/IMapType.h"
+
+/*
+**************
+** includes **
+**************
+*/
+
+// CppReflection
+#include "CppReflection/Iterator.h"
 
 /*
 ****************
@@ -45,67 +54,32 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-IType::IType(void)
+IMapType::IMapType()
 {
 }
 
-IType::IType(const std::string& name, size_t size, const std::type_info* typeInfo) :
-	_name(name),
-	_size(size),
-	_typeInfo(typeInfo)
+IMapType::IMapType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
+	: IType(name, size, typeInfo)
+	, _keyType(keyType)
+	, _valueType(valueType)
 {
 }
 
-IType::~IType(void)
+IMapType::~IMapType()
 {
 }
 
-bool					IType::isPointer() const
+bool			IMapType::isMap() const
 {
-	return false;
+	return true;
 }
 
-bool					IType::isReflectable() const
+const IType*	IMapType::getKeyType() const
 {
-	return false;
+	return _keyType;
 }
 
-bool					IType::isList() const
+const IType*	IMapType::getValueType() const
 {
-	return false;
-}
-
-bool					IType::isMap() const
-{
-	return false;
-}
-
-const std::string&		IType::getName(void) const
-{
-	return (_name);
-}
-
-size_t					IType::getSize(void) const
-{
-	return (_size);
-}
-
-const std::type_info*	IType::getTypeInfo(void) const
-{
-	return (_typeInfo);
-}
-
-void					IType::initialize(void* instance) const
-{
-	// do nothing by default
-}
-
-bool					IType::operator==(const IType& other) const
-{
-	return (*getTypeInfo() == *other.getTypeInfo());
-}
-
-bool					IType::operator!=(const IType& other) const
-{
-	return (*getTypeInfo() != *other.getTypeInfo());
+	return _valueType;
 }
