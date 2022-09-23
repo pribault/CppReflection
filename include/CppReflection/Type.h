@@ -43,6 +43,7 @@
 #include <CppReflection/IType.h>
 
 // stl
+#include <list>
 #include <map>
 #include <vector>
 
@@ -155,6 +156,59 @@ namespace	CppReflection
 			*/
 
 			static Type<std::vector<T>>*	_instance;
+
+	};
+
+	template	<typename T>
+	class		Type<std::list<T>> : public IListType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::list<T>>*		get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* instance, const void* valueInstance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::list<T>>*	_instance;
 
 	};
 

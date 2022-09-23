@@ -271,6 +271,8 @@ void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 	const IType*			valueType = listType->getSubType();
 	void*					valueInstance = nullptr;
 
+	if (!node.IsScalar())
+		return ;
 	std::vector<YAML::Node> list = node.as<std::vector<YAML::Node>>();
 	for (const YAML::Node& child : list)
 	{
@@ -302,6 +304,8 @@ void	YamlReader::beforeMap(const IMapType* mapType, void* mapInstance)
 	void*					keyInstance = nullptr;
 	void*					valueInstance = nullptr;
 
+	if (!node.IsMap())
+		return ;
 	for (it = node.begin(); it != node.end(); it++)
 	{
 		_stack.push_back(new YAML::Node(it->first));

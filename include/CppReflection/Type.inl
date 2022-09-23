@@ -41,6 +41,9 @@ CppReflection::Type<T>*	CppReflection::Type<T>::_instance = nullptr;
 template	<typename T>
 CppReflection::Type<std::vector<T>>*	CppReflection::Type<std::vector<T>>::_instance = nullptr;
 
+template	<typename T>
+CppReflection::Type<std::list<T>>*		CppReflection::Type<std::list<T>>::_instance = nullptr;
+
 template	<typename K, typename V>
 CppReflection::Type<std::map<K, V>>*	CppReflection::Type<std::map<K, V>>::_instance = nullptr;
 
@@ -127,6 +130,52 @@ void	CppReflection::Type<std::vector<T>>::insert(void* instance, const void* val
 	T				value = *(T*)valueInstance;
 
 	vector->push_back(value);
+}
+
+// list
+
+template	<typename T>
+CppReflection::Type<std::list<T>>::Type()
+	: IListType(typeid(std::list<T>).name(), sizeof(std::list<T>), &typeid(std::list<T>), TypeManager::findType<T>())
+{
+}
+
+template	<typename T>
+CppReflection::Type<std::list<T>>::~Type()
+{
+}
+
+template	<typename T>
+void*		CppReflection::Type<std::list<T>>::create() const
+{
+	return (new std::list<T>());
+}
+
+template	<typename T>
+CppReflection::Type<std::list<T>>*	CppReflection::Type<std::list<T>>::get()
+{
+	if (!_instance)
+		_instance = new Type<std::list<T>>();
+	return _instance;
+}
+
+template	<typename T>
+void	CppReflection::Type<std::list<T>>::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.beforeList(this, instance);
+	std::list<T>*	list = (std::list<T>*)instance;
+	for (const T& value : *list)
+		iterator.listValue(_subType, (void*)&value);
+	iterator.afterList();
+}
+
+template	<typename T>
+void	CppReflection::Type<std::list<T>>::insert(void* instance, const void* valueInstance) const
+{
+	std::list<T>*	list = (std::list<T>*)instance;
+	T				value = *(T*)valueInstance;
+
+	list->push_back(value);
 }
 
 // map
