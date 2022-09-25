@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Reflectable.h
- * Created: 13th August 2022 2:56:48 pm
+ * File: YamlWriter.h
+ * Created: 15th August 2022 12:11:15 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:37 pm
+ * Last Modified: 15th August 2022 12:38:27 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,35 +38,26 @@
 */
 
 // CppReflection
-#include <CppReflection/Attribute.h>
-#include <CppReflection/TypeManager.h>
+#include <CppReflection/Iterator.h>
+
+// stl
+#include <string>
 
 /*
-************
-** macros **
-************
+****************
+** class used **
+****************
 */
 
-#define ATTRIBUTE_OFFSET(className, attr)	((size_t)&((className*)nullptr)->attr)
+namespace	CppReflection
+{
+	class	Reflectable;
+}
 
-#define START_REFLECTION(className, ...)	\
-	typedef className	ClassType;\
-	\
-	virtual const CppReflection::IReflectableType*	getType() const\
-	{\
-		return (CppReflection::ReflectableType<className>::get());\
-	}\
-	\
-	static void		staticInitReflection()\
-	{\
-		CppReflection::IReflectableType*	type = CppReflection::ReflectableType<className>::get();\
-		CppReflection::addParents<__VA_ARGS__>(type);
-
-#define REFLECT_ATTRIBUTE(attr)	\
-		type->addAttribute(new CppReflection::Attribute(type, #attr, ATTRIBUTE_OFFSET(ClassType, attr), CppReflection::TypeManager::findType<decltype(attr)>()));
-
-#define END_REFLECTION()	\
-	}
+namespace	YAML
+{
+	class	Emitter;
+}
 
 /*
 **********************
@@ -76,10 +67,7 @@
 
 namespace	CppReflection
 {
-	template	<typename ... Parents>
-	void		addParents(IReflectableType* type);
-
-	class	Reflectable
+	class	YamlWriter : public Iterator
 	{
 
 		/*
@@ -96,12 +84,40 @@ namespace	CppReflection
 			*************
 			*/
 
-			Reflectable();
-			virtual ~Reflectable();
+			YamlWriter();
+			~YamlWriter();
 
-			virtual const IReflectableType*	getType() const = 0;
+			std::string		compute(const Reflectable& reflectable);
+
+			virtual void	value(const IType* valueType, void* valueInstance);
+
+			virtual void	beforeReflectable(Reflectable& reflectable);
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
+			virtual void	afterReflectable();
+
+			virtual void	beforeList(const IListType* listType, void* listInstance);
+			virtual void	listValue(const IType* valueType, void* valueInstance);
+			virtual void	afterList();
+
+			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
+			virtual void	afterMap();
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			YAML::Emitter*	_emitter;
 
 	};
 }
-
-#include <CppReflection/Reflectable.inl>

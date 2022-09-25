@@ -43,6 +43,17 @@
 #include <vector>
 
 /*
+****************
+** class used **
+****************
+*/
+
+namespace	CppReflection
+{
+	class	Iterator;
+}
+
+/*
 **********************
 ** class definition **
 **********************
@@ -68,30 +79,26 @@ namespace	CppReflection
 			*/
 
 			IType(const std::string& name, size_t size, const std::type_info* typeInfo);
-			virtual ~IType(void);
+			virtual ~IType();
 
 			virtual bool			isPointer() const;
 			virtual bool			isReflectable() const;
+			virtual bool			isList() const;
+			virtual bool			isMap() const;
 
 			// getters
-			const std::string&		getName(void) const;
-			size_t					getSize(void) const;
-			const std::type_info*	getTypeInfo(void) const;
+			const std::string&		getName() const;
+			size_t					getSize() const;
+			const std::type_info*	getTypeInfo() const;
 
-			virtual void*			create(void) const = 0;
+			virtual void*			create() const = 0;
 			virtual void			initialize(void* instance) const;
 
+			virtual void			iterate(Iterator& iterator, void* instance) const = 0;
+
 			// operators
-			bool					operator==(const IType& other);
-			bool					operator!=(const IType& other);
-
-		/*
-		************************************************************************
-		******************************* PROTECTED ******************************
-		************************************************************************
-		*/
-
-		protected:
+			bool					operator==(const IType& other) const;
+			bool					operator!=(const IType& other) const;
 
 			/*
 			*************
@@ -99,7 +106,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IType(void);
+			IType();
 
 		/*
 		************************************************************************

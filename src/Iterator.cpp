@@ -21,22 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: PointerType.inl
- * Created: 13th August 2022 4:13:00 pm
+ * File: Iterator.cpp
+ * Created: 15th August 2022 12:10:54 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 4:13:02 pm
+ * Last Modified: 15th August 2022 12:34:34 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
+#include "CppReflection/Iterator.h"
+
 /*
-***********************************************************************************
-************************************ ATTRIBUTES ***********************************
-***********************************************************************************
+****************
+** namespaces **
+****************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullptr;
+using namespace	CppReflection;
 
 /*
 ********************************************************************************
@@ -44,40 +45,50 @@ CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullpt
 ********************************************************************************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>::PointerType()
-	: IPointerType(typeid(T*).name(), sizeof(T*), &typeid(T*), TypeManager::findType<T>())
+Iterator::Iterator()
 {
 }
 
-template	<typename T>
-CppReflection::PointerType<T>::~PointerType()
+Iterator::~Iterator()
 {
 }
 
-template	<typename T>
-void*		CppReflection::PointerType<T>::create() const
+void	Iterator::value(const IType* valueType, void* valueInstance)
 {
-	void**	result;
-
-	result = new void*();
-	*result = _subType->create();
-	return (result);
 }
 
-template	<typename T>
-void		CppReflection::PointerType<T>::initialize(void* instance) const
+void	Iterator::beforeReflectable(Reflectable& reflectable)
 {
-	T**		value = (T**)instance;
-
-	*value = new T();
-	_subType->initialize(*value);
 }
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::get()
+void	Iterator::reflectableAttribute(const Attribute* attribute, void* attributeInstance)
 {
-	if (!_instance)
-		_instance = new PointerType<T>();
-	return _instance;
+}
+
+void	Iterator::afterReflectable()
+{
+}
+
+void	Iterator::beforeList(const IListType* listType, void* listInstance)
+{
+}
+
+void	Iterator::listValue(const IType* valueType, void* valueInstance)
+{
+}
+
+void	Iterator::afterList()
+{
+}
+
+void	Iterator::beforeMap(const IMapType* mapType, void* mapInstance)
+{
+}
+
+void	Iterator::mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance)
+{
+}
+
+void	Iterator::afterMap()
+{
 }

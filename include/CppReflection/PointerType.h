@@ -38,7 +38,7 @@
 */
 
 // CppReflection
-#include "CppReflection/IType.h"
+#include <CppReflection/IPointerType.h>
 
 /*
 **********************
@@ -49,7 +49,7 @@
 namespace	CppReflection
 {
 	template	<typename T>
-	class		PointerType : public IType
+	class		PointerType : public IPointerType
 	{
 
 		/*
@@ -66,12 +66,10 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual bool	isPointer() const;
-
-			virtual void*	create(void) const;
+			virtual void*	create() const;
 			virtual void	initialize(void* instance) const;
 
-			static PointerType<T>*	get(void);
+			static PointerType<T>*	get();
 
 		/*
 		************************************************************************
@@ -87,8 +85,8 @@ namespace	CppReflection
 			*************
 			*/
 
-			PointerType(void);
-			virtual ~PointerType(void);
+			PointerType();
+			virtual ~PointerType();
 
 			/*
 			****************
@@ -96,11 +94,9 @@ namespace	CppReflection
 			****************
 			*/
 
-			IType*	_subType;
-
 			static PointerType<T>*	_instance;
 
 	};
 }
 
-#include "CppReflection/PointerType.inl"
+#include <CppReflection/PointerType.inl>

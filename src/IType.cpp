@@ -70,6 +70,16 @@ bool					IType::isReflectable() const
 	return false;
 }
 
+bool					IType::isList() const
+{
+	return false;
+}
+
+bool					IType::isMap() const
+{
+	return false;
+}
+
 const std::string&		IType::getName(void) const
 {
 	return (_name);
@@ -90,12 +100,12 @@ void					IType::initialize(void* instance) const
 	// do nothing by default
 }
 
-bool					IType::operator==(const IType& other)
+bool					IType::operator==(const IType& other) const
 {
-	return (getTypeInfo() == other.getTypeInfo());
+	return (*getTypeInfo() == *other.getTypeInfo());
 }
 
-bool					IType::operator!=(const IType& other)
+bool					IType::operator!=(const IType& other) const
 {
-	return (getTypeInfo() != other.getTypeInfo());
+	return (*getTypeInfo() != *other.getTypeInfo());
 }

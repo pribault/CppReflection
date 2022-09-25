@@ -41,6 +41,8 @@
 #include <CppReflection/IType.h>
 
 // stl
+#include <map>
+#include <string>
 #include <type_traits>
 
 /*
@@ -88,14 +90,32 @@ namespace	CppReflection
 			*************
 			*/
 
-			static TypeManager*	get(void);
+			static TypeManager*	get();
 
 			template		<typename T>
-			static typename std::enable_if<IF_POINTER, IType*>::type						findType(void);
+			static typename std::enable_if<IF_POINTER, IType*>::type						findType();
 			template		<typename T>
-			static typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, IType*>::type		findType(void);
+			static typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, IType*>::type		findType();
 			template		<typename T>
-			static typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, IType*>::type	findType(void);
+			static typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, IType*>::type	findType();
+
+			static IType*	findType(const std::string& typeName);
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			***********
+			** types **
+			***********
+			*/
+
+			typedef std::map<std::string, IType*>	TypeMap;
 
 		/*
 		************************************************************************
@@ -111,8 +131,11 @@ namespace	CppReflection
 			*************
 			*/
 
-			TypeManager(void);
-			~TypeManager(void);
+			TypeManager();
+			~TypeManager();
+
+			IType*		registerAndGet(IType* type);
+			IType*		getType(const std::string& typeName) const;
 
 			/*
 			****************
@@ -121,6 +144,8 @@ namespace	CppReflection
 			*/
 
 			static TypeManager*	_instance;
+
+			TypeMap				_typeMap;
 
 	};
 }

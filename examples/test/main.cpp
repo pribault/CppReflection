@@ -29,13 +29,15 @@
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
-#include <CppReflection/Reflectable.h>
-
 /*
 **************
 ** includes **
 **************
 */
+
+// CppReflection
+#include <CppReflection/Reflectable.h>
+#include <CppReflection/YamlWriter.h>
 
 // stl
 #include <iostream>
@@ -72,10 +74,20 @@ class	Rectangle : public Point
 		START_REFLECTION(Rectangle, Point)
 		REFLECT_ATTRIBUTE(w)
 		REFLECT_ATTRIBUTE(h)
+		REFLECT_ATTRIBUTE(test)
+		REFLECT_ATTRIBUTE(test2)
+		REFLECT_ATTRIBUTE(test3)
+		REFLECT_ATTRIBUTE(test4)
+		REFLECT_ATTRIBUTE(test5)
 		END_REFLECTION()
 
 		int	w;
 		int	h;
+		std::vector<int>			test;
+		std::map<std::string, int>	test2;
+		int*						test3;
+		int*						test4;
+		Point						test5;
 };
 
 /*
@@ -83,44 +95,6 @@ class	Rectangle : public Point
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
-
-void	addIndentation(size_t indentation)
-{
-	for (size_t i = 0; i < indentation; i++)
-		std::cout << "  ";
-}
-
-void	debugType(const IReflectableType* type, size_t indentation)
-{
-	// print object type
-	addIndentation(indentation);
-	std::cout << type->getName() << " (size=" << type->getSize() << "):" << std::endl;
-
-	// iterate over attributes
-	for (size_t i = 0; i < type->getNbAttributes(); i++)
-	{
-		Attribute* attribute = type->getAttribute(i);
-
-		// print attribute type, name, offset and size
-		addIndentation(indentation + 1);
-		std::cout << " - " << attribute->getType()->getName() << " '" << attribute->getName() << "' (offset=" << attribute->getOffset() << ", size=" << attribute->getType()->getSize() << ")" << std::endl;
-	}
-
-	// iterate over parents
-	if (type->getNbParents())
-	{
-		addIndentation(indentation + 1);
-		std::cout << "parents:" << std::endl;
-	}
-	for (size_t i = 0; i < type->getNbParents(); i++)
-	{
-		IType* parent = type->getParent(i);
-
-		// If type is reflectable debug it too
-		if (parent->isReflectable())
-			debugType(static_cast<IReflectableType*>(parent), indentation + 2);
-	}
-}
 
 int		main(int argc, char** argv)
 {
@@ -131,11 +105,16 @@ int		main(int argc, char** argv)
 	rectangle.y = -66;
 	rectangle.w = 1920;
 	rectangle.h = -1080;
+	rectangle.test.push_back(1);
+	rectangle.test.push_back(2);
+	rectangle.test.push_back(3);
+	rectangle.test2["Hello"] = 42;
+	rectangle.test2["World"] = 43;
+	rectangle.test2["!"] = 44;
+	rectangle.test3 = new int(-42);
+	rectangle.test4 = nullptr;
 
-	// get object type
-	const IReflectableType* type = rectangle.getType();
-
-	debugType(type, 0);
+	std::cout << YamlWriter().compute(rectangle) << std::endl;
 
 	return 0;
 }

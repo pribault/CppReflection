@@ -21,52 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Reflectable.h
- * Created: 13th August 2022 2:56:48 pm
+ * File: Iterator.h
+ * Created: 15th August 2022 12:10:21 am
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:37 pm
+ * Last Modified: 15th August 2022 12:10:23 am
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
 #pragma once
 
 /*
-**************
-** includes **
-**************
+****************
+** class used **
+****************
 */
 
-// CppReflection
-#include <CppReflection/Attribute.h>
-#include <CppReflection/TypeManager.h>
-
-/*
-************
-** macros **
-************
-*/
-
-#define ATTRIBUTE_OFFSET(className, attr)	((size_t)&((className*)nullptr)->attr)
-
-#define START_REFLECTION(className, ...)	\
-	typedef className	ClassType;\
-	\
-	virtual const CppReflection::IReflectableType*	getType() const\
-	{\
-		return (CppReflection::ReflectableType<className>::get());\
-	}\
-	\
-	static void		staticInitReflection()\
-	{\
-		CppReflection::IReflectableType*	type = CppReflection::ReflectableType<className>::get();\
-		CppReflection::addParents<__VA_ARGS__>(type);
-
-#define REFLECT_ATTRIBUTE(attr)	\
-		type->addAttribute(new CppReflection::Attribute(type, #attr, ATTRIBUTE_OFFSET(ClassType, attr), CppReflection::TypeManager::findType<decltype(attr)>()));
-
-#define END_REFLECTION()	\
-	}
+namespace	CppReflection
+{
+	class	Attribute;
+	class	IListType;
+	class	IMapType;
+	class	IType;
+	class	Reflectable;
+}
 
 /*
 **********************
@@ -76,10 +54,7 @@
 
 namespace	CppReflection
 {
-	template	<typename ... Parents>
-	void		addParents(IReflectableType* type);
-
-	class	Reflectable
+	class	Iterator
 	{
 
 		/*
@@ -96,12 +71,22 @@ namespace	CppReflection
 			*************
 			*/
 
-			Reflectable();
-			virtual ~Reflectable();
+			Iterator();
+			~Iterator();
 
-			virtual const IReflectableType*	getType() const = 0;
+			virtual void	value(const IType* valueType, void* valueInstance);
+
+			virtual void	beforeReflectable(Reflectable& reflectable);
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
+			virtual void	afterReflectable();
+
+			virtual void	beforeList(const IListType* listType, void* listInstance);
+			virtual void	listValue(const IType* valueType, void* valueInstance);
+			virtual void	afterList();
+
+			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
+			virtual void	afterMap();
 
 	};
 }
-
-#include <CppReflection/Reflectable.inl>

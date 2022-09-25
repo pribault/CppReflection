@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Reflectable.h
- * Created: 13th August 2022 2:56:48 pm
+ * File: IPointerType.h
+ * Created: 14th August 2022 7:36:10 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:37 pm
+ * Last Modified: 14th August 2022 9:27:08 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,35 +38,7 @@
 */
 
 // CppReflection
-#include <CppReflection/Attribute.h>
-#include <CppReflection/TypeManager.h>
-
-/*
-************
-** macros **
-************
-*/
-
-#define ATTRIBUTE_OFFSET(className, attr)	((size_t)&((className*)nullptr)->attr)
-
-#define START_REFLECTION(className, ...)	\
-	typedef className	ClassType;\
-	\
-	virtual const CppReflection::IReflectableType*	getType() const\
-	{\
-		return (CppReflection::ReflectableType<className>::get());\
-	}\
-	\
-	static void		staticInitReflection()\
-	{\
-		CppReflection::IReflectableType*	type = CppReflection::ReflectableType<className>::get();\
-		CppReflection::addParents<__VA_ARGS__>(type);
-
-#define REFLECT_ATTRIBUTE(attr)	\
-		type->addAttribute(new CppReflection::Attribute(type, #attr, ATTRIBUTE_OFFSET(ClassType, attr), CppReflection::TypeManager::findType<decltype(attr)>()));
-
-#define END_REFLECTION()	\
-	}
+#include <CppReflection/IType.h>
 
 /*
 **********************
@@ -76,10 +48,7 @@
 
 namespace	CppReflection
 {
-	template	<typename ... Parents>
-	void		addParents(IReflectableType* type);
-
-	class	Reflectable
+	class		IPointerType : public IType
 	{
 
 		/*
@@ -96,12 +65,53 @@ namespace	CppReflection
 			*************
 			*/
 
-			Reflectable();
-			virtual ~Reflectable();
+			virtual ~IPointerType();
 
-			virtual const IReflectableType*	getType() const = 0;
+			const IType*	getSubType() const;
+
+			virtual bool	isPointer() const;
+
+			virtual void	iterate(Iterator& iterator, void* instance) const;
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			IPointerType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* subType);
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			IType*	_subType;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			IPointerType();
 
 	};
 }
-
-#include <CppReflection/Reflectable.inl>

@@ -53,17 +53,42 @@ TypeManager*	TypeManager::_instance = nullptr;
 ********************************************************************************
 */
 
-TypeManager::TypeManager(void)
+TypeManager::TypeManager()
 {
 }
 
-TypeManager::~TypeManager(void)
+TypeManager::~TypeManager()
 {
 }
 
-TypeManager*	TypeManager::get(void)
+TypeManager*	TypeManager::get()
 {
 	if (!_instance)
 		_instance = new TypeManager();
 	return _instance;
+}
+
+IType*	TypeManager::findType(const std::string& typeName)
+{
+	return TypeManager::get()->getType(typeName);
+}
+
+IType*	TypeManager::registerAndGet(IType* type)
+{
+	TypeMap::const_iterator	it = _typeMap.find(type->getName());
+
+	if (it == _typeMap.cend())
+		_typeMap[type->getName()] = type;
+
+	return type;
+}
+
+IType*	TypeManager::getType(const std::string& typeName) const
+{
+	TypeMap::const_iterator	it = _typeMap.find(typeName);
+
+	if (it != _typeMap.cend())
+		return it->second;
+
+	return nullptr;
 }

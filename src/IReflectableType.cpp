@@ -39,6 +39,7 @@
 
 // CppReflection
 #include "CppReflection/Attribute.h"
+#include "CppReflection/Iterator.h"
 
 /*
 ****************
@@ -54,22 +55,45 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-IReflectableType::IReflectableType(void)
+IReflectableType::IReflectableType()
 {
 }
 
-IReflectableType::IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo) :
-	IType(name, size, typeInfo)
+IReflectableType::IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo)
+	: IType(name, size, typeInfo)
 {
 }
 
-IReflectableType::~IReflectableType(void)
+IReflectableType::~IReflectableType()
 {
 }
 
 bool	IReflectableType::isReflectable() const
 {
 	return true;
+}
+
+void	IReflectableType::iterate(Iterator& iterator, void* instance) const
+{
+	iterator.beforeReflectable(*(Reflectable*)instance);
+	iterate(iterator, *(Reflectable*)instance);
+	iterator.afterReflectable();
+}
+
+void	IReflectableType::iterate(Iterator& iterator, Reflectable& reflectable) const
+{
+	for (const IType* parent : _parents)
+	{
+		if (parent->isReflectable())
+		{
+			const IReflectableType*	reflectableParent = static_cast<const IReflectableType*>(parent);
+
+			reflectableParent->iterate(iterator, reflectable);
+		}
+	}
+
+	for (const Attribute* attribute : _attributes)
+		iterator.reflectableAttribute(attribute, (void*)((size_t)&reflectable + attribute->getOffset()));
 }
 
 void							IReflectableType::addParent(IType* parent)
@@ -85,12 +109,12 @@ void							IReflectableType::removeParent(size_t index)
 	_parents.erase(iterator);
 }
 
-size_t							IReflectableType::getNbParents(void) const
+size_t							IReflectableType::getNbParents() const
 {
 	return (_parents.size());
 }
 
-IType* 							IReflectableType::getParent(size_t index) const
+const IType* 					IReflectableType::getParent(size_t index) const
 {
 	if (index < _parents.size())
 		return (_parents[index]);
@@ -110,12 +134,12 @@ void							IReflectableType::removeAttribute(size_t index)
 	_attributes.erase(iterator);
 }
 
-size_t							IReflectableType::getNbAttributes(void) const
+size_t							IReflectableType::getNbAttributes() const
 {
 	return (_attributes.size());
 }
 
-Attribute*						IReflectableType::getAttribute(size_t index) const
+const Attribute*				IReflectableType::getAttribute(size_t index) const
 {
 	if (index < _attributes.size())
 		return (_attributes[index]);

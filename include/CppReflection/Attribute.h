@@ -77,12 +77,12 @@ namespace	CppReflection
 			*/
 
 			Attribute(const IType* parentClass, const std::string& name, off_t offset, const IType* type);
-			~Attribute(void);
+			~Attribute();
 
-			const IType*			getParentClass(void) const;
-			const std::string&		getName(void) const;
-			off_t					getOffset(void) const;
-			const IType*			getType(void) const;
+			const IType*			getParentClass() const;
+			const std::string&		getName() const;
+			off_t					getOffset() const;
+			const IType*			getType() const;
 
 		/*
 		************************************************************************
@@ -98,7 +98,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			Attribute(void);
+			Attribute();
 
 		/*
 		************************************************************************

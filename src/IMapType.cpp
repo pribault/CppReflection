@@ -21,22 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: PointerType.inl
- * Created: 13th August 2022 4:13:00 pm
+ * File: IMapType.cpp
+ * Created: 21th September 2022 4:48:00 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 4:13:02 pm
+ * Last Modified: 21th September 2022 4:48:00 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
+#include "CppReflection/IMapType.h"
+
 /*
-***********************************************************************************
-************************************ ATTRIBUTES ***********************************
-***********************************************************************************
+**************
+** includes **
+**************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullptr;
+// CppReflection
+#include "CppReflection/Iterator.h"
+
+/*
+****************
+** namespaces **
+****************
+*/
+
+using namespace	CppReflection;
 
 /*
 ********************************************************************************
@@ -44,40 +54,32 @@ CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullpt
 ********************************************************************************
 */
 
-template	<typename T>
-CppReflection::PointerType<T>::PointerType()
-	: IPointerType(typeid(T*).name(), sizeof(T*), &typeid(T*), TypeManager::findType<T>())
+IMapType::IMapType()
 {
 }
 
-template	<typename T>
-CppReflection::PointerType<T>::~PointerType()
+IMapType::IMapType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
+	: IType(name, size, typeInfo)
+	, _keyType(keyType)
+	, _valueType(valueType)
 {
 }
 
-template	<typename T>
-void*		CppReflection::PointerType<T>::create() const
+IMapType::~IMapType()
 {
-	void**	result;
-
-	result = new void*();
-	*result = _subType->create();
-	return (result);
 }
 
-template	<typename T>
-void		CppReflection::PointerType<T>::initialize(void* instance) const
+bool			IMapType::isMap() const
 {
-	T**		value = (T**)instance;
-
-	*value = new T();
-	_subType->initialize(*value);
+	return true;
 }
 
-template	<typename T>
-CppReflection::PointerType<T>*	CppReflection::PointerType<T>::get()
+const IType*	IMapType::getKeyType() const
 {
-	if (!_instance)
-		_instance = new PointerType<T>();
-	return _instance;
+	return _keyType;
+}
+
+const IType*	IMapType::getValueType() const
+{
+	return _valueType;
 }

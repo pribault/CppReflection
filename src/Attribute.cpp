@@ -54,38 +54,38 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-Attribute::Attribute(void)
+Attribute::Attribute()
 {
 }
 
-Attribute::Attribute(const IType* parentClass, const std::string& name, off_t offset, const IType* type) :
-	_parentClass(parentClass),
-	_name(name),
-	_offset(offset),
-	_type(type)
+Attribute::Attribute(const IType* parentClass, const std::string& name, off_t offset, const IType* type)
+	: _parentClass(parentClass)
+	, _name(name)
+	, _offset(offset)
+	, _type(type)
 {
 }
 
-Attribute::~Attribute(void)
+Attribute::~Attribute()
 {
 }
 
-const IType*	Attribute::getParentClass(void) const
+const IType*	Attribute::getParentClass() const
 {
 	return (_parentClass);
 }
 
-const std::string&		Attribute::getName(void) const
+const std::string&		Attribute::getName() const
 {
 	return (_name);
 }
 
-off_t					Attribute::getOffset(void) const
+off_t					Attribute::getOffset() const
 {
 	return (_offset);
 }
 
-const IType*			Attribute::getType(void) const
+const IType*			Attribute::getType() const
 {
 	return (_type);
 }

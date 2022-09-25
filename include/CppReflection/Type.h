@@ -38,7 +38,14 @@
 */
 
 // CppReflection
-#include "CppReflection/IType.h"
+#include <CppReflection/IListType.h>
+#include <CppReflection/IMapType.h>
+#include <CppReflection/IType.h>
+
+// stl
+#include <list>
+#include <map>
+#include <vector>
 
 /*
 **********************
@@ -66,9 +73,11 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*	create(void) const;
+			virtual void*	create() const;
 
-			static Type<T>*	get(void);
+			static Type<T>*	get();
+
+			virtual void	iterate(Iterator& iterator, void* instance) const;
 
 		/*
 		************************************************************************
@@ -84,8 +93,8 @@ namespace	CppReflection
 			*************
 			*/
 
-			Type(void);
-			virtual ~Type(void);
+			Type();
+			virtual ~Type();
 
 			/*
 			****************
@@ -96,6 +105,165 @@ namespace	CppReflection
 			static Type<T>*	_instance;
 
 	};
+
+	template	<typename T>
+	class		Type<std::vector<T>> : public IListType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::vector<T>>*	get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* instance, const void* valueInstance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::vector<T>>*	_instance;
+
+	};
+
+	template	<typename T>
+	class		Type<std::list<T>> : public IListType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::list<T>>*		get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* instance, const void* valueInstance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::list<T>>*	_instance;
+
+	};
+
+	template	<typename K, typename V>
+	class		Type<std::map<K, V>> : public IMapType
+	{
+
+		/*
+		************************************************************************
+		******************************** PUBLIC ********************************
+		************************************************************************
+		*/
+
+		public:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			virtual void*					create() const;
+
+			static Type<std::map<K, V>>*	get();
+
+			virtual void					iterate(Iterator& iterator, void* instance) const;
+
+			virtual void					insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			Type();
+			virtual ~Type();
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			static Type<std::map<K, V>>*	_instance;
+
+	};
 }
 
-#include "CppReflection/Type.inl"
+#include <CppReflection/Type.inl>

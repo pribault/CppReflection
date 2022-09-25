@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: Reflectable.h
- * Created: 13th August 2022 2:56:48 pm
+ * File: IListType.h
+ * Created: 21th September 2022 4:48:00 pm
  * Author: Paul Ribault (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 2:58:37 pm
+ * Last Modified: 21th September 2022 4:48:00 pm
  * Modified By: Paul Ribault (pribault.dev@gmail.com)
  */
 
@@ -38,35 +38,7 @@
 */
 
 // CppReflection
-#include <CppReflection/Attribute.h>
-#include <CppReflection/TypeManager.h>
-
-/*
-************
-** macros **
-************
-*/
-
-#define ATTRIBUTE_OFFSET(className, attr)	((size_t)&((className*)nullptr)->attr)
-
-#define START_REFLECTION(className, ...)	\
-	typedef className	ClassType;\
-	\
-	virtual const CppReflection::IReflectableType*	getType() const\
-	{\
-		return (CppReflection::ReflectableType<className>::get());\
-	}\
-	\
-	static void		staticInitReflection()\
-	{\
-		CppReflection::IReflectableType*	type = CppReflection::ReflectableType<className>::get();\
-		CppReflection::addParents<__VA_ARGS__>(type);
-
-#define REFLECT_ATTRIBUTE(attr)	\
-		type->addAttribute(new CppReflection::Attribute(type, #attr, ATTRIBUTE_OFFSET(ClassType, attr), CppReflection::TypeManager::findType<decltype(attr)>()));
-
-#define END_REFLECTION()	\
-	}
+#include <CppReflection/IType.h>
 
 /*
 **********************
@@ -76,10 +48,7 @@
 
 namespace	CppReflection
 {
-	template	<typename ... Parents>
-	void		addParents(IReflectableType* type);
-
-	class	Reflectable
+	class		IListType : public IType
 	{
 
 		/*
@@ -96,12 +65,53 @@ namespace	CppReflection
 			*************
 			*/
 
-			Reflectable();
-			virtual ~Reflectable();
+			virtual ~IListType();
 
-			virtual const IReflectableType*	getType() const = 0;
+			const IType*	getSubType() const;
+
+			virtual bool	isList() const;
+
+			virtual void	insert(void* instance, const void* valueInstance) const = 0;
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			IListType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* subType);
+
+			/*
+			****************
+			** attributes **
+			****************
+			*/
+
+			IType*	_subType;
+
+		/*
+		************************************************************************
+		******************************** PRIVATE *******************************
+		************************************************************************
+		*/
+
+		private:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			IListType();
 
 	};
 }
-
-#include <CppReflection/Reflectable.inl>

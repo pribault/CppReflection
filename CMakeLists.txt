@@ -22,6 +22,9 @@ cppreflection_set_env()
 
 add_subdirectory(examples)
 
+# Find required packages
+find_package(yaml-cpp CONFIG REQUIRED)
+
 # Retrieve sources
 file(GLOB_RECURSE SOURCES RELATIVE
 	"${CMAKE_CURRENT_SOURCE_DIR}"
@@ -44,4 +47,8 @@ endif()
 set_target_properties(CppReflection
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY ${CPPREFLECTION_OUTPUT_DIR}
+)
+
+target_link_libraries(CppReflection PRIVATE
+	yaml-cpp
 )

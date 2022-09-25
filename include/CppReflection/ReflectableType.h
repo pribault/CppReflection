@@ -38,7 +38,7 @@
 */
 
 // CppReflection
-#include "CppReflection/IReflectableType.h"
+#include <CppReflection/IReflectableType.h>
 
 // stl
 #include <type_traits>
@@ -69,12 +69,12 @@ namespace	CppReflection
 			*************
 			*/
 
-			ReflectableType(void);
-			virtual ~ReflectableType(void);
+			ReflectableType();
+			virtual ~ReflectableType();
 
-			virtual void*	create(void) const;
+			virtual void*	create() const;
 
-			static ReflectableType<T>*	get(void);
+			static ReflectableType<T>*	get();
 
 		/*
 		************************************************************************
@@ -95,4 +95,4 @@ namespace	CppReflection
 	};
 }
 
-#include "CppReflection/ReflectableType.inl"
+#include <CppReflection/ReflectableType.inl>
