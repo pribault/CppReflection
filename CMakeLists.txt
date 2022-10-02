@@ -52,3 +52,5 @@ set_target_properties(CppReflection
 target_link_libraries(CppReflection PRIVATE
 	yaml-cpp
 )
+
+target_compile_features(CppReflection PRIVATE cxx_std_17)

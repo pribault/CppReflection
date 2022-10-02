@@ -43,6 +43,9 @@
 // yamlcpp
 #include <yaml-cpp/yaml.h>
 
+// stl
+#include <optional>
+
 /*
 ****************
 ** namespaces **
@@ -56,6 +59,23 @@ using namespace	CppReflection;
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
+
+static std::optional<YAML::Node>	getAttribute(const YAML::Node& node, const std::string& attribute)
+{
+	try
+	{
+		YAML::Node	result = node[attribute];
+
+		if (result.IsDefined())
+			return result;
+
+		return std::nullopt;
+	}
+	catch (const std::exception& e)
+	{
+		return std::nullopt;
+	}
+}
 
 YamlReader::YamlReader()
 {
@@ -73,11 +93,9 @@ Reflectable*	YamlReader::load(const std::string& input)
 	if (!root.IsMap())
 		return nullptr;
 
-	YAML::Node	typeNode = root["type"];
-	if (typeNode.IsNull())
-		return nullptr;
+	std::optional<YAML::Node>	typeNode = getAttribute(root, "type");
 
-	std::string typeName = typeNode.as<std::string>();
+	std::string typeName = typeNode.value().as<std::string>();
 	IType*	type = TypeManager::findType(typeName);
 	if (!type)
 		return nullptr;
@@ -233,25 +251,44 @@ void	YamlReader::beforeReflectable(Reflectable& reflectable)
 
 void	YamlReader::reflectableAttribute(const Attribute* attribute, void* attributeInstance)
 {
-	const std::string&	attributeName = attribute->getName();
-	const IType*		type = attribute->getType();
-	const YAML::Node&	node = *_stack.back();
-	YAML::Node			child;
+	const std::string&			attributeName = attribute->getName();
+	const IType*				type = attribute->getType();
+	const YAML::Node&			node = *_stack.back();
+	std::optional<YAML::Node>	child;
 
-	try
-	{
-		child = node[attributeName];
-	}
-	catch (const std::exception& e)
-	{
-		return;
-	}
+	child = getAttribute(node, attributeName);
+	if (!child.has_value())
+		return ;
 
-	_stack.push_back(new YAML::Node(child));
+	_stack.push_back(new YAML::Node(child.value()));
 	if (type->isPointer())
 	{
 		const IPointerType* pointerType = static_cast<const IPointerType*>(type);
-		pointerType->initialize(attributeInstance);
+		bool				instanceInitialized = false;
+
+		std::optional<YAML::Node>	typeNode = getAttribute(child.value(), "type");
+		if (typeNode.has_value())
+		{
+			std::string		typeName = typeNode.value().as<std::string>();
+			const IType*	nodeType = TypeManager::findType(typeName);
+			if (nodeType->isReflectable())
+			{
+				const IReflectableType* reflectableNodeType = static_cast<const IReflectableType*>(nodeType);
+				if (reflectableNodeType)
+				{
+					if (reflectableNodeType->inherits(pointerType->getSubType()))
+					{
+						type = reflectableNodeType;
+						reflectableNodeType->getPointerType()->initialize(attributeInstance);
+						instanceInitialized = true;
+						attributeInstance = *(void**)attributeInstance;
+					}
+				}
+			}
+		}
+
+		if (!instanceInitialized)
+			pointerType->initialize(attributeInstance);
 	}
 	type->iterate(*this, attributeInstance);
 	delete _stack.back();
@@ -261,8 +298,6 @@ void	YamlReader::reflectableAttribute(const Attribute* attribute, void* attribut
 void	YamlReader::afterReflectable()
 {
 }
-
-#include <iostream>
 
 void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 {

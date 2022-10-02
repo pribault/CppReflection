@@ -35,6 +35,9 @@
 **************
 */
 
+// CppReflection
+#include <CppReflection/TypeManager.h>
+
 // stl
 #include <type_traits>
 
@@ -79,4 +82,10 @@ CppReflection::ReflectableType<T>*	CppReflection::ReflectableType<T>::get()
 		T::staticInitReflection();
 	}
 	return (_instance);
+}
+
+template	<typename T>
+const CppReflection::IPointerType*	CppReflection::ReflectableType<T>::getPointerType() const
+{
+	return ((const IPointerType*)TypeManager::findType<T*>());
 }

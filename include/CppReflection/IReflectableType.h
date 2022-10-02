@@ -51,8 +51,9 @@
 
 namespace	CppReflection
 {
-	class	Reflectable;
 	class	Attribute;
+	class	IPointerType;
+	class	Reflectable;
 }
 
 /*
@@ -83,22 +84,26 @@ namespace	CppReflection
 			IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo);
 			virtual ~IReflectableType();
 
-			virtual bool			isReflectable() const;
+			virtual bool				isReflectable() const;
 
-			virtual void			iterate(Iterator& iterator, void* instance) const;
+			virtual void				iterate(Iterator& iterator, void* instance) const;
+
+			bool						inherits(const IType* other) const;
+
+			virtual const IPointerType*	getPointerType() const = 0;
 
 			// parents
-			void					addParent(IType* parent);
-			void					removeParent(size_t index);
-			size_t					getNbParents() const;
-			const IType*			getParent(size_t index) const;
+			void						addParent(IType* parent);
+			void						removeParent(size_t index);
+			size_t						getNbParents() const;
+			const IType*				getParent(size_t index) const;
 
 			// attributes
-			void					addAttribute(Attribute* attribute);
-			void					removeAttribute(size_t index);
-			size_t					getNbAttributes() const;
-			const Attribute*		getAttribute(size_t index) const;
-			size_t					findAttribute(const std::string& name) const;
+			void						addAttribute(Attribute* attribute);
+			void						removeAttribute(size_t index);
+			size_t						getNbAttributes() const;
+			const Attribute*			getAttribute(size_t index) const;
+			size_t						findAttribute(const std::string& name) const;
 
 		/*
 		************************************************************************

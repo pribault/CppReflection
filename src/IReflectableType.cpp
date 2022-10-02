@@ -96,6 +96,22 @@ void	IReflectableType::iterate(Iterator& iterator, Reflectable& reflectable) con
 		iterator.reflectableAttribute(attribute, (void*)((size_t)&reflectable + attribute->getOffset()));
 }
 
+bool	IReflectableType::inherits(const IType* other) const
+{
+	for (const IType* parent : _parents)
+	{
+		if (*parent == *other)
+			return true;
+		if (parent->isReflectable())
+		{
+			const IReflectableType*	reflectableParent = static_cast<const IReflectableType*>(parent);
+			if (reflectableParent->inherits(other))
+				return true;
+		}
+	}
+	return false;
+}
+
 void							IReflectableType::addParent(IType* parent)
 {
 	_parents.push_back(parent);
