@@ -93,6 +93,7 @@ namespace	CppReflection
 
 			virtual void*			create() const = 0;
 			virtual void			initialize(void* instance) const;
+			virtual void			remove(void* instance) const;
 
 			virtual void			iterate(Iterator& iterator, void* instance) const = 0;
 

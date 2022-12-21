@@ -72,7 +72,7 @@ namespace	CppReflection
 			ReflectableType();
 			virtual ~ReflectableType();
 
-			virtual void*	create() const;
+			virtual void*	create() const override;
 
 			static ReflectableType<T>*	get();
 			

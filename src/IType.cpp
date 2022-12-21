@@ -95,6 +95,11 @@ const std::type_info*	IType::getTypeInfo(void) const
 	return (_typeInfo);
 }
 
+void					IType::remove(void* instance) const
+{
+	// do nothing by default
+}
+
 void					IType::initialize(void* instance) const
 {
 	// do nothing by default

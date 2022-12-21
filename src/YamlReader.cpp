@@ -318,7 +318,7 @@ void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 		_stack.pop_back();
 
 		listType->insert(listInstance, valueInstance);
-		delete valueInstance;
+		valueType->remove(valueInstance);
 	}
 }
 
@@ -356,8 +356,8 @@ void	YamlReader::beforeMap(const IMapType* mapType, void* mapInstance)
 		_stack.pop_back();
 
 		mapType->insert(mapInstance, keyInstance, valueInstance);
-		delete keyInstance;
-		delete valueInstance;
+		keyType->remove(keyInstance);
+		valueType->remove(valueInstance);
 	}
 }
 

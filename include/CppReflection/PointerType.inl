@@ -66,6 +66,12 @@ void*		CppReflection::PointerType<T>::create() const
 }
 
 template	<typename T>
+void		CppReflection::PointerType<T>::remove(void* instance) const
+{
+	delete (T*)instance;
+}
+
+template	<typename T>
 void		CppReflection::PointerType<T>::initialize(void* instance) const
 {
 	T**		value = (T**)instance;
