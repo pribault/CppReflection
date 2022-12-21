@@ -17,9 +17,6 @@ endif()
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/cmake/CppReflectionCommon.cmake)
 
-# Set environment
-cppreflection_set_env()
-
 add_subdirectory(examples)
 
 # Find required packages

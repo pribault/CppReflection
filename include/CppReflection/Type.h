@@ -48,6 +48,17 @@
 #include <vector>
 
 /*
+****************
+** class used **
+****************
+*/
+
+namespace	CppReflection
+{
+	class	Iterator;
+}
+
+/*
 **********************
 ** class definition **
 **********************
