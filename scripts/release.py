@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import getopt
 import os
 import re
 import shutil
@@ -7,10 +8,15 @@ import sys
 from env import *
 
 # global variables
+allowedBuildTypes = ["Release", "Debug"]
 releaseDir = os.path.join(buildDir, "release")
 releaseIncludeDir = os.path.join(releaseDir, "include")
 releaseBinDir = os.path.join(releaseDir, "bin")
 releaseLibDir = os.path.join(releaseDir, "lib")
+
+# print usage
+def printUsage():
+	print("release.py [-h] [--help] [-b <Debug|Release>] [--buildType <Debug|Release>]")
 
 # filter strings with the given pattern
 def glob_re(pattern, strings):
@@ -41,10 +47,10 @@ def releaseCommon():
 	copy(includeDir, "^.+$", releaseIncludeDir)
 
 # windows specific steps to make release
-def releaseWindows():
-	binDir = os.path.join(buildDir, "bin", "Release")
+def releaseWindows(buildType):
+	binDir = os.path.join(buildDir, "bin", buildType)
 	copy(binDir, "^.+\\.(?P<ext>exe|dll)$", releaseBinDir)
-	copy(binDir, "^.+\\.(?P<ext>lib)$", releaseLibDir)
+	copy(binDir, "^.+\\.(?P<ext>lib|pdb)$", releaseLibDir)
 
 # unix specific steps to make release
 def releaseUnix():
@@ -52,9 +58,39 @@ def releaseUnix():
 	copy(binDir, "^\\w+$", releaseBinDir)
 	copy(binDir, "^.+\\.(?P<ext>so|a)$", releaseLibDir)
 
-# make release
-releaseCommon()
-if sys.platform.startswith('win'):
-	releaseWindows()
-else:
-	releaseUnix()
+if __name__ == '__main__':
+
+	# define default variables
+	buildType = "Release"
+
+	# retrieve arguments
+	opts, args = getopt.getopt(sys.argv[1:], "hb:", ["help", "buildType="])
+
+	# ensure all arguments are parsed
+	if len(args) != 0:
+		print("invalid number of arguments (%s)" % (len(args) - 1))
+		printUsage()
+		exit(1)
+
+	# handle each argument
+	for opt, arg in opts:
+		# help
+		if opt in ("-h", "--help"):
+			printUsage()
+			exit(0)
+		# build type
+		if opt in ("-b", "--buildType"):
+			if not arg in allowedBuildTypes:
+				print("unknown build type '%s'" % arg)
+				printUsage()
+				exit(1)
+			buildType = arg
+
+	# make release
+	print("creating '%s' release at '%s'" % (buildType, releaseDir))
+	releaseCommon()
+	if sys.platform.startswith('win'):
+		releaseWindows(buildType)
+	else:
+		releaseUnix()
+	print("release created!" % buildType)

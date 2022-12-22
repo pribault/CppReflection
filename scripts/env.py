@@ -14,8 +14,11 @@ if "VCPKG_PATH" not in os.environ:
 else:
 	vcpkgPath = os.environ["VCPKG_PATH"]
 
-print("root: %s" % rootDir)
-print("script: %s" % scriptDir)
-print("include: %s" % includeDir)
-print("sources: %s" % srcDir)
-print("vcpkg: %s" % vcpkgPath)
+print("================================= ENVIRONMENT ==================================")
+print("directories:")
+print(" - root: %s" % rootDir)
+print(" - script: %s" % scriptDir)
+print(" - include: %s" % includeDir)
+print(" - sources: %s" % srcDir)
+print(" - vcpkg: %s" % vcpkgPath)
+print("================================================================================")
