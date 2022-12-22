@@ -35,6 +35,9 @@ jobs:
     - name: Build
       run: make -C ${{github.workspace}}/build
 
+    - name: Release
+      run: python3 ${{github.workspace}}/scripts/release.py
+
     - name: Archive artifacts
       uses: actions/upload-artifact@v3
       with:
