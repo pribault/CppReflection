@@ -3,4 +3,4 @@
 import os
 from env import *
 
-os.system("cmake --build %s" % buildDir)
+os.system("cmake --build %s --config Release" % buildDir)
