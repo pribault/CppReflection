@@ -22,9 +22,6 @@ jobs:
       with:
         vcpkgDirectory: '${{runner.workspace}}/vcpkg'
         vcpkgGitCommitId: 'e9d35a26f8081ab88035a1c8d9af38c27b52d135'
-        runVcpkgInstall: true
-        vcpkgJsonGlob: '**/cmakepresets/vcpkg.json'
-        appendedCacheKey: vcpkginstall
 
     - name: Install dependencies
       run: vcpkg install yaml-cpp
