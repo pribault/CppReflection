@@ -93,4 +93,4 @@ if __name__ == '__main__':
 		releaseWindows(buildType)
 	else:
 		releaseUnix()
-	print("release created!" % buildType)
+	print("release created!")
