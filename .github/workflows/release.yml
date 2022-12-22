@@ -12,6 +12,11 @@ jobs:
 
     steps:
 
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: lukka/get-cmake@latest
+
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v10
       with:
@@ -23,9 +28,6 @@ jobs:
 
     - name: Install dependencies
       run: vcpkg install yaml-cpp
-
-    - name: Checkout
-      uses: actions/checkout@v3
 
     - name: Configure CMake
       run: python3 ${{github.workspace}}/scripts/cmake.py
