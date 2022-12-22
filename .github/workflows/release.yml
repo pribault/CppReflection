@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VCPKG_PATH: ${{runner.workspace}}/vcpkg
+      VCPKG_PATH: ${{github.workspace}}/vcpkg
 
     steps:
 
@@ -23,7 +23,7 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v10
       with:
-        vcpkgDirectory: '${{runner.workspace}}/vcpkg'
+        vcpkgDirectory: '${{github.workspace}}/vcpkg'
         vcpkgGitCommitId: 'e9d35a26f8081ab88035a1c8d9af38c27b52d135'
 
     - name: Install dependencies
