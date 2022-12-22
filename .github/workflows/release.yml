@@ -10,6 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v10
+      with:
+        runVcpkgInstall: true
+
+    - name: Install dependencies
+      run: vcpkg install yaml-cpp
+
     steps:
     - name: Checkout
       uses: actions/checkout@v3
