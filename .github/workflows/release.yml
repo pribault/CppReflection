@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      VCPKG_PATH: ${{runner.workspace}}/vcpkg
+
     steps:
 
     - name: Checkout
