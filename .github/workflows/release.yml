@@ -8,10 +8,22 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }}-${{ github.workflow }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: windows-latest
+            vcpkgCommitId: 253704407ae68efa37bf8f5b59b3e06dd40d3d3f
+            vcpkgPath: /usr/local/share/vcpkg
+          - os: ubuntu-latest
+            vcpkgCommitId: 253704407ae68efa37bf8f5b59b3e06dd40d3d3f
+            vcpkgPath: /usr/local/share/vcpkg
 
     env:
-      VCPKG_PATH: /usr/local/share/vcpkg
+      VCPKG_PATH: ${{ matrix.vcpkgPath }}
 
     steps:
 
@@ -23,23 +35,23 @@ jobs:
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v10
       with:
-        vcpkgDirectory: '${{github.workspace}}/vcpkg'
-        vcpkgGitCommitId: 'e9d35a26f8081ab88035a1c8d9af38c27b52d135'
+        vcpkgDirectory: ${{ github.workspace }}/vcpkg
+        vcpkgGitCommitId: ${{ matrix.vcpkgCommitId }}
 
     - name: Install dependencies
       run: vcpkg install yaml-cpp
 
     - name: Configure CMake
-      run: python3 ${{github.workspace}}/scripts/cmake.py
+      run: python3 ${{ github.workspace }}/scripts/cmake.py
 
     - name: Build
-      run: make -C ${{github.workspace}}/build
+      run: python3 ${{ github.workspace }}/scripts/build.py
 
     - name: Release
-      run: python3 ${{github.workspace}}/scripts/release.py
+      run: python3 ${{ github.workspace }}/scripts/release.py
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: linux-artifacts
-        path: ${{github.workspace}}/build/release/
+        name: ${{ matrix.os }}-artifacts
+        path: ${{ github.workspace }}/build/release/

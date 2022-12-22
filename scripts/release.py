@@ -58,6 +58,3 @@ if sys.platform.startswith('win'):
 	releaseWindows()
 else:
 	releaseUnix()
-
-# create artifact
-shutil.make_archive(releaseDir, "zip", releaseDir)
