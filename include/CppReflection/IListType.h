@@ -87,7 +87,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IListType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* subType);
+			IListType(size_t size, const std::type_info* typeInfo, IType* subType);
 
 			/*
 			****************

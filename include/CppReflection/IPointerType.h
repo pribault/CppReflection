@@ -87,7 +87,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IPointerType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* subType);
+			IPointerType(size_t size, const std::type_info* typeInfo, IType* subType);
 
 			/*
 			****************

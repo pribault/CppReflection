@@ -66,7 +66,7 @@ CppReflection::Type<std::map<K, V>>*	CppReflection::Type<std::map<K, V>>::_insta
 
 template	<typename T>
 CppReflection::Type<T>::Type()
-	: IType(typeid(T).name(), sizeof(T), &typeid(T))
+	: IType(sizeof(T), &typeid(T))
 {
 }
 
@@ -99,7 +99,7 @@ void	CppReflection::Type<T>::iterate(Iterator& iterator, void* instance) const
 
 template	<typename T>
 CppReflection::Type<std::vector<T>>::Type()
-	: IListType(typeid(std::vector<T>).name(), sizeof(std::vector<T>), &typeid(std::vector<T>), TypeManager::findType<T>())
+	: IListType(sizeof(std::vector<T>), &typeid(std::vector<T>), TypeManager::findType<T>())
 {
 }
 
@@ -145,7 +145,7 @@ void	CppReflection::Type<std::vector<T>>::insert(void* instance, const void* val
 
 template	<typename T>
 CppReflection::Type<std::list<T>>::Type()
-	: IListType(typeid(std::list<T>).name(), sizeof(std::list<T>), &typeid(std::list<T>), TypeManager::findType<T>())
+	: IListType(sizeof(std::list<T>), &typeid(std::list<T>), TypeManager::findType<T>())
 {
 }
 
@@ -191,7 +191,7 @@ void	CppReflection::Type<std::list<T>>::insert(void* instance, const void* value
 
 template	<typename K, typename V>
 CppReflection::Type<std::map<K, V>>::Type()
-	: IMapType(typeid(std::map<K, V>).name(), sizeof(std::map<K, V>), &typeid(std::map<K, V>), TypeManager::findType<K>(), TypeManager::findType<V>())
+	: IMapType(sizeof(std::map<K, V>), &typeid(std::map<K, V>), TypeManager::findType<K>(), TypeManager::findType<V>())
 {
 }
 

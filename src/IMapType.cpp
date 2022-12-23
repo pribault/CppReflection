@@ -58,8 +58,8 @@ IMapType::IMapType()
 {
 }
 
-IMapType::IMapType(const std::string& name, size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
-	: IType(name, size, typeInfo)
+IMapType::IMapType(size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
+	: IType(size, typeInfo)
 	, _keyType(keyType)
 	, _valueType(valueType)
 {

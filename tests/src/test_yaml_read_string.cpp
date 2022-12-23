@@ -80,7 +80,7 @@ void	test_yaml_read_string()
 
 	TestYamlReadString*	test;
 
-	std::string	input = "type: class TestYamlReadString\nvalue: " + value;
+	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -96,7 +96,7 @@ void	test_yaml_read_string_from_null()
 
 	TestYamlReadString*	test;
 
-	std::string	input = "type: class TestYamlReadString\nvalue: " + value;
+	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -112,7 +112,7 @@ void	test_yaml_read_string_from_array()
 
 	TestYamlReadString*	test;
 
-	std::string	input = "type: class TestYamlReadString\nvalue: " + value;
+	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -128,7 +128,7 @@ void	test_yaml_read_string_from_map()
 
 	TestYamlReadString*	test;
 
-	std::string	input = "type: class TestYamlReadString\nvalue: " + value;
+	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")

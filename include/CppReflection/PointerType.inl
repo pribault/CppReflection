@@ -46,7 +46,7 @@ CppReflection::PointerType<T>*	CppReflection::PointerType<T>::_instance = nullpt
 
 template	<typename T>
 CppReflection::PointerType<T>::PointerType()
-	: IPointerType(typeid(T*).name(), sizeof(T*), &typeid(T*), TypeManager::findType<T>())
+	: IPointerType(sizeof(T*), &typeid(T*), TypeManager::findType<T>())
 {
 }
 

@@ -80,7 +80,7 @@ void	test_yaml_read_uint8()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -96,7 +96,7 @@ void	test_yaml_read_uint8_lowest()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -112,7 +112,7 @@ void	test_yaml_read_uint8_underflow()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -128,7 +128,7 @@ void	test_yaml_read_uint8_highest()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -144,7 +144,7 @@ void	test_yaml_read_uint8_overflow()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -160,7 +160,7 @@ void	test_yaml_read_uint8_float()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -176,7 +176,7 @@ void	test_yaml_read_uint8_string()
 
 	TestYamlReadUint8*	test;
 
-	std::string	input = "type: class TestYamlReadUint8\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint8\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint8>(input);
 	ASSERT(test, "YamlReader::load returned a null object")

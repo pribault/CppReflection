@@ -80,7 +80,7 @@ void	test_yaml_read_int16()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -96,7 +96,7 @@ void	test_yaml_read_int16_lowest()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -112,7 +112,7 @@ void	test_yaml_read_int16_underflow()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -128,7 +128,7 @@ void	test_yaml_read_int16_highest()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -144,7 +144,7 @@ void	test_yaml_read_int16_overflow()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -160,7 +160,7 @@ void	test_yaml_read_int16_float()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -176,7 +176,7 @@ void	test_yaml_read_int16_string()
 
 	TestYamlReadInt16*	test;
 
-	std::string	input = "type: class TestYamlReadInt16\nvalue: " + value;
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadInt16>(input);
 	ASSERT(test, "YamlReader::load returned a null object")

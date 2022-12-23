@@ -78,7 +78,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IType(const std::string& name, size_t size, const std::type_info* typeInfo);
+			IType(size_t size, const std::type_info* typeInfo);
 			virtual ~IType();
 
 			virtual bool			isPointer() const;
@@ -108,6 +108,22 @@ namespace	CppReflection
 			*/
 
 			IType();
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
+			static std::string	name(const std::type_info* typeInfo);
 
 		/*
 		************************************************************************

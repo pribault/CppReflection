@@ -80,7 +80,7 @@ void	test_yaml_read_uint64()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -96,7 +96,7 @@ void	test_yaml_read_uint64_lowest()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -112,7 +112,7 @@ void	test_yaml_read_uint64_underflow()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -128,7 +128,7 @@ void	test_yaml_read_uint64_highest()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -144,7 +144,7 @@ void	test_yaml_read_uint64_overflow()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -160,7 +160,7 @@ void	test_yaml_read_uint64_float()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
@@ -176,7 +176,7 @@ void	test_yaml_read_uint64_string()
 
 	TestYamlReadUint64*	test;
 
-	std::string	input = "type: class TestYamlReadUint64\nvalue: " + value;
+	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader().load<TestYamlReadUint64>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
