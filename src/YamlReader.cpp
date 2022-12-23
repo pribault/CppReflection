@@ -44,7 +44,11 @@
 #include <yaml-cpp/yaml.h>
 
 // stl
+#ifndef NDEBUG
+# include <iostream>
+#endif
 #include <optional>
+#include <stdexcept>
 
 /*
 ****************
@@ -71,7 +75,7 @@ static std::optional<YAML::Node>	getAttribute(const YAML::Node& node, const std:
 
 		return std::nullopt;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
 		return std::nullopt;
 	}
@@ -95,7 +99,15 @@ Reflectable*	YamlReader::load(const std::string& input)
 
 	std::optional<YAML::Node>	typeNode = getAttribute(root, "type");
 
-	std::string typeName = typeNode.value().as<std::string>();
+	std::string typeName;
+	try
+	{
+		typeName = typeNode.value().as<std::string>();
+	}
+	catch (const std::exception& e)
+	{
+		throw std::runtime_error(std::string("couldn't retrieve node type: '") + e.what() + "'");
+	}
 	IType*	type = TypeManager::findType(typeName);
 	if (!type)
 		return nullptr;
@@ -125,7 +137,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((std::string*)valueInstance) = "";
 				break;
 			case YAML::NodeType::Scalar:
-				*((std::string*)valueInstance) = node.as<std::string>();
+				try
+				{
+					*((std::string*)valueInstance) = node.as<std::string>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve string: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -139,7 +164,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((uint8_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((uint8_t*)valueInstance) = node.as<uint8_t>();
+				try
+				{
+					*((uint8_t*)valueInstance) = node.as<uint8_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve uint8: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -153,7 +191,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((uint16_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((uint16_t*)valueInstance) = node.as<uint16_t>();
+				try
+				{
+					*((uint16_t*)valueInstance) = node.as<uint16_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve uint16: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -167,7 +218,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((uint32_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((uint32_t*)valueInstance) = node.as<uint32_t>();
+				try
+				{
+					*((uint32_t*)valueInstance) = node.as<uint32_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve uint32: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -181,7 +245,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((uint64_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((uint64_t*)valueInstance) = node.as<uint64_t>();
+				try
+				{
+					*((uint64_t*)valueInstance) = node.as<uint64_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve uint64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -195,7 +272,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((int8_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((int8_t*)valueInstance) = node.as<int8_t>();
+				try
+				{
+					*((int8_t*)valueInstance) = node.as<int8_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int8: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -209,7 +299,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((int16_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((int16_t*)valueInstance) = node.as<int16_t>();
+				try
+				{
+					*((int16_t*)valueInstance) = node.as<int16_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int16: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -223,7 +326,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((int32_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((int32_t*)valueInstance) = node.as<int32_t>();
+				try
+				{
+					*((int32_t*)valueInstance) = node.as<int32_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int32: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -237,7 +353,20 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				*((int64_t*)valueInstance) = 0;
 				break;
 			case YAML::NodeType::Scalar:
-				*((int64_t*)valueInstance) = node.as<int64_t>();
+				try
+				{
+					*((int64_t*)valueInstance) = node.as<int64_t>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
 				break;
 			default:
 				break;
@@ -269,19 +398,36 @@ void	YamlReader::reflectableAttribute(const Attribute* attribute, void* attribut
 		std::optional<YAML::Node>	typeNode = getAttribute(child.value(), "type");
 		if (typeNode.has_value())
 		{
-			std::string		typeName = typeNode.value().as<std::string>();
-			const IType*	nodeType = TypeManager::findType(typeName);
-			if (nodeType->isReflectable())
+			std::string		typeName;
+			try
 			{
-				const IReflectableType* reflectableNodeType = static_cast<const IReflectableType*>(nodeType);
-				if (reflectableNodeType)
+				typeName = typeNode.value().as<std::string>();
+			}
+#ifndef NDEBUG
+			catch (const std::exception& e)
+			{
+				std::cerr << "couldn't retrieve node type: '" << e.what() << "'" << std::endl;
+			}
+#else
+			catch (const std::exception&)
+			{
+			}
+#endif
+			if (!typeName.empty())
+			{
+				const IType*	nodeType = TypeManager::findType(typeName);
+				if (nodeType->isReflectable())
 				{
-					if (reflectableNodeType->inherits(pointerType->getSubType()))
+					const IReflectableType* reflectableNodeType = static_cast<const IReflectableType*>(nodeType);
+					if (reflectableNodeType)
 					{
-						type = reflectableNodeType;
-						reflectableNodeType->getPointerType()->initialize(attributeInstance);
-						instanceInitialized = true;
-						attributeInstance = *(void**)attributeInstance;
+						if (reflectableNodeType->inherits(pointerType->getSubType()))
+						{
+							type = reflectableNodeType;
+							reflectableNodeType->getPointerType()->initialize(attributeInstance);
+							instanceInitialized = true;
+							attributeInstance = *(void**)attributeInstance;
+						}
 					}
 				}
 			}
@@ -308,7 +454,24 @@ void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 
 	if (!node.IsScalar())
 		return ;
-	std::vector<YAML::Node> list = node.as<std::vector<YAML::Node>>();
+
+	std::vector<YAML::Node> list;
+	try
+	{
+		list = node.as<std::vector<YAML::Node>>();
+	}
+#ifndef NDEBUG
+	catch (const std::exception& e)
+	{
+		std::cerr << "couldn't retrieve node list: '" << e.what() << "'" << std::endl;
+		return ;
+	}
+#else
+	catch (const std::exception&)
+	{
+		return ;
+	}
+#endif
 	for (const YAML::Node& child : list)
 	{
 		_stack.push_back(new YAML::Node(child));

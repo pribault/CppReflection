@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: TypeManager.inl
- * Created: 13th August 2022 3:53:16 pm
- * Author: Paul Ribault (pribault.dev@gmail.com)
+ * File: YamlReader.inl
+ * Created: Friday, 23rd December 2022 4:11:51 pm
+ * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: 13th August 2022 3:53:17 pm
- * Modified By: Paul Ribault (pribault.dev@gmail.com)
+ * Last Modified: Friday, 23rd December 2022 4:12:01 pm
+ * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
 /*
@@ -36,12 +36,6 @@
 */
 
 // CppReflection
-#include "CppReflection/PointerType.h"
-#include "CppReflection/Type.h"
-#include "CppReflection/ReflectableType.h"
-
-// stl
-#include <type_traits>
 
 /*
 ********************************************************************************
@@ -49,20 +43,8 @@
 ********************************************************************************
 */
 
-template		<typename T>
-typename std::enable_if<IF_POINTER, CppReflection::IType*>::type						CppReflection::TypeManager::findType()
+template	<typename T>
+T*			CppReflection::YamlReader::load(const std::string& input)
 {
-	return TypeManager::get()->registerAndGet(PointerType<typename std::remove_pointer<T>::type>::get());
-}
-
-template		<typename T>
-typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, CppReflection::IType*>::type	CppReflection::TypeManager::findType()
-{
-	return TypeManager::get()->registerAndGet(ReflectableType<T>::get());
-}
-
-template		<typename T>
-typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, CppReflection::IType*>::type	CppReflection::TypeManager::findType()
-{
-	return TypeManager::get()->registerAndGet(Type<T>::get());
+	return dynamic_cast<T*>(this->load(input));
 }
