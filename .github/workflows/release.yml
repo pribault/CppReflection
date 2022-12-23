@@ -57,7 +57,7 @@ jobs:
       run: vcpkg install --triplet=${{ matrix.vcpkgTriplet }} yaml-cpp
 
     - name: Configure CMake
-      run: python3 ${{ github.workspace }}/scripts/cmake.py ${{ matrix.cmakeParameters }}
+      run: python3 ${{ github.workspace }}/scripts/cmake.py -b ${{ matrix.buildType }} ${{ matrix.cmakeParameters }}
 
     - name: Build
       run: python3 ${{ github.workspace }}/scripts/build.py -b ${{ matrix.buildType }}
