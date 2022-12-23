@@ -87,6 +87,22 @@ void	test_yaml_read_int64()
 	ASSERT(test->value == expected, "failed to retrieve int64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
 
+void	test_yaml_read_int64_null()
+{
+	TypeManager::findType<TestYamlReadInt64>();
+	std::string value = "~";
+	// expect to find 0 (no conversion can be done)
+	int64_t 	expected = 0;
+
+	TestYamlReadInt64*	test;
+
+	std::string	input = "type: TestYamlReadInt64\nvalue: " + value;
+
+	test = YamlReader().load<TestYamlReadInt64>(input);
+	ASSERT(test, "YamlReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve int64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+}
+
 void	test_yaml_read_int64_lowest()
 {
 	TypeManager::findType<TestYamlReadInt64>();

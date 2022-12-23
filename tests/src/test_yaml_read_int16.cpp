@@ -87,6 +87,22 @@ void	test_yaml_read_int16()
 	ASSERT(test->value == expected, "failed to retrieve int16 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
 
+void	test_yaml_read_int16_null()
+{
+	TypeManager::findType<TestYamlReadInt16>();
+	std::string value = "~";
+	// expect to find 0 (no conversion can be done)
+	int16_t 	expected = 0;
+
+	TestYamlReadInt16*	test;
+
+	std::string	input = "type: TestYamlReadInt16\nvalue: " + value;
+
+	test = YamlReader().load<TestYamlReadInt16>(input);
+	ASSERT(test, "YamlReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve int16 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+}
+
 void	test_yaml_read_int16_lowest()
 {
 	TypeManager::findType<TestYamlReadInt16>();

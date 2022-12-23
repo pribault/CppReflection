@@ -156,6 +156,33 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				break;
 		}
 	}
+	else if (*valueType == *TypeManager::findType<bool>())
+	{
+		switch (node.Type())
+		{
+			case YAML::NodeType::Null:
+				*((bool*)valueInstance) = 0;
+				break;
+			case YAML::NodeType::Scalar:
+				try
+				{
+					*((bool*)valueInstance) = node.as<bool>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve bool: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
+				break;
+			default:
+				break;
+		}
+	}
 	else if (*valueType == *TypeManager::findType<uint8_t>())
 	{
 		switch (node.Type())

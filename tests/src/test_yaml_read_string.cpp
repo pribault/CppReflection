@@ -87,7 +87,7 @@ void	test_yaml_read_string()
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
 
-void	test_yaml_read_string_from_null()
+void	test_yaml_read_string_null()
 {
 	TypeManager::findType<TestYamlReadString>();
 	std::string value = "~";
@@ -103,7 +103,7 @@ void	test_yaml_read_string_from_null()
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
 
-void	test_yaml_read_string_from_array()
+void	test_yaml_read_string_array()
 {
 	TypeManager::findType<TestYamlReadString>();
 	std::string value = "\n- 42\n- 43\n- 44";
@@ -119,7 +119,7 @@ void	test_yaml_read_string_from_array()
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
 
-void	test_yaml_read_string_from_map()
+void	test_yaml_read_string_map()
 {
 	TypeManager::findType<TestYamlReadString>();
 	std::string value = "\n  a: 42\n  b: 43\n  c: 44";

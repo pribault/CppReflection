@@ -63,11 +63,12 @@
 */
 
 void	test_yaml_read_string();
-void	test_yaml_read_string_from_null();
-void	test_yaml_read_string_from_array();
-void	test_yaml_read_string_from_map();
+void	test_yaml_read_string_null();
+void	test_yaml_read_string_array();
+void	test_yaml_read_string_map();
 
 void	test_yaml_read_uint8();
+void	test_yaml_read_uint8_null();
 void	test_yaml_read_uint8_lowest();
 void	test_yaml_read_uint8_underflow();
 void	test_yaml_read_uint8_highest();
@@ -76,6 +77,7 @@ void	test_yaml_read_uint8_float();
 void	test_yaml_read_uint8_string();
 
 void	test_yaml_read_uint16();
+void	test_yaml_read_uint16_null();
 void	test_yaml_read_uint16_lowest();
 void	test_yaml_read_uint16_underflow();
 void	test_yaml_read_uint16_highest();
@@ -84,6 +86,7 @@ void	test_yaml_read_uint16_float();
 void	test_yaml_read_uint16_string();
 
 void	test_yaml_read_uint32();
+void	test_yaml_read_uint32_null();
 void	test_yaml_read_uint32_lowest();
 void	test_yaml_read_uint32_underflow();
 void	test_yaml_read_uint32_highest();
@@ -92,6 +95,7 @@ void	test_yaml_read_uint32_float();
 void	test_yaml_read_uint32_string();
 
 void	test_yaml_read_uint64();
+void	test_yaml_read_uint64_null();
 void	test_yaml_read_uint64_lowest();
 void	test_yaml_read_uint64_underflow();
 void	test_yaml_read_uint64_highest();
@@ -100,6 +104,7 @@ void	test_yaml_read_uint64_float();
 void	test_yaml_read_uint64_string();
 
 void	test_yaml_read_int8();
+void	test_yaml_read_int8_null();
 void	test_yaml_read_int8_lowest();
 void	test_yaml_read_int8_underflow();
 void	test_yaml_read_int8_highest();
@@ -108,6 +113,7 @@ void	test_yaml_read_int8_float();
 void	test_yaml_read_int8_string();
 
 void	test_yaml_read_int16();
+void	test_yaml_read_int16_null();
 void	test_yaml_read_int16_lowest();
 void	test_yaml_read_int16_underflow();
 void	test_yaml_read_int16_highest();
@@ -116,6 +122,7 @@ void	test_yaml_read_int16_float();
 void	test_yaml_read_int16_string();
 
 void	test_yaml_read_int32();
+void	test_yaml_read_int32_null();
 void	test_yaml_read_int32_lowest();
 void	test_yaml_read_int32_underflow();
 void	test_yaml_read_int32_highest();
@@ -124,9 +131,15 @@ void	test_yaml_read_int32_float();
 void	test_yaml_read_int32_string();
 
 void	test_yaml_read_int64();
+void	test_yaml_read_int64_null();
 void	test_yaml_read_int64_lowest();
 void	test_yaml_read_int64_underflow();
 void	test_yaml_read_int64_highest();
 void	test_yaml_read_int64_overflow();
 void	test_yaml_read_int64_float();
 void	test_yaml_read_int64_string();
+
+void	test_yaml_read_boolean();
+void	test_yaml_read_boolean_null();
+void	test_yaml_read_boolean_array();
+void	test_yaml_read_boolean_map();

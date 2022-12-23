@@ -87,6 +87,22 @@ void	test_yaml_read_uint32()
 	ASSERT(test->value == expected, "failed to retrieve uint32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
 
+void	test_yaml_read_uint32_null()
+{
+	TypeManager::findType<TestYamlReadUint32>();
+	std::string value = "~";
+	// expect to find 0 (no conversion can be done)
+	uint32_t 	expected = 0;
+
+	TestYamlReadUint32*	test;
+
+	std::string	input = "type: TestYamlReadUint32\nvalue: " + value;
+
+	test = YamlReader().load<TestYamlReadUint32>(input);
+	ASSERT(test, "YamlReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve uint32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+}
+
 void	test_yaml_read_uint32_lowest()
 {
 	TypeManager::findType<TestYamlReadUint32>();
