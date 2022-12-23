@@ -10,6 +10,8 @@ allowedBuildTypes = ["Release", "Debug"]
 # print usage
 def printUsage():
 	print("build.py [-h] [--help] [-b <Debug|Release>] [--buildType <Debug|Release>]")
+	print("  -h or --help: dysplay help and quit")
+	print("  -b or --buildType: set build type ('Release' or 'Debug')")
 
 if __name__ == '__main__':
 
