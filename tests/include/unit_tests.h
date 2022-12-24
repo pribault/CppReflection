@@ -143,3 +143,11 @@ void	test_yaml_read_boolean();
 void	test_yaml_read_boolean_null();
 void	test_yaml_read_boolean_array();
 void	test_yaml_read_boolean_map();
+
+void	test_yaml_read_list();
+void	test_yaml_read_list_null();
+void	test_yaml_read_list_map();
+
+void	test_yaml_read_map();
+void	test_yaml_read_map_null();
+void	test_yaml_read_map_array();

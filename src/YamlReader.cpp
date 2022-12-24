@@ -479,7 +479,7 @@ void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 	const IType*			valueType = listType->getSubType();
 	void*					valueInstance = nullptr;
 
-	if (!node.IsScalar())
+	if (!node.IsSequence())
 		return ;
 
 	std::vector<YAML::Node> list;

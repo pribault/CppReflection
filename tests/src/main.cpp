@@ -124,7 +124,13 @@ int		main(int argc, char** argv)
 		std::make_pair("yaml read boolean", &test_yaml_read_boolean),
 		std::make_pair("yaml read boolean from null", &test_yaml_read_boolean_null),
 		std::make_pair("yaml read boolean from array", &test_yaml_read_boolean_array),
-		std::make_pair("yaml read boolean from map", &test_yaml_read_boolean_map)
+		std::make_pair("yaml read boolean from map", &test_yaml_read_boolean_map),
+		std::make_pair("yaml read list", &test_yaml_read_list),
+		std::make_pair("yaml read list from null", &test_yaml_read_list_null),
+		std::make_pair("yaml read list from map", &test_yaml_read_list_map),
+		std::make_pair("yaml read map", &test_yaml_read_map),
+		std::make_pair("yaml read map from null", &test_yaml_read_map_null),
+		std::make_pair("yaml read map from array", &test_yaml_read_map_array)
 	});
 	size_t	failures = 0;
 	size_t	index = 1;
