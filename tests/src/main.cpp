@@ -130,7 +130,11 @@ int		main(int argc, char** argv)
 		std::make_pair("yaml read list from map", &test_yaml_read_list_map),
 		std::make_pair("yaml read map", &test_yaml_read_map),
 		std::make_pair("yaml read map from null", &test_yaml_read_map_null),
-		std::make_pair("yaml read map from array", &test_yaml_read_map_array)
+		std::make_pair("yaml read map from array", &test_yaml_read_map_array),
+		std::make_pair("yaml read pointer", &test_yaml_read_pointer),
+		std::make_pair("yaml read pointer from null", &test_yaml_read_pointer_null),
+		std::make_pair("yaml read reflectable", &test_yaml_read_reflectable),
+		std::make_pair("yaml read reflectable with type mismatch", &test_yaml_read_reflectable_type_mismatch)
 	});
 	size_t	failures = 0;
 	size_t	index = 1;

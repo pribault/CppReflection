@@ -62,6 +62,8 @@
 ***************
 */
 
+void	test_reflectable();
+
 void	test_yaml_read_string();
 void	test_yaml_read_string_null();
 void	test_yaml_read_string_array();
@@ -151,3 +153,10 @@ void	test_yaml_read_list_map();
 void	test_yaml_read_map();
 void	test_yaml_read_map_null();
 void	test_yaml_read_map_array();
+
+void	test_yaml_read_pointer();
+void	test_yaml_read_pointer_null();
+
+void	test_yaml_read_reflectable();
+void	test_yaml_read_reflectable_type_mismatch();
+void	test_yaml_read_reflectable_null();
