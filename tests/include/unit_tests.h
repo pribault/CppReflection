@@ -62,7 +62,10 @@
 ***************
 */
 
-void	test_reflectable();
+void	test_type_reflectable();
+void	test_type_reflectable_inheritance();
+void	test_type_reflectable_attributes();
+void	test_type_pointer();
 
 void	test_yaml_read_string();
 void	test_yaml_read_string_null();

@@ -134,7 +134,11 @@ int		main(int argc, char** argv)
 		std::make_pair("yaml read pointer", &test_yaml_read_pointer),
 		std::make_pair("yaml read pointer from null", &test_yaml_read_pointer_null),
 		std::make_pair("yaml read reflectable", &test_yaml_read_reflectable),
-		std::make_pair("yaml read reflectable with type mismatch", &test_yaml_read_reflectable_type_mismatch)
+		std::make_pair("yaml read reflectable with type mismatch", &test_yaml_read_reflectable_type_mismatch),
+		std::make_pair("type reflectable", &test_type_reflectable),
+		std::make_pair("type reflectable inheritance", &test_type_reflectable_inheritance),
+		std::make_pair("type reflectable attributes", &test_type_reflectable_attributes),
+		std::make_pair("type pointer", &test_type_pointer)
 	});
 	size_t	failures = 0;
 	size_t	index = 1;
@@ -148,7 +152,7 @@ int		main(int argc, char** argv)
 	for (it = testsMap.cbegin(); it != end; it++)
 	{
 		// try to run the test
-		std::cout << "===== running '" << it->first << "' (" << index << "/" << total << ")" << std::endl;
+		std::cout << "===== running '" << it->first << "' (test " << index << "/" << total << ")" << std::endl;
 		try
 		{
 			it->second();
