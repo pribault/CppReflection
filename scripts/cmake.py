@@ -50,5 +50,9 @@ if __name__ == '__main__':
 
 	# run cmake command
 	print("starting cmake")
-	os.system("cmake %s -DENABLE_DYNAMIC_LINK=%s -DCMAKE_TOOLCHAIN_FILE=%s/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=%s -B %s" % (rootDir, str(dynamicLinking), vcpkgPath, buildType, buildDir))
-	print("cmake ended!")
+	result = os.system("cmake %s -DENABLE_DYNAMIC_LINK=%s -DCMAKE_TOOLCHAIN_FILE=%s/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=%s -B %s" % (rootDir, str(dynamicLinking), vcpkgPath, buildType, buildDir))
+	if result:
+		print("Cmake KO!")
+	else:
+		print("Cmake OK!")
+	sys.exit(1 if result > 0 else 0)

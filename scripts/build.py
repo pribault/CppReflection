@@ -43,5 +43,9 @@ if __name__ == '__main__':
 
 	# run build command
 	print("starting '%s' build" % buildType)
-	os.system("cmake --build %s --config %s" % (buildDir, buildType))
-	print("build ended!")
+	result = os.system("cmake --build %s --config %s" % (buildDir, buildType))
+	if result:
+		print("Build KO!")
+	else:
+		print("Build OK!")
+	sys.exit(1 if result > 0 else 0)

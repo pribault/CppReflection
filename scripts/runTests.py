@@ -55,4 +55,4 @@ if __name__ == '__main__':
 		print("Unit tests KO!")
 	else:
 		print("Unit tests OK!")
-	quit(result)
+	sys.exit(1 if result > 0 else 0)

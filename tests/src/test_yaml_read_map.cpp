@@ -79,8 +79,8 @@ std::string	map_to_string(const std::map<K, V>& map)
 {
 	std::string	result = "{";
 	size_t	index = 0;
-	std::map<K, V>::const_iterator	it;
-	std::map<K, V>::const_iterator	end = map.cend();
+	typename std::map<K, V>::const_iterator	it;
+	typename std::map<K, V>::const_iterator	end = map.cend();
 
 	for (it = map.cbegin(); it != end; it++)
 	{

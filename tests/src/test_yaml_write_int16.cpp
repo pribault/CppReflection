@@ -41,6 +41,9 @@
 #include <CppReflection/Reflectable.h>
 #include <CppReflection/YamlWriter.h>
 
+// stl
+#include <limits>
+
 /*
 ****************
 ** namespaces **
