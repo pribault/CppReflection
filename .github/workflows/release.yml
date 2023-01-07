@@ -62,6 +62,9 @@ jobs:
     - name: Build
       run: python3 ${{ github.workspace }}/scripts/build.py -b ${{ matrix.buildType }}
 
+    - name: Run unit tests
+      run: python3 ${{ github.workspace }}/scripts/runTests.py -b ${{ matrix.buildType }}
+
     - name: Release
       run: python3 ${{ github.workspace }}/scripts/release.py -b ${{ matrix.buildType }}
 
