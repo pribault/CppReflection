@@ -32,6 +32,18 @@
 #include "CppReflection/IType.h"
 
 /*
+**************
+** includes **
+**************
+*/
+
+#ifdef __GNUG__
+# include <cstdlib>
+# include <memory>
+# include <cxxabi.h>
+#endif
+
+/*
 ****************
 ** namespaces **
 ****************
@@ -49,8 +61,8 @@ IType::IType(void)
 {
 }
 
-IType::IType(const std::string& name, size_t size, const std::type_info* typeInfo) :
-	_name(name),
+IType::IType(size_t size, const std::type_info* typeInfo) :
+	_name(name(typeInfo)),
 	_size(size),
 	_typeInfo(typeInfo)
 {
@@ -113,4 +125,27 @@ bool					IType::operator==(const IType& other) const
 bool					IType::operator!=(const IType& other) const
 {
 	return (*getTypeInfo() != *other.getTypeInfo());
+}
+
+
+std::string				IType::name(const std::type_info* typeInfo)
+{
+#ifdef __GNUG__
+	int status; // some arbitrary value to eliminate the compiler warning
+
+	std::unique_ptr<char, void(*)(void*)>	res {
+		abi::__cxa_demangle(typeInfo->name(), NULL, NULL, &status),
+		std::free
+	};
+
+	return (status == 0) ? res.get() : typeInfo->name();
+#else
+
+	std::string result = typeInfo->name();
+
+	if (!result.compare(0, 6, "class "))
+		result = result.substr(6, std::string::npos);
+
+	return result;
+#endif
 }

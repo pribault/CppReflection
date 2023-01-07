@@ -17,6 +17,8 @@ releaseLibDir = os.path.join(releaseDir, "lib")
 # print usage
 def printUsage():
 	print("release.py [-h] [--help] [-b <Debug|Release>] [--buildType <Debug|Release>]")
+	print("  -h or --help: dysplay help and quit")
+	print("  -b or --buildType: set build type ('Release' or 'Debug')")
 
 # filter strings with the given pattern
 def glob_re(pattern, strings):

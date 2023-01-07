@@ -2,27 +2,28 @@
 
 import getopt
 import os
+import re
+import shutil
 import sys
 from env import *
 
+# global variables
 allowedBuildTypes = ["Release", "Debug"]
+binDir = os.path.join(buildDir, "bin")
 
 # print usage
 def printUsage():
-	print("cmake.py [-h] [--help] [-d] [--dynamic] [-s] [--static] [-b <Debug|Release>] [--buildType <Debug|Release>]")
+	print("runTests.py [-h] [--help] [-b <Debug|Release>] [--buildType <Debug|Release>]")
 	print("  -h or --help: dysplay help and quit")
-	print("  -d or --dynamic: enable dynamic linking (default)")
-	print("  -s or --static: disable dynamic linking")
 	print("  -b or --buildType: set build type ('Release' or 'Debug')")
 
 if __name__ == '__main__':
 
 	# define default variables
-	dynamicLinking = True
 	buildType = "Release"
 
 	# retrieve arguments
-	opts, args = getopt.getopt(sys.argv[1:], "hdsb:", ["help", "dynamic", "static", "buildType="])
+	opts, args = getopt.getopt(sys.argv[1:], "hb:", ["help", "buildType="])
 
 	# ensure all arguments are parsed
 	if len(args) != 0:
@@ -36,10 +37,6 @@ if __name__ == '__main__':
 		if opt in ("-h", "--help"):
 			printUsage()
 			exit(0)
-		elif opt in ("-d", "--dynamic"):
-			dynamicLinking = True
-		elif opt in ("-s", "--static"):
-			dynamicLinking = False
 		# build type
 		if opt in ("-b", "--buildType"):
 			if not arg in allowedBuildTypes:
@@ -48,11 +45,16 @@ if __name__ == '__main__':
 				exit(1)
 			buildType = arg
 
-	# run cmake command
-	print("starting cmake")
-	result = os.system("cmake %s -DENABLE_DYNAMIC_LINK=%s -DCMAKE_TOOLCHAIN_FILE=%s/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=%s -B %s" % (rootDir, str(dynamicLinking), vcpkgPath, buildType, buildDir))
-	if result:
-		print("Cmake KO!")
+	if sys.platform.startswith('win'):
+		program = os.path.join(binDir, buildType, "unit_tests.exe")
 	else:
-		print("Cmake OK!")
+		program = os.path.join(binDir, "unit_tests")
+
+	# run tests
+	print("Running unit tests for '%s' mode" % buildType)
+	result = os.system(program)
+	if result:
+		print("Unit tests KO!")
+	else:
+		print("Unit tests OK!")
 	sys.exit(1 if result > 0 else 0)

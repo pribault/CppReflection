@@ -1,15 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(test2 CXX)
+project(00_Read_YAML CXX)
 
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/../../cmake/CppReflectionCommon.cmake)
 
-set(CPPREFLECTION_BINARY_DIR ${CPPREFLECTION_ROOT_DIR}/build/bin)
-
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR})
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR})
-set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin)
 
 file(GLOB_RECURSE SOURCES RELATIVE
 	"${CMAKE_CURRENT_SOURCE_DIR}"
@@ -23,8 +20,8 @@ include_directories(
 	${CPPREFLECTION_INCLUDE_DIR}
 )
 
-add_executable(test2 ${SOURCES})
+add_executable(00_Read_YAML ${SOURCES})
 
-target_link_libraries(test2 PRIVATE
+target_link_libraries(00_Read_YAML PRIVATE
 	CppReflection
 )

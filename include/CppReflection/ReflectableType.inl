@@ -58,7 +58,7 @@ CppReflection::ReflectableType<T>*		CppReflection::ReflectableType<T>::_instance
 
 template	<typename T>
 CppReflection::ReflectableType<T>::ReflectableType()
-	: IReflectableType(typeid(T).name(), sizeof(T), &typeid(T))
+	: IReflectableType(sizeof(T), &typeid(T))
 {
 }
 

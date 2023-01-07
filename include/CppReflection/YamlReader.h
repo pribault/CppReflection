@@ -84,6 +84,8 @@ namespace	CppReflection
 			~YamlReader();
 
 			Reflectable*	load(const std::string& input);
+			template		<typename T>
+			T*				load(const std::string& input);
 
 			virtual void	value(const IType* valueType, void* valueInstance);
 
@@ -117,3 +119,5 @@ namespace	CppReflection
 
 	};
 }
+
+#include <CppReflection/YamlReader.inl>

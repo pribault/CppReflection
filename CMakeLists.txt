@@ -18,6 +18,7 @@ endif()
 include(${PROJECT_SOURCE_DIR}/cmake/CppReflectionCommon.cmake)
 
 add_subdirectory(examples)
+add_subdirectory(tests)
 
 # Find required packages
 find_package(yaml-cpp CONFIG REQUIRED)

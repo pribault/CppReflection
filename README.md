@@ -7,6 +7,40 @@ A non intrusive, powerful c++ reflection library
 
 ## Getting started
 
+### Dependencies
+
+Before compiling the project, you need to install the following dependencies :
+- <b>python</b>
+- <b>cmake</b>
+- <b>vcpkg</b>
+- a c++ compiler depending on your platform (<b>msvc</b> for Windows, <b>clang++</b> or <b>g++</b> for Unix systems)
+
+The environment variable VCPKG_PATH needs to be defined to the vcpkg install directory.
+You also need to install some dependencies using vcpkg, on Windows:
+
+`vcpkg install --triplet=x64-windows yaml-cpp`
+
+On Unix systems:
+
+`vcpkg install --triplet=x64-linux yaml-cpp`
+
+### Build
+
+Some scripts are present inside the <b>scripts</b> directory to easily build and package this library.
+
+```
+python ./scripts/cmake.py
+python ./scripts/build.py
+python ./scripts/release.py
+```
+
+The resulting binaires will be located inside the <b>build/bin</b> directory.
+Some examples and unit tests will also be built, feel free to try them
+
+### Releases
+
+You can find the release builds here : https://github.com/pribault/CppReflection/releases
+
 ### Include
 
 To enable reflection you only have to include the <b>Reflectable.h</b> header in your code.
@@ -58,7 +92,20 @@ class	Rectangle : public Point
 };
 ```
 
-This example demonstrates how to reflect an attribute and how to inherit from another Reflectable object
+This example demonstrates how to reflect an attribute and how to inherit from another Reflectable object.
+
+Some classes are also present to help you manipulate your objects, for example to read and write an object from/to YAML :
+
+```
+	Rectangle	rectangle;
+
+	rectangle.x = 42;
+	rectangle.y = -66;
+	rectangle.w = 1920;
+	rectangle.h = 1080;
+
+	std::cout << YamlWriter().compute(rectangle) << std::endl;
+```
 
 ## More details
 
