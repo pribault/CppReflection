@@ -163,3 +163,49 @@ void	test_yaml_read_pointer_null();
 void	test_yaml_read_reflectable();
 void	test_yaml_read_reflectable_type_mismatch();
 void	test_yaml_read_reflectable_null();
+
+void	test_yaml_write_boolean();
+
+void	test_yaml_write_int8();
+void	test_yaml_write_int8_min();
+void	test_yaml_write_int8_max();
+
+void	test_yaml_write_int16();
+void	test_yaml_write_int16_min();
+void	test_yaml_write_int16_max();
+
+void	test_yaml_write_int32();
+void	test_yaml_write_int32_min();
+void	test_yaml_write_int32_max();
+
+void	test_yaml_write_int64();
+void	test_yaml_write_int64_min();
+void	test_yaml_write_int64_max();
+
+void	test_yaml_write_uint8();
+void	test_yaml_write_uint8_min();
+void	test_yaml_write_uint8_max();
+
+void	test_yaml_write_uint16();
+void	test_yaml_write_uint16_min();
+void	test_yaml_write_uint16_max();
+
+void	test_yaml_write_uint32();
+void	test_yaml_write_uint32_min();
+void	test_yaml_write_uint32_max();
+
+void	test_yaml_write_uint64();
+void	test_yaml_write_uint64_min();
+void	test_yaml_write_uint64_max();
+
+void	test_yaml_write_string();
+void	test_yaml_write_string_quotes();
+
+void	test_yaml_write_list();
+
+void	test_yaml_write_map();
+
+void	test_yaml_write_reflectable();
+
+void	test_yaml_write_pointer();
+void	test_yaml_write_pointer_null();
