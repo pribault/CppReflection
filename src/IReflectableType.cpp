@@ -59,8 +59,8 @@ IReflectableType::IReflectableType()
 {
 }
 
-IReflectableType::IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo)
-	: IType(name, size, typeInfo)
+IReflectableType::IReflectableType(size_t size, const std::type_info* typeInfo)
+	: IType(size, typeInfo)
 {
 }
 

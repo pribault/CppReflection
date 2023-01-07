@@ -54,6 +54,7 @@ typename std::enable_if<IF_POINTER, CppReflection::IType*>::type						CppReflect
 {
 	return TypeManager::get()->registerAndGet(PointerType<typename std::remove_pointer<T>::type>::get());
 }
+
 template		<typename T>
 typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, CppReflection::IType*>::type	CppReflection::TypeManager::findType()
 {

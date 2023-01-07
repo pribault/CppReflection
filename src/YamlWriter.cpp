@@ -98,7 +98,7 @@ void	YamlWriter::value(const IType* valueType, void* valueInstance)
 	else if (*valueType == *TypeManager::findType<std::string>())
 		*_emitter << *(std::string*)valueInstance;
 	else if (*valueType == *TypeManager::findType<uint8_t>())
-		*_emitter << *(uint8_t*)valueInstance;
+		*_emitter << (uint16_t)*(uint8_t*)valueInstance;
 	else if (*valueType == *TypeManager::findType<uint16_t>())
 		*_emitter << *(uint16_t*)valueInstance;
 	else if (*valueType == *TypeManager::findType<uint32_t>())
@@ -113,6 +113,8 @@ void	YamlWriter::value(const IType* valueType, void* valueInstance)
 		*_emitter << *(int32_t*)valueInstance;
 	else if (*valueType == *TypeManager::findType<int64_t>())
 		*_emitter << *(int64_t*)valueInstance;
+	else if (*valueType == *TypeManager::findType<bool>())
+		*_emitter << *(bool*)valueInstance;
 	else
 		*_emitter << YAML::Null;
 }

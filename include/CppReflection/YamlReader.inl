@@ -21,15 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: IMapType.cpp
- * Created: 21th September 2022 4:48:00 pm
- * Author: Paul Ribault (pribault.dev@gmail.com)
+ * File: YamlReader.inl
+ * Created: Friday, 23rd December 2022 4:11:51 pm
+ * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: 21th September 2022 4:48:00 pm
- * Modified By: Paul Ribault (pribault.dev@gmail.com)
+ * Last Modified: Friday, 23rd December 2022 4:12:01 pm
+ * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
-
-#include "CppReflection/IMapType.h"
 
 /*
 **************
@@ -38,15 +36,6 @@
 */
 
 // CppReflection
-#include "CppReflection/Iterator.h"
-
-/*
-****************
-** namespaces **
-****************
-*/
-
-using namespace	CppReflection;
 
 /*
 ********************************************************************************
@@ -54,32 +43,8 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-IMapType::IMapType()
+template	<typename T>
+T*			CppReflection::YamlReader::load(const std::string& input)
 {
-}
-
-IMapType::IMapType(size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
-	: IType(size, typeInfo)
-	, _keyType(keyType)
-	, _valueType(valueType)
-{
-}
-
-IMapType::~IMapType()
-{
-}
-
-bool			IMapType::isMap() const
-{
-	return true;
-}
-
-const IType*	IMapType::getKeyType() const
-{
-	return _keyType;
-}
-
-const IType*	IMapType::getValueType() const
-{
-	return _valueType;
+	return dynamic_cast<T*>(this->load(input));
 }

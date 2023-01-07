@@ -1,7 +1,7 @@
 /*
  * MIT License
  * 
- * Copyright (c) 2022 paul ribault
+ * Copyright (c) 2023 paul ribault
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: IMapType.cpp
- * Created: 21th September 2022 4:48:00 pm
- * Author: Paul Ribault (pribault.dev@gmail.com)
+ * File: test_yaml_write_list.cpp
+ * Created: Saturday, 7th January 2023 1:22:52 pm
+ * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: 21th September 2022 4:48:00 pm
- * Modified By: Paul Ribault (pribault.dev@gmail.com)
+ * Last Modified: Saturday, 7th January 2023 1:24:25 pm
+ * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
-#include "CppReflection/IMapType.h"
+#include "unit_tests.h"
 
 /*
 **************
@@ -38,7 +38,8 @@
 */
 
 // CppReflection
-#include "CppReflection/Iterator.h"
+#include <CppReflection/Reflectable.h>
+#include <CppReflection/YamlWriter.h>
 
 /*
 ****************
@@ -50,36 +51,41 @@ using namespace	CppReflection;
 
 /*
 ********************************************************************************
+************************************ CLASSES ***********************************
+********************************************************************************
+*/
+
+class	TestYamlWriteList : public Reflectable
+{
+	public:
+		START_REFLECTION(TestYamlWriteList)
+		REFLECT_ATTRIBUTE(value)
+		END_REFLECTION()
+
+		std::vector<int>	value;
+};
+
+/*
+********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
 */
 
-IMapType::IMapType()
+void	test_yaml_write_list()
 {
-}
+	TypeManager::findType<TestYamlWriteList>();
 
-IMapType::IMapType(size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType)
-	: IType(size, typeInfo)
-	, _keyType(keyType)
-	, _valueType(valueType)
-{
-}
+	TestYamlWriteList	test;
+	test.value = {42, 43, 44};
 
-IMapType::~IMapType()
-{
-}
+	std::string	expected = "\
+type: TestYamlWriteList\n\
+value:\n\
+  - 42\n\
+  - 43\n\
+  - 44";
 
-bool			IMapType::isMap() const
-{
-	return true;
-}
+	std::string result = YamlWriter().compute(test);
 
-const IType*	IMapType::getKeyType() const
-{
-	return _keyType;
-}
-
-const IType*	IMapType::getValueType() const
-{
-	return _valueType;
+	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

@@ -81,7 +81,7 @@ namespace	CppReflection
 			*************
 			*/
 
-			IReflectableType(const std::string& name, size_t size, const std::type_info* typeInfo);
+			IReflectableType(size_t size, const std::type_info* typeInfo);
 			virtual ~IReflectableType();
 
 			virtual bool				isReflectable() const;
