@@ -45,12 +45,14 @@ if __name__ == '__main__':
 				exit(1)
 			buildType = arg
 
-	# make release
-	print("Running unit tests for '%s' mode" % buildType)
-	suffix = ""
 	if sys.platform.startswith('win'):
-		suffix = ".exe"
-	result = os.system(os.path.join(binDir, buildType, "unit_tests" + suffix))
+		program = os.path.join(binDir, buildType, "unit_tests.exe")
+	else:
+		program = os.path.join(binDir, "unit_tests")
+
+	# run tests
+	print("Running unit tests for '%s' mode" % buildType)
+	result = os.system(program)
 	if result:
 		print("Unit tests KO!")
 	else:
