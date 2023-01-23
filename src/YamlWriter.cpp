@@ -73,6 +73,11 @@ YamlWriter::~YamlWriter()
 
 std::string		YamlWriter::compute(const Reflectable& reflectable)
 {
+	return YamlWriter().internalCompute(reflectable);
+}
+
+std::string		YamlWriter::internalCompute(const Reflectable& reflectable)
+{
 	if (!_emitter)
 	{
 		_emitter = new YAML::Emitter();

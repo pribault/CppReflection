@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_read_reflectable.cpp
+ * File: test_json_read_reflectable.cpp
  * Created: Saturday, 24th December 2022 2:40:38 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
@@ -39,7 +39,7 @@
 
 // CppReflection
 #include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlReader.h>
+#include <CppReflection/JsonReader.h>
 
 /*
 ****************
@@ -55,36 +55,36 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-class	TestYamlReadReflectable_Base : public Reflectable
+class	TestJsonReadReflectable_Base : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlReadReflectable_Base)
+		START_REFLECTION(TestJsonReadReflectable_Base)
 		REFLECT_ATTRIBUTE(baseValue)
 		END_REFLECTION()
 
 		std::string	baseValue;
 };
 
-class	TestYamlReadReflectable_Derived : public TestYamlReadReflectable_Base
+class	TestJsonReadReflectable_Derived : public TestJsonReadReflectable_Base
 {
 	public:
-		START_REFLECTION(TestYamlReadReflectable_Derived, TestYamlReadReflectable_Base)
+		START_REFLECTION(TestJsonReadReflectable_Derived, TestJsonReadReflectable_Base)
 		REFLECT_ATTRIBUTE(derivedValue)
 		END_REFLECTION()
 
 		std::string	derivedValue;
 };
 
-class	TestYamlReadReflectable : public Reflectable
+class	TestJsonReadReflectable : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlReadReflectable)
+		START_REFLECTION(TestJsonReadReflectable)
 		REFLECT_ATTRIBUTE(value)
 		END_REFLECTION()
 
-		TestYamlReadReflectable() : value(nullptr) { }
+		TestJsonReadReflectable() : value(nullptr) { }
 
-		TestYamlReadReflectable_Base*	value;
+		TestJsonReadReflectable_Base*	value;
 };
 
 /*
@@ -93,76 +93,61 @@ class	TestYamlReadReflectable : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_reflectable()
+void	test_json_read_reflectable()
 {
-	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
-	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
-	IType*	derivedType = TypeManager::findType<TestYamlReadReflectable_Derived>();
+	IType*	reflectableType = TypeManager::findType<TestJsonReadReflectable>();
+	IType*	baseType = TypeManager::findType<TestJsonReadReflectable_Base>();
+	IType*	derivedType = TypeManager::findType<TestJsonReadReflectable_Derived>();
 
 	// expect to find the derived class and the according attributes and values
-	TestYamlReadReflectable*	test;
+	TestJsonReadReflectable*	test;
 	std::string					expectedBaseValue = "Hello base!";
 	std::string					expectedDerivedValue = "Hello derived!";
 
 	std::string	input = "\
-type: TestYamlReadReflectable\n\
-value:\n\
-  type: TestYamlReadReflectable_Derived\n\
-  baseValue: \"" + expectedBaseValue + "\"\n\
-  derivedValue: \"" + expectedDerivedValue + "\"\n\
+{\n\
+	\"type\": \"TestJsonReadReflectable\",\n\
+	\"value\":\n\
+	{\n\
+		\"type\": \"TestJsonReadReflectable_Derived\",\n\
+		\"baseValue\": \"" + expectedBaseValue + "\",\n\
+		\"derivedValue\": \"" + expectedDerivedValue + "\"\n\
+	}\n\
+}\n\
 ";
 
-	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
+	test = JsonReader::load<TestJsonReadReflectable>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
 	ASSERT(test->value, "null value")
 	const IType*	valueType = test->value->getType();
 	ASSERT(*valueType == *derivedType, "expecting value type '" + derivedType->getName() + "' but was '" + valueType->getName() + "'")
 	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
-	std::string derivedValue = static_cast<TestYamlReadReflectable_Derived*>(test->value)->derivedValue;
+	std::string derivedValue = static_cast<TestJsonReadReflectable_Derived*>(test->value)->derivedValue;
 	ASSERT(derivedValue == expectedDerivedValue, "base value to be '" + expectedDerivedValue + "' but was '" + derivedValue + "'")
 }
 
-void	test_yaml_read_reflectable_type_mismatch()
+void	test_json_read_reflectable_type_mismatch()
 {
-	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
-	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
-	IType*	derivedType = TypeManager::findType<TestYamlReadReflectable_Derived>();
+	IType*	reflectableType = TypeManager::findType<TestJsonReadReflectable>();
+	IType*	baseType = TypeManager::findType<TestJsonReadReflectable_Base>();
+	IType*	derivedType = TypeManager::findType<TestJsonReadReflectable_Derived>();
 
 	// expect to find the base class because no conversion was possible
-	TestYamlReadReflectable*	test;
+	TestJsonReadReflectable*	test;
 	std::string					expectedBaseValue = "";
 
 	std::string	input = "\
-type: TestYamlReadReflectable\n\
-value:\n\
-  type: TestYamlReadReflectable\n\
+{\n\
+	\"type\": \"TestJsonReadReflectable\",\n\
+	\"value\":\n\
+	{\n\
+		\"type\": \"TestJsonReadReflectable\"\n\
+	}\n\
+}\n\
 ";
 
-	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null value")
-	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *baseType, "expecting value type '" + baseType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
-}
-
-void	test_yaml_read_reflectable_null()
-{
-	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
-	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
-	IType*	derivedType = TypeManager::findType<TestYamlReadReflectable_Derived>();
-
-	// expect to find the base class
-	TestYamlReadReflectable*	test;
-	std::string					expectedBaseValue = "";
-
-	std::string	input = "\
-type: TestYamlReadReflectable\n\
-value: ~\n\
-";
-
-	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
+	test = JsonReader::load<TestJsonReadReflectable>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
 	ASSERT(test->value, "null value")
 	const IType*	valueType = test->value->getType();
 	ASSERT(*valueType == *baseType, "expecting value type '" + baseType->getName() + "' but was '" + valueType->getName() + "'")

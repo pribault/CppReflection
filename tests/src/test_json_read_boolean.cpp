@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_read_boolean.cpp
+ * File: test_json_read_boolean.cpp
  * Created: Friday, 23rd December 2022 11:30:33 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
@@ -39,7 +39,7 @@
 
 // CppReflection
 #include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlReader.h>
+#include <CppReflection/JsonReader.h>
 
 /*
 ****************
@@ -55,10 +55,10 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-class	TestYamlReadBoolean : public Reflectable
+class	TestJsonReadBoolean : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlReadBoolean)
+		START_REFLECTION(TestJsonReadBoolean)
 		REFLECT_ATTRIBUTE(value)
 		END_REFLECTION()
 
@@ -71,20 +71,20 @@ class	TestYamlReadBoolean : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_boolean()
+void	test_json_read_boolean()
 {
 	std::map<std::string, bool>	testsMap({
 		std::make_pair("true", true),
-		std::make_pair("True", true),
-		std::make_pair("TRUE", true),
+		std::make_pair("True", false),
+		std::make_pair("TRUE", false),
 		std::make_pair("false", false),
 		std::make_pair("False", false),
 		std::make_pair("FALSE", false)
 	});
 
-	TypeManager::findType<TestYamlReadBoolean>();
+	TypeManager::findType<TestJsonReadBoolean>();
 
-	TestYamlReadBoolean*	test;
+	TestJsonReadBoolean*	test;
 	std::string				input;
 
 	for (const std::pair<std::string, bool>& pair : testsMap)
@@ -92,58 +92,42 @@ void	test_yaml_read_boolean()
 		std::string value = pair.first;
 		bool expected = pair.second;
 
-		input = "type: TestYamlReadBoolean\nvalue: " + value;
+		input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
-		test = YamlReader::load<TestYamlReadBoolean>(input);
-		ASSERT(test, "YamlReader::load returned a null object")
-		ASSERT(test->value == expected, "failed to retrieve boolean value from YAML input (" + value + "), expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+		test = JsonReader::load<TestJsonReadBoolean>(input);
+		ASSERT(test, "JsonReader::load returned a null object")
+		ASSERT(test->value == expected, "failed to retrieve boolean value from JSON input (" + value + "), expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 	}
 }
 
-void	test_yaml_read_boolean_null()
+void	test_json_read_boolean_array()
 {
-	TypeManager::findType<TestYamlReadBoolean>();
-	std::string value = "~";
-	// expect to find boolean default value: false
-	bool expected = false;
-
-	TestYamlReadBoolean*	test;
-
-	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
-
-	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
-}
-
-void	test_yaml_read_boolean_array()
-{
-	TypeManager::findType<TestYamlReadBoolean>();
+	TypeManager::findType<TestJsonReadBoolean>();
 	std::string value = "\n- 42\n- 43\n- 44";
 	// expect to find boolean default value: false
 	bool expected = false;
 
-	TestYamlReadBoolean*	test;
+	TestJsonReadBoolean*	test;
 
-	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
+	std::string	input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
-	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	test = JsonReader::load<TestJsonReadBoolean>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
 
-void	test_yaml_read_boolean_map()
+void	test_json_read_boolean_map()
 {
-	TypeManager::findType<TestYamlReadBoolean>();
+	TypeManager::findType<TestJsonReadBoolean>();
 	std::string value = "\n  a: 42\n  b: 43\n  c: 44";
 	// expect to find boolean default value: false
 	bool expected = false;
 
-	TestYamlReadBoolean*	test;
+	TestJsonReadBoolean*	test;
 
-	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
+	std::string	input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
-	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	test = JsonReader::load<TestJsonReadBoolean>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }

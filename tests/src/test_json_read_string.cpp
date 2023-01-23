@@ -1,7 +1,7 @@
 /*
  * MIT License
  * 
- * Copyright (c) 2023 paul ribault
+ * Copyright (c) 2022 paul ribault
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_write_uint16.cpp
- * Created: Saturday, 7th January 2023 1:22:15 pm
+ * File: test_json_read_string.cpp
+ * Created: Friday, 23rd December 2022 4:21:25 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: Saturday, 7th January 2023 1:24:40 pm
+ * Last Modified: Friday, 23rd December 2022 4:21:46 pm
  * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
@@ -39,10 +39,7 @@
 
 // CppReflection
 #include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlWriter.h>
-
-// stl
-#include <limits>
+#include <CppReflection/JsonReader.h>
 
 /*
 ****************
@@ -58,14 +55,14 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-class	TestYamlWriteUint16 : public Reflectable
+class	TestJsonReadString : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlWriteUint16)
+		START_REFLECTION(TestJsonReadString)
 		REFLECT_ATTRIBUTE(value)
 		END_REFLECTION()
 
-		uint16_t		value;
+		std::string	value;
 };
 
 /*
@@ -74,44 +71,50 @@ class	TestYamlWriteUint16 : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_uint16()
+void	test_json_read_string()
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	TypeManager::findType<TestJsonReadString>();
+	std::string value = "\"Hello world!\"";
+	// expect to find the same string
+	std::string expected = "Hello world!";
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::max() / 2;
+	TestJsonReadString*	test;
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
+	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	test = JsonReader::load<TestJsonReadString>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
 }
 
-void	test_yaml_write_uint16_min()
+void	test_json_read_string_array()
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	TypeManager::findType<TestJsonReadString>();
+	std::string value = "[42, 43, 44]";
+	// expect to find an empty string
+	std::string expected = "";
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::min();
+	TestJsonReadString*	test;
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
+	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	test = JsonReader::load<TestJsonReadString>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
 }
 
-void	test_yaml_write_uint16_max()
+void	test_json_read_string_map()
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	TypeManager::findType<TestJsonReadString>();
+	std::string value = "{\"a\": 42, \"b\": 43, \"c\": 44}";
+	// expect to find an empty string
+	std::string expected = "";
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::max();
+	TestJsonReadString*	test;
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
+	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	test = JsonReader::load<TestJsonReadString>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
 }

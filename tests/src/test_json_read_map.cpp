@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_read_pointer.cpp
- * Created: Saturday, 24th December 2022 2:36:56 pm
+ * File: test_json_read_map.cpp
+ * Created: Friday, 23rd December 2022 10:12:23 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: Saturday, 24th December 2022 2:36:57 pm
+ * Last Modified: Friday, 23rd December 2022 10:13:04 pm
  * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
@@ -39,7 +39,10 @@
 
 // CppReflection
 #include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlReader.h>
+#include <CppReflection/JsonReader.h>
+
+// stl
+#include <map>
 
 /*
 ****************
@@ -55,16 +58,14 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-class	TestYamlReadPointer : public Reflectable
+class	TestJsonReadMap : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlReadPointer)
+		START_REFLECTION(TestJsonReadMap)
 		REFLECT_ATTRIBUTE(value)
 		END_REFLECTION()
 
-		TestYamlReadPointer() : value(nullptr) { }
-
-		std::string*	value;
+		std::map<std::string, int>	value;
 };
 
 /*
@@ -73,36 +74,59 @@ class	TestYamlReadPointer : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_pointer()
+template	<typename K, typename V>
+std::string	map_to_string(const std::map<K, V>& map)
 {
-	TypeManager::findType<TestYamlReadPointer>();
-	std::string value = "'Hello world!'";
-	// expect to find the same string
-	std::string expected = "Hello world!";
+	std::string	result = "{";
+	size_t	index = 0;
+	typename std::map<K, V>::const_iterator	it;
+	typename std::map<K, V>::const_iterator	end = map.cend();
 
-	TestYamlReadPointer*	test;
+	for (it = map.cbegin(); it != end; it++)
+	{
+		K	key = it->first;
+		V	value = it->second;
+		result.append(key + ": " + std::to_string(value));
+		if (index != map.size() - 1)
+			result.append(", ");
+		index++;
+	}
 
-	std::string	input = "type: TestYamlReadPointer\nvalue: " + value;
-
-	test = YamlReader::load<TestYamlReadPointer>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null pointer returned")
-	ASSERT(*test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + *test->value + "'")
+	return result.append("}");
 }
 
-void	test_yaml_read_pointer_null()
+void	test_json_read_map()
 {
-	TypeManager::findType<TestYamlReadPointer>();
-	std::string value = "~";
-	// expect to find an empty string
-	std::string expected = "";
+	TypeManager::findType<TestJsonReadMap>();
+	std::string value = "{\"a\": 1, \"b\": 2, \"c\": 3}";
+	// expect to find the same map
+	std::map<std::string, int> expected({
+		std::make_pair("a", 1),
+		std::make_pair("b", 2),
+		std::make_pair("c", 3)
+	});
 
-	TestYamlReadPointer*	test;
+	TestJsonReadMap*	test;
 
-	std::string	input = "type: TestYamlReadPointer\nvalue: " + value;
+	std::string	input = "{\"type\": \"TestJsonReadMap\", \"value\": " + value + "}";
 
-	test = YamlReader::load<TestYamlReadPointer>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null pointer returned")
-	ASSERT(*test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + *test->value + "'")
+	test = JsonReader::load<TestJsonReadMap>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + map_to_string(expected) + "', was '" + map_to_string(test->value) + "'")
+}
+
+void	test_json_read_map_array()
+{
+	TypeManager::findType<TestJsonReadMap>();
+	std::string value = "[1, 2, 3]";
+	// expect to find an empty map
+	std::map<std::string, int> expected;
+
+	TestJsonReadMap*	test;
+
+	std::string	input = "{\"type\": \"TestJsonReadMap\", \"value\": " + value + "}";
+
+	test = JsonReader::load<TestJsonReadMap>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + map_to_string(expected) + "', was '" + map_to_string(test->value) + "'")
 }

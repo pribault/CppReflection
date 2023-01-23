@@ -1,7 +1,7 @@
 /*
  * MIT License
  * 
- * Copyright (c) 2023 paul ribault
+ * Copyright (c) 2022 paul ribault
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_write_uint16.cpp
- * Created: Saturday, 7th January 2023 1:22:15 pm
+ * File: test_json_read_list.cpp
+ * Created: Friday, 23rd December 2022 10:12:04 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: Saturday, 7th January 2023 1:24:40 pm
+ * Last Modified: Friday, 23rd December 2022 10:13:01 pm
  * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
@@ -39,10 +39,10 @@
 
 // CppReflection
 #include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlWriter.h>
+#include <CppReflection/JsonReader.h>
 
 // stl
-#include <limits>
+#include <vector>
 
 /*
 ****************
@@ -58,14 +58,14 @@ using namespace	CppReflection;
 ********************************************************************************
 */
 
-class	TestYamlWriteUint16 : public Reflectable
+class	TestJsonReadList : public Reflectable
 {
 	public:
-		START_REFLECTION(TestYamlWriteUint16)
+		START_REFLECTION(TestJsonReadList)
 		REFLECT_ATTRIBUTE(value)
 		END_REFLECTION()
 
-		uint16_t		value;
+		std::vector<int>	value;
 };
 
 /*
@@ -74,44 +74,53 @@ class	TestYamlWriteUint16 : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_uint16()
+template	<typename T>
+std::string	vector_to_string(const std::vector<T>& vector)
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	std::string	result = "[";
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::max() / 2;
+	for (size_t i = 0; i < vector.size(); i++)
+	{
+		result.append(std::to_string(vector[i]));
+		if (i != vector.size() - 1)
+			result.append(", ");
+	}
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
-
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	return result.append("]");
 }
 
-void	test_yaml_write_uint16_min()
+void	test_json_read_list()
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	TypeManager::findType<TestJsonReadList>();
+	std::string	value = "[1, 2, 3]";
+	// expect to find the same list
+	std::vector<int>	expected({
+		1,
+		2,
+		3
+	});
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::min();
+	TestJsonReadList*	test;
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
+	std::string	input = "{\"type\": \"TestJsonReadList\", \"value\": " + value + "}";
 
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	test = JsonReader::load<TestJsonReadList>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
 }
 
-void	test_yaml_write_uint16_max()
+void	test_json_read_list_map()
 {
-	TypeManager::findType<TestYamlWriteUint16>();
+	TypeManager::findType<TestJsonReadList>();
+	std::string	value = "{\"a\": 42, \"b\": 43, \"c\": 44}";
+	// expect to find an empty list
+	std::vector<int>	expected;
 
-	TestYamlWriteUint16	test;
-	test.value = std::numeric_limits<uint16_t>::max();
+	TestJsonReadList*	test;
 
-	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
+	std::string	input = "{\"type\": \"TestJsonReadList\", \"value\": " + value + "}";
 
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	test = JsonReader::load<TestJsonReadList>(input);
+	ASSERT(test, "JsonReader::load returned a null object")
+	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
 }

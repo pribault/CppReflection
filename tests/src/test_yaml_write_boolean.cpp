@@ -80,7 +80,7 @@ void	test_yaml_write_boolean()
 
 	std::string	expected = "type: TestYamlWriteBoolean\nvalue: true";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

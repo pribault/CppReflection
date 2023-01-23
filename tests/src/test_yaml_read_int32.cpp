@@ -82,7 +82,7 @@ void	test_yaml_read_int32()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -98,7 +98,7 @@ void	test_yaml_read_int32_null()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -114,7 +114,7 @@ void	test_yaml_read_int32_lowest()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -130,7 +130,7 @@ void	test_yaml_read_int32_underflow()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -146,7 +146,7 @@ void	test_yaml_read_int32_highest()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -162,7 +162,7 @@ void	test_yaml_read_int32_overflow()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -178,7 +178,7 @@ void	test_yaml_read_int32_float()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -194,7 +194,7 @@ void	test_yaml_read_int32_string()
 
 	std::string	input = "type: TestYamlReadInt32\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadInt32>(input);
+	test = YamlReader::load<TestYamlReadInt32>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve int32 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }

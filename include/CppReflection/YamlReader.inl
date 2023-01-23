@@ -30,14 +30,6 @@
  */
 
 /*
-**************
-** includes **
-**************
-*/
-
-// CppReflection
-
-/*
 ********************************************************************************
 ************************************ METHODS ***********************************
 ********************************************************************************
@@ -46,5 +38,5 @@
 template	<typename T>
 T*			CppReflection::YamlReader::load(const std::string& input)
 {
-	return dynamic_cast<T*>(this->load(input));
+	return dynamic_cast<T*>(YamlReader::load(input));
 }

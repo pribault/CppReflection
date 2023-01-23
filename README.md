@@ -18,11 +18,11 @@ Before compiling the project, you need to install the following dependencies :
 The environment variable VCPKG_PATH needs to be defined to the vcpkg install directory.
 You also need to install some dependencies using vcpkg, on Windows:
 
-`vcpkg install --triplet=x64-windows yaml-cpp`
+`vcpkg install --triplet=x64-windows yaml-cpp jsoncpp`
 
-On Unix systems:
+On Linux systems:
 
-`vcpkg install --triplet=x64-linux yaml-cpp`
+`vcpkg install --triplet=x64-linux yaml-cpp jsoncpp`
 
 ### Build
 
@@ -31,6 +31,7 @@ Some scripts are present inside the <b>scripts</b> directory to easily build and
 ```
 python ./scripts/cmake.py
 python ./scripts/build.py
+python ./scripts/runTests.py
 python ./scripts/release.py
 ```
 
@@ -104,7 +105,7 @@ Some classes are also present to help you manipulate your objects, for example t
 	rectangle.w = 1920;
 	rectangle.h = 1080;
 
-	std::cout << YamlWriter().compute(rectangle) << std::endl;
+	std::cout << YamlWriter::compute(rectangle) << std::endl;
 ```
 
 ## More details

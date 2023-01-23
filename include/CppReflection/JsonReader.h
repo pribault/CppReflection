@@ -1,7 +1,7 @@
 /*
  * MIT License
  * 
- * Copyright (c) 2022 paul ribault
+ * Copyright (c) 2023 paul ribault
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: YamlWriter.h
- * Created: 15th August 2022 12:11:15 am
- * Author: Paul Ribault (pribault.dev@gmail.com)
+ * File: JsonReader.h
+ * Created: Saturday, 7th January 2023 9:40:44 pm
+ * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: 15th August 2022 12:38:27 am
- * Modified By: Paul Ribault (pribault.dev@gmail.com)
+ * Last Modified: Saturday, 7th January 2023 9:40:46 pm
+ * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
 
 #pragma once
@@ -41,6 +41,7 @@
 #include <CppReflection/Iterator.h>
 
 // stl
+#include <list>
 #include <string>
 
 /*
@@ -49,14 +50,9 @@
 ****************
 */
 
-namespace	CppReflection
+namespace	Json
 {
-	class	Reflectable;
-}
-
-namespace	YAML
-{
-	class	Emitter;
+	class	Value;
 }
 
 /*
@@ -67,7 +63,7 @@ namespace	YAML
 
 namespace	CppReflection
 {
-	class	YamlWriter : public Iterator
+	class	JsonReader : public Iterator
 	{
 
 		/*
@@ -84,7 +80,9 @@ namespace	CppReflection
 			*************
 			*/
 
-			static std::string		compute(const Reflectable& reflectable);
+			static Reflectable*	load(const std::string& input);
+			template		<typename T>
+			static T*			load(const std::string& input);
 
 			virtual void	value(const IType* valueType, void* valueInstance) override;
 
@@ -114,10 +112,10 @@ namespace	CppReflection
 			*************
 			*/
 
-			YamlWriter();
-			~YamlWriter();
+			JsonReader();
+			~JsonReader();
 
-			std::string		internalCompute(const Reflectable& reflectable);
+			Reflectable*		internalLoad(const std::string& input);
 
 		/*
 		************************************************************************
@@ -133,7 +131,9 @@ namespace	CppReflection
 			****************
 			*/
 
-			YAML::Emitter*	_emitter;
+			std::list<Json::Value*>	_stack;
 
 	};
 }
+
+#include <CppReflection/JsonReader.inl>

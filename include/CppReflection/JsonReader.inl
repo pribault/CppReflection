@@ -21,49 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * File: test_yaml_write_list.cpp
- * Created: Saturday, 7th January 2023 1:22:52 pm
+ * File: JsonReader.inl
+ * Created: Saturday, 7th January 2023 9:43:32 pm
  * Author: Ribault Paul (pribault.dev@gmail.com)
  * 
- * Last Modified: Saturday, 7th January 2023 1:24:25 pm
+ * Last Modified: Saturday, 7th January 2023 9:43:34 pm
  * Modified By: Ribault Paul (pribault.dev@gmail.com)
  */
-
-#include "unit_tests.h"
-
-/*
-**************
-** includes **
-**************
-*/
-
-// CppReflection
-#include <CppReflection/Reflectable.h>
-#include <CppReflection/YamlWriter.h>
-
-/*
-****************
-** namespaces **
-****************
-*/
-
-using namespace	CppReflection;
-
-/*
-********************************************************************************
-************************************ CLASSES ***********************************
-********************************************************************************
-*/
-
-class	TestYamlWriteList : public Reflectable
-{
-	public:
-		START_REFLECTION(TestYamlWriteList)
-		REFLECT_ATTRIBUTE(value)
-		END_REFLECTION()
-
-		std::vector<int>	value;
-};
 
 /*
 ********************************************************************************
@@ -71,21 +35,8 @@ class	TestYamlWriteList : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_list()
+template	<typename T>
+T*			CppReflection::JsonReader::load(const std::string& input)
 {
-	TypeManager::findType<TestYamlWriteList>();
-
-	TestYamlWriteList	test;
-	test.value = {42, 43, 44};
-
-	std::string	expected = "\
-type: TestYamlWriteList\n\
-value:\n\
-  - 42\n\
-  - 43\n\
-  - 44";
-
-	std::string result = YamlWriter::compute(test);
-
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	return dynamic_cast<T*>(JsonReader::load(input));
 }

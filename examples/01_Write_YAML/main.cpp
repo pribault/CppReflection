@@ -114,7 +114,7 @@ int		main(int argc, char** argv)
 	rectangle.test3 = new int(-42);
 	rectangle.test4 = nullptr;
 
-	std::cout << YamlWriter().compute(rectangle) << std::endl;
+	std::cout << YamlWriter::compute(rectangle) << std::endl;
 
 	return 0;
 }

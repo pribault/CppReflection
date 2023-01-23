@@ -80,7 +80,7 @@ void	test_yaml_write_string()
 
 	std::string	expected = "type: TestYamlWriteString\nvalue: Hello World!";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -94,7 +94,7 @@ void	test_yaml_write_string_quotes()
 
 	std::string	expected = "type: TestYamlWriteString\nvalue: \"Hello\\nWorld!\"";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

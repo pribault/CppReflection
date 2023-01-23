@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
 	# run build command
 	print("starting '%s' build" % buildType)
-	result = os.system("cmake --build %s --config %s" % (buildDir, buildType))
+	result = os.system("cmake --build %s --config %s --parallel" % (buildDir, buildType))
 	if result:
 		print("Build KO!")
 	else:

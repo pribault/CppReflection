@@ -80,26 +80,42 @@ namespace	CppReflection
 			*************
 			*/
 
+			static Reflectable*	load(const std::string& input);
+			template		<typename T>
+			static T*			load(const std::string& input);
+
+			virtual void	value(const IType* valueType, void* valueInstance) override;
+
+			virtual void	beforeReflectable(Reflectable& reflectable) override;
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
+			virtual void	afterReflectable() override;
+
+			virtual void	beforeList(const IListType* listType, void* listInstance) override;
+			virtual void	listValue(const IType* valueType, void* valueInstance) override;
+			virtual void	afterList() override;
+
+			virtual void	beforeMap(const IMapType* mapType, void* mapInstance) override;
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
+			virtual void	afterMap() override;
+
+		/*
+		************************************************************************
+		******************************* PROTECTED ******************************
+		************************************************************************
+		*/
+
+		protected:
+
+			/*
+			*************
+			** methods **
+			*************
+			*/
+
 			YamlReader();
 			~YamlReader();
 
-			Reflectable*	load(const std::string& input);
-			template		<typename T>
-			T*				load(const std::string& input);
-
-			virtual void	value(const IType* valueType, void* valueInstance);
-
-			virtual void	beforeReflectable(Reflectable& reflectable);
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
-			virtual void	afterReflectable();
-
-			virtual void	beforeList(const IListType* listType, void* listInstance);
-			virtual void	listValue(const IType* valueType, void* valueInstance);
-			virtual void	afterList();
-
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
-			virtual void	afterMap();
+			Reflectable*	internalLoad(const std::string& input);
 
 		/*
 		************************************************************************

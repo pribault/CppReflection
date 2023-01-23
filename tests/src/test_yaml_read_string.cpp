@@ -82,7 +82,7 @@ void	test_yaml_read_string()
 
 	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadString>(input);
+	test = YamlReader::load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
@@ -98,7 +98,7 @@ void	test_yaml_read_string_null()
 
 	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadString>(input);
+	test = YamlReader::load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
@@ -114,7 +114,7 @@ void	test_yaml_read_string_array()
 
 	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadString>(input);
+	test = YamlReader::load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
@@ -130,7 +130,7 @@ void	test_yaml_read_string_map()
 
 	std::string	input = "type: TestYamlReadString\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadString>(input);
+	test = YamlReader::load<TestYamlReadString>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + test->value + "'")
 }
