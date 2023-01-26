@@ -46,6 +46,7 @@
 // stl
 #include <optional>
 #include <iostream>
+#include <limits>
 
 /*
 ****************
