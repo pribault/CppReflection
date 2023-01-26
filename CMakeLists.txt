@@ -48,9 +48,11 @@ set_target_properties(CppReflection
 	RUNTIME_OUTPUT_DIRECTORY ${CPPREFLECTION_OUTPUT_DIR}
 )
 
-target_link_libraries(CppReflection PRIVATE
-	yaml-cpp
-	jsoncpp_lib jsoncpp_object JsonCpp::JsonCpp
-)
+target_link_libraries(CppReflection PRIVATE yaml-cpp)
+if(UNIX)
+	target_link_libraries(CppReflection PRIVATE jsoncpp_object jsoncpp_static JsonCpp::JsonCpp)
+else()
+	target_link_libraries(CppReflection PRIVATE jsoncpp_lib jsoncpp_object JsonCpp::JsonCpp)
+endif()
 
 target_compile_features(CppReflection PRIVATE cxx_std_17)
