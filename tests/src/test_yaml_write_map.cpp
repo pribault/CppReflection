@@ -89,7 +89,7 @@ value:\n\
   second: 43\n\
   third: 44";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

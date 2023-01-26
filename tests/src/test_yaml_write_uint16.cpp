@@ -83,7 +83,7 @@ void	test_yaml_write_uint16()
 
 	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -97,7 +97,7 @@ void	test_yaml_write_uint16_min()
 
 	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -111,7 +111,7 @@ void	test_yaml_write_uint16_max()
 
 	std::string	expected = "type: TestYamlWriteUint16\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

@@ -94,7 +94,7 @@ void	test_yaml_read_boolean()
 
 		input = "type: TestYamlReadBoolean\nvalue: " + value;
 
-		test = YamlReader().load<TestYamlReadBoolean>(input);
+		test = YamlReader::load<TestYamlReadBoolean>(input);
 		ASSERT(test, "YamlReader::load returned a null object")
 		ASSERT(test->value == expected, "failed to retrieve boolean value from YAML input (" + value + "), expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 	}
@@ -111,7 +111,7 @@ void	test_yaml_read_boolean_null()
 
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadBoolean>(input);
+	test = YamlReader::load<TestYamlReadBoolean>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -127,7 +127,7 @@ void	test_yaml_read_boolean_array()
 
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadBoolean>(input);
+	test = YamlReader::load<TestYamlReadBoolean>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }
@@ -143,7 +143,7 @@ void	test_yaml_read_boolean_map()
 
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
-	test = YamlReader().load<TestYamlReadBoolean>(input);
+	test = YamlReader::load<TestYamlReadBoolean>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
 }

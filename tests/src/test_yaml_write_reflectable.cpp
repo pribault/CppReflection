@@ -98,7 +98,7 @@ value:\n\
   value: " + std::to_string(test.value.value) + "\n\
   str: " + test.value.str;
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

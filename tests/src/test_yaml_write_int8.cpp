@@ -83,7 +83,7 @@ void	test_yaml_write_int8()
 
 	std::string	expected = "type: TestYamlWriteInt8\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -97,7 +97,7 @@ void	test_yaml_write_int8_min()
 
 	std::string	expected = "type: TestYamlWriteInt8\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -111,7 +111,7 @@ void	test_yaml_write_int8_max()
 
 	std::string	expected = "type: TestYamlWriteInt8\nvalue: " + std::to_string(test.value);
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

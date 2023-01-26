@@ -112,7 +112,7 @@ value:\n\
   derivedValue: \"" + expectedDerivedValue + "\"\n\
 ";
 
-	test = YamlReader().load<TestYamlReadReflectable>(input);
+	test = YamlReader::load<TestYamlReadReflectable>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value, "null value")
 	const IType*	valueType = test->value->getType();
@@ -138,7 +138,7 @@ value:\n\
   type: TestYamlReadReflectable\n\
 ";
 
-	test = YamlReader().load<TestYamlReadReflectable>(input);
+	test = YamlReader::load<TestYamlReadReflectable>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value, "null value")
 	const IType*	valueType = test->value->getType();
@@ -161,7 +161,7 @@ type: TestYamlReadReflectable\n\
 value: ~\n\
 ";
 
-	test = YamlReader().load<TestYamlReadReflectable>(input);
+	test = YamlReader::load<TestYamlReadReflectable>(input);
 	ASSERT(test, "YamlReader::load returned a null object")
 	ASSERT(test->value, "null value")
 	const IType*	valueType = test->value->getType();

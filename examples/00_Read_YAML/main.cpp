@@ -122,7 +122,7 @@ test5:\n\
   x: -858993460\n\
   y: -858993460";
 
-	rectangle = YamlReader().load(input);
+	rectangle = YamlReader::load(input);
 
 	return 0;
 }

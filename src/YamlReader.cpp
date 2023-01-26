@@ -91,6 +91,11 @@ YamlReader::~YamlReader()
 
 Reflectable*	YamlReader::load(const std::string& input)
 {
+	return YamlReader().internalLoad(input);
+}
+
+Reflectable*	YamlReader::internalLoad(const std::string& input)
+{
 	Reflectable*	result = nullptr;
 
 	YAML::Node	root = YAML::Load(input);
@@ -475,7 +480,6 @@ void	YamlReader::afterReflectable()
 void	YamlReader::beforeList(const IListType* listType, void* listInstance)
 {
 	const YAML::Node&		node = *_stack.back();
-	YAML::const_iterator	it;
 	const IType*			valueType = listType->getSubType();
 	void*					valueInstance = nullptr;
 

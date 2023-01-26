@@ -67,6 +67,10 @@ void	test_type_reflectable_inheritance();
 void	test_type_reflectable_attributes();
 void	test_type_pointer();
 
+/**
+ * YAML tests
+ */
+
 void	test_yaml_read_string();
 void	test_yaml_read_string_null();
 void	test_yaml_read_string_array();
@@ -209,3 +213,136 @@ void	test_yaml_write_reflectable();
 
 void	test_yaml_write_pointer();
 void	test_yaml_write_pointer_null();
+
+/**
+ * JSON tests
+ */
+
+void	test_json_read_string();
+void	test_json_read_string_array();
+void	test_json_read_string_map();
+
+void	test_json_read_uint8();
+void	test_json_read_uint8_lowest();
+void	test_json_read_uint8_underflow();
+void	test_json_read_uint8_highest();
+void	test_json_read_uint8_overflow();
+void	test_json_read_uint8_float();
+void	test_json_read_uint8_string();
+
+void	test_json_read_uint16();
+void	test_json_read_uint16_lowest();
+void	test_json_read_uint16_underflow();
+void	test_json_read_uint16_highest();
+void	test_json_read_uint16_overflow();
+void	test_json_read_uint16_float();
+void	test_json_read_uint16_string();
+
+void	test_json_read_uint32();
+void	test_json_read_uint32_lowest();
+void	test_json_read_uint32_underflow();
+void	test_json_read_uint32_highest();
+void	test_json_read_uint32_overflow();
+void	test_json_read_uint32_float();
+void	test_json_read_uint32_string();
+
+void	test_json_read_uint64();
+void	test_json_read_uint64_lowest();
+void	test_json_read_uint64_underflow();
+void	test_json_read_uint64_highest();
+void	test_json_read_uint64_overflow();
+void	test_json_read_uint64_float();
+void	test_json_read_uint64_string();
+
+void	test_json_read_int8();
+void	test_json_read_int8_lowest();
+void	test_json_read_int8_underflow();
+void	test_json_read_int8_highest();
+void	test_json_read_int8_overflow();
+void	test_json_read_int8_float();
+void	test_json_read_int8_string();
+
+void	test_json_read_int16();
+void	test_json_read_int16_lowest();
+void	test_json_read_int16_underflow();
+void	test_json_read_int16_highest();
+void	test_json_read_int16_overflow();
+void	test_json_read_int16_float();
+void	test_json_read_int16_string();
+
+void	test_json_read_int32();
+void	test_json_read_int32_lowest();
+void	test_json_read_int32_underflow();
+void	test_json_read_int32_highest();
+void	test_json_read_int32_overflow();
+void	test_json_read_int32_float();
+void	test_json_read_int32_string();
+
+void	test_json_read_int64();
+void	test_json_read_int64_lowest();
+void	test_json_read_int64_underflow();
+void	test_json_read_int64_highest();
+void	test_json_read_int64_overflow();
+void	test_json_read_int64_float();
+void	test_json_read_int64_string();
+
+void	test_json_read_boolean();
+void	test_json_read_boolean_array();
+void	test_json_read_boolean_map();
+
+void	test_json_read_list();
+void	test_json_read_list_map();
+
+void	test_json_read_map();
+void	test_json_read_map_array();
+
+void	test_json_read_pointer();
+
+void	test_json_read_reflectable();
+void	test_json_read_reflectable_type_mismatch();
+
+void	test_json_write_boolean();
+
+void	test_json_write_int8();
+void	test_json_write_int8_min();
+void	test_json_write_int8_max();
+
+void	test_json_write_int16();
+void	test_json_write_int16_min();
+void	test_json_write_int16_max();
+
+void	test_json_write_int32();
+void	test_json_write_int32_min();
+void	test_json_write_int32_max();
+
+void	test_json_write_int64();
+void	test_json_write_int64_min();
+void	test_json_write_int64_max();
+
+void	test_json_write_uint8();
+void	test_json_write_uint8_min();
+void	test_json_write_uint8_max();
+
+void	test_json_write_uint16();
+void	test_json_write_uint16_min();
+void	test_json_write_uint16_max();
+
+void	test_json_write_uint32();
+void	test_json_write_uint32_min();
+void	test_json_write_uint32_max();
+
+void	test_json_write_uint64();
+void	test_json_write_uint64_min();
+void	test_json_write_uint64_max();
+
+void	test_json_write_string();
+void	test_json_write_string_quotes();
+
+void	test_json_write_list();
+
+void	test_json_write_map();
+
+void	test_json_write_reflectable();
+
+void	test_json_write_pointer();
+void	test_json_write_pointer_null();

@@ -80,7 +80,7 @@ void	test_yaml_write_pointer()
 
 	std::string	expected = "type: TestYamlWritePointer\nvalue: Hello World!";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }
@@ -94,7 +94,7 @@ void	test_yaml_write_pointer_null()
 
 	std::string	expected = "type: TestYamlWritePointer\nvalue: ~";
 
-	std::string result = YamlWriter().compute(test);
+	std::string result = YamlWriter::compute(test);
 
 	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
 }

@@ -22,6 +22,7 @@ add_subdirectory(tests)
 
 # Find required packages
 find_package(yaml-cpp CONFIG REQUIRED)
+find_package(jsoncpp CONFIG REQUIRED)
 
 # Retrieve sources
 file(GLOB_RECURSE SOURCES RELATIVE
@@ -47,8 +48,11 @@ set_target_properties(CppReflection
 	RUNTIME_OUTPUT_DIRECTORY ${CPPREFLECTION_OUTPUT_DIR}
 )
 
-target_link_libraries(CppReflection PRIVATE
-	yaml-cpp
-)
+target_link_libraries(CppReflection PRIVATE yaml-cpp)
+if(UNIX)
+	target_link_libraries(CppReflection PRIVATE jsoncpp_object jsoncpp_static JsonCpp::JsonCpp)
+else()
+	target_link_libraries(CppReflection PRIVATE jsoncpp_lib jsoncpp_object JsonCpp::JsonCpp)
+endif()
 
 target_compile_features(CppReflection PRIVATE cxx_std_17)
