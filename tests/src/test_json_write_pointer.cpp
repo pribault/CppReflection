@@ -71,7 +71,7 @@ class	TestJsonWritePointer : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_pointer()
+GTEST_TEST(JsonWriter, pointer)
 {
 	TypeManager::findType<TestJsonWritePointer>();
 
@@ -82,10 +82,10 @@ void	test_json_write_pointer()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_pointer_null()
+GTEST_TEST(JsonWriter, pointer_null)
 {
 	TypeManager::findType<TestJsonWritePointer>();
 
@@ -96,5 +96,5 @@ void	test_json_write_pointer_null()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

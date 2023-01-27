@@ -74,7 +74,7 @@ class	TestYamlWriteDouble : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_double()
+GTEST_TEST(YamlWriter, double)
 {
 	TypeManager::findType<TestYamlWriteDouble>();
 
@@ -85,10 +85,10 @@ void	test_yaml_write_double()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_double_min()
+GTEST_TEST(YamlWriter, double_min)
 {
 	TypeManager::findType<TestYamlWriteDouble>();
 
@@ -99,10 +99,10 @@ void	test_yaml_write_double_min()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_double_max()
+GTEST_TEST(YamlWriter, double_max)
 {
 	TypeManager::findType<TestYamlWriteDouble>();
 
@@ -113,5 +113,5 @@ void	test_yaml_write_double_max()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

@@ -71,7 +71,7 @@ class	TestYamlReadBoolean : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_boolean()
+GTEST_TEST(YamlReader, boolean)
 {
 	std::map<std::string, bool>	testsMap({
 		std::make_pair("true", true),
@@ -95,12 +95,12 @@ void	test_yaml_read_boolean()
 		input = "type: TestYamlReadBoolean\nvalue: " + value;
 
 		test = YamlReader::load<TestYamlReadBoolean>(input);
-		ASSERT(test, "YamlReader::load returned a null object")
-		ASSERT(test->value == expected, "failed to retrieve boolean value from YAML input (" + value + "), expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+		GTEST_ASSERT_TRUE(test);
+		GTEST_ASSERT_EQ(test->value, expected);
 	}
 }
 
-void	test_yaml_read_boolean_null()
+GTEST_TEST(YamlReader, boolean_fromNull)
 {
 	TypeManager::findType<TestYamlReadBoolean>();
 	std::string value = "~";
@@ -112,11 +112,11 @@ void	test_yaml_read_boolean_null()
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_boolean_array()
+GTEST_TEST(YamlReader, boolean_fromArray)
 {
 	TypeManager::findType<TestYamlReadBoolean>();
 	std::string value = "\n- 42\n- 43\n- 44";
@@ -128,11 +128,11 @@ void	test_yaml_read_boolean_array()
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_boolean_map()
+GTEST_TEST(YamlReader, boolean_fromMap)
 {
 	TypeManager::findType<TestYamlReadBoolean>();
 	std::string value = "\n  a: 42\n  b: 43\n  c: 44";
@@ -144,6 +144,6 @@ void	test_yaml_read_boolean_map()
 	std::string	input = "type: TestYamlReadBoolean\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadBoolean>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

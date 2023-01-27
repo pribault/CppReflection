@@ -71,7 +71,7 @@ class	TestJsonWriteBoolean : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_boolean()
+GTEST_TEST(JsonWriter, boolean)
 {
 	TypeManager::findType<TestJsonWriteBoolean>();
 
@@ -82,5 +82,5 @@ void	test_json_write_boolean()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

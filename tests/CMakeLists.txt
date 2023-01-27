@@ -5,6 +5,9 @@ project(unit_tests CXX)
 # Load common cmake
 include(${PROJECT_SOURCE_DIR}/../cmake/CppReflectionCommon.cmake)
 
+# Find required packages
+find_package(GTest CONFIG REQUIRED)
+
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
@@ -24,4 +27,6 @@ add_executable(unit_tests ${SOURCES})
 
 target_link_libraries(unit_tests PRIVATE
 	CppReflection
+	GTest::gtest
+	GTest::gtest_main
 )

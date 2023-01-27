@@ -93,7 +93,7 @@ class	TestJsonReadReflectable : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_reflectable()
+GTEST_TEST(JsonReader, reflectable)
 {
 	IType*	reflectableType = TypeManager::findType<TestJsonReadReflectable>();
 	IType*	baseType = TypeManager::findType<TestJsonReadReflectable_Base>();
@@ -117,16 +117,16 @@ void	test_json_read_reflectable()
 ";
 
 	test = JsonReader::load<TestJsonReadReflectable>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value, "null value")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
 	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *derivedType, "expecting value type '" + derivedType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
+	GTEST_ASSERT_EQ(*valueType, *derivedType);
+	GTEST_ASSERT_EQ(test->value->baseValue, expectedBaseValue);
 	std::string derivedValue = static_cast<TestJsonReadReflectable_Derived*>(test->value)->derivedValue;
-	ASSERT(derivedValue == expectedDerivedValue, "base value to be '" + expectedDerivedValue + "' but was '" + derivedValue + "'")
+	GTEST_ASSERT_EQ(derivedValue, expectedDerivedValue);
 }
 
-void	test_json_read_reflectable_type_mismatch()
+GTEST_TEST(JsonReader, reflectable_withTypeMismatch)
 {
 	IType*	reflectableType = TypeManager::findType<TestJsonReadReflectable>();
 	IType*	baseType = TypeManager::findType<TestJsonReadReflectable_Base>();
@@ -147,9 +147,9 @@ void	test_json_read_reflectable_type_mismatch()
 ";
 
 	test = JsonReader::load<TestJsonReadReflectable>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value, "null value")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
 	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *baseType, "expecting value type '" + baseType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
+	GTEST_ASSERT_EQ(*valueType, *baseType);
+	GTEST_ASSERT_EQ(test->value->baseValue, expectedBaseValue);
 }

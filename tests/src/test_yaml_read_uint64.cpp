@@ -71,7 +71,7 @@ class	TestYamlReadUint64 : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_uint64()
+GTEST_TEST(YamlReader, uint64)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "42";
@@ -83,11 +83,11 @@ void	test_yaml_read_uint64()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_null()
+GTEST_TEST(YamlReader, uint64_fromNull)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "~";
@@ -99,11 +99,11 @@ void	test_yaml_read_uint64_null()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_lowest()
+GTEST_TEST(YamlReader, uint64_fromLowest)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "0";
@@ -115,11 +115,11 @@ void	test_yaml_read_uint64_lowest()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_underflow()
+GTEST_TEST(YamlReader, uint64_fromUnderflow)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "-1";
@@ -131,11 +131,11 @@ void	test_yaml_read_uint64_underflow()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_highest()
+GTEST_TEST(YamlReader, uint64_fromHighest)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "18446744073709551615";
@@ -147,11 +147,11 @@ void	test_yaml_read_uint64_highest()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_overflow()
+GTEST_TEST(YamlReader, uint64_fromOverflow)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "18446744073709551616";
@@ -163,11 +163,11 @@ void	test_yaml_read_uint64_overflow()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_float()
+GTEST_TEST(YamlReader, uint64_fromFloat)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "42.42424242";
@@ -179,11 +179,11 @@ void	test_yaml_read_uint64_float()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_uint64_string()
+GTEST_TEST(YamlReader, uint64_fromString)
 {
 	TypeManager::findType<TestYamlReadUint64>();
 	std::string value = "Hello world!";
@@ -195,6 +195,6 @@ void	test_yaml_read_uint64_string()
 	std::string	input = "type: TestYamlReadUint64\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadUint64>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

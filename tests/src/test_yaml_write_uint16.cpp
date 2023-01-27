@@ -74,7 +74,7 @@ class	TestYamlWriteUint16 : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_uint16()
+GTEST_TEST(YamlWriter, uint16)
 {
 	TypeManager::findType<TestYamlWriteUint16>();
 
@@ -85,10 +85,10 @@ void	test_yaml_write_uint16()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_uint16_min()
+GTEST_TEST(YamlWriter, uint16_min)
 {
 	TypeManager::findType<TestYamlWriteUint16>();
 
@@ -99,10 +99,10 @@ void	test_yaml_write_uint16_min()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_uint16_max()
+GTEST_TEST(YamlWriter, uint16_max)
 {
 	TypeManager::findType<TestYamlWriteUint16>();
 
@@ -113,5 +113,5 @@ void	test_yaml_write_uint16_max()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

@@ -73,7 +73,7 @@ class	TestYamlReadPointer : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_pointer()
+GTEST_TEST(YamlReader, pointer)
 {
 	TypeManager::findType<TestYamlReadPointer>();
 	std::string value = "'Hello world!'";
@@ -85,12 +85,12 @@ void	test_yaml_read_pointer()
 	std::string	input = "type: TestYamlReadPointer\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadPointer>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null pointer returned")
-	ASSERT(*test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + *test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
+	GTEST_ASSERT_EQ(*test->value, expected);
 }
 
-void	test_yaml_read_pointer_null()
+GTEST_TEST(YamlReader, pointer_fromNull)
 {
 	TypeManager::findType<TestYamlReadPointer>();
 	std::string value = "~";
@@ -102,7 +102,7 @@ void	test_yaml_read_pointer_null()
 	std::string	input = "type: TestYamlReadPointer\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadPointer>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null pointer returned")
-	ASSERT(*test->value == expected, "failed to retrieve string value from YAML input, expecting '" + expected + "', was '" + *test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
+	GTEST_ASSERT_EQ(*test->value, expected);
 }

@@ -74,7 +74,7 @@ class	TestYamlWriteFloat : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_float()
+GTEST_TEST(YamlWriter, float)
 {
 	TypeManager::findType<TestYamlWriteFloat>();
 
@@ -85,10 +85,10 @@ void	test_yaml_write_float()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_float_min()
+GTEST_TEST(YamlWriter, float_min)
 {
 	TypeManager::findType<TestYamlWriteFloat>();
 
@@ -99,10 +99,10 @@ void	test_yaml_write_float_min()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_float_max()
+GTEST_TEST(YamlWriter, float_max)
 {
 	TypeManager::findType<TestYamlWriteFloat>();
 
@@ -113,5 +113,5 @@ void	test_yaml_write_float_max()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

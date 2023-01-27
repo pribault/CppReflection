@@ -71,7 +71,7 @@ class	TestJsonReadBoolean : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_boolean()
+GTEST_TEST(JsonReader, boolean)
 {
 	std::map<std::string, bool>	testsMap({
 		std::make_pair("true", true),
@@ -95,12 +95,12 @@ void	test_json_read_boolean()
 		input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
 		test = JsonReader::load<TestJsonReadBoolean>(input);
-		ASSERT(test, "JsonReader::load returned a null object")
-		ASSERT(test->value == expected, "failed to retrieve boolean value from JSON input (" + value + "), expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+		GTEST_ASSERT_TRUE(test);
+		GTEST_ASSERT_EQ(test->value, expected);
 	}
 }
 
-void	test_json_read_boolean_array()
+GTEST_TEST(JsonReader, boolean_fromArray)
 {
 	TypeManager::findType<TestJsonReadBoolean>();
 	std::string value = "\n- 42\n- 43\n- 44";
@@ -112,11 +112,11 @@ void	test_json_read_boolean_array()
 	std::string	input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadBoolean>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_boolean_map()
+GTEST_TEST(JsonReader, boolean_fromMap)
 {
 	TypeManager::findType<TestJsonReadBoolean>();
 	std::string value = "\n  a: 42\n  b: 43\n  c: 44";
@@ -128,6 +128,6 @@ void	test_json_read_boolean_map()
 	std::string	input = "{\"type\": \"TestJsonReadBoolean\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadBoolean>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

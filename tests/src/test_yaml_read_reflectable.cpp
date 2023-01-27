@@ -93,7 +93,7 @@ class	TestYamlReadReflectable : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_reflectable()
+GTEST_TEST(YamlReader, reflectable)
 {
 	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
 	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
@@ -113,16 +113,16 @@ value:\n\
 ";
 
 	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null value")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
 	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *derivedType, "expecting value type '" + derivedType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
+	GTEST_ASSERT_EQ(*valueType, *derivedType);
+	GTEST_ASSERT_EQ(test->value->baseValue, expectedBaseValue);
 	std::string derivedValue = static_cast<TestYamlReadReflectable_Derived*>(test->value)->derivedValue;
-	ASSERT(derivedValue == expectedDerivedValue, "base value to be '" + expectedDerivedValue + "' but was '" + derivedValue + "'")
+	GTEST_ASSERT_EQ(derivedValue, expectedDerivedValue);
 }
 
-void	test_yaml_read_reflectable_type_mismatch()
+GTEST_TEST(YamlReader, reflectable_withTypeMismatch)
 {
 	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
 	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
@@ -139,14 +139,14 @@ value:\n\
 ";
 
 	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null value")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
 	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *baseType, "expecting value type '" + baseType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
+	GTEST_ASSERT_EQ(*valueType, *baseType);
+	GTEST_ASSERT_EQ(test->value->baseValue, expectedBaseValue);
 }
 
-void	test_yaml_read_reflectable_null()
+GTEST_TEST(YamlReader, reflectable_fromNull)
 {
 	IType*	reflectableType = TypeManager::findType<TestYamlReadReflectable>();
 	IType*	baseType = TypeManager::findType<TestYamlReadReflectable_Base>();
@@ -162,9 +162,9 @@ value: ~\n\
 ";
 
 	test = YamlReader::load<TestYamlReadReflectable>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value, "null value")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
 	const IType*	valueType = test->value->getType();
-	ASSERT(*valueType == *baseType, "expecting value type '" + baseType->getName() + "' but was '" + valueType->getName() + "'")
-	ASSERT(test->value->baseValue == expectedBaseValue, "base value to be '" + expectedBaseValue + "' but was '" + test->value->baseValue + "'")
+	GTEST_ASSERT_EQ(*valueType, *baseType);
+	GTEST_ASSERT_EQ(test->value->baseValue, expectedBaseValue);
 }

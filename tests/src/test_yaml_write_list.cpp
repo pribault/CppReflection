@@ -71,7 +71,7 @@ class	TestYamlWriteList : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_list()
+GTEST_TEST(YamlWriter, list)
 {
 	TypeManager::findType<TestYamlWriteList>();
 
@@ -87,5 +87,5 @@ value:\n\
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

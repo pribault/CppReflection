@@ -74,7 +74,7 @@ class	TestJsonWriteDouble : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_double()
+GTEST_TEST(JsonWriter, double)
 {
 	TypeManager::findType<TestJsonWriteDouble>();
 
@@ -85,10 +85,10 @@ void	test_json_write_double()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_double_min()
+GTEST_TEST(JsonWriter, double_min)
 {
 	TypeManager::findType<TestJsonWriteDouble>();
 
@@ -99,10 +99,10 @@ void	test_json_write_double_min()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_double_max()
+GTEST_TEST(JsonWriter, double_max)
 {
 	TypeManager::findType<TestJsonWriteDouble>();
 
@@ -113,5 +113,5 @@ void	test_json_write_double_max()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

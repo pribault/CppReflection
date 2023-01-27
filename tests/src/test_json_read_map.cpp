@@ -74,28 +74,7 @@ class	TestJsonReadMap : public Reflectable
 ********************************************************************************
 */
 
-template	<typename K, typename V>
-std::string	map_to_string(const std::map<K, V>& map)
-{
-	std::string	result = "{";
-	size_t	index = 0;
-	typename std::map<K, V>::const_iterator	it;
-	typename std::map<K, V>::const_iterator	end = map.cend();
-
-	for (it = map.cbegin(); it != end; it++)
-	{
-		K	key = it->first;
-		V	value = it->second;
-		result.append(key + ": " + std::to_string(value));
-		if (index != map.size() - 1)
-			result.append(", ");
-		index++;
-	}
-
-	return result.append("}");
-}
-
-void	test_json_read_map()
+GTEST_TEST(JsonReader, map)
 {
 	TypeManager::findType<TestJsonReadMap>();
 	std::string value = "{\"a\": 1, \"b\": 2, \"c\": 3}";
@@ -111,11 +90,11 @@ void	test_json_read_map()
 	std::string	input = "{\"type\": \"TestJsonReadMap\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadMap>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + map_to_string(expected) + "', was '" + map_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_map_array()
+GTEST_TEST(JsonReader, map_fromArray)
 {
 	TypeManager::findType<TestJsonReadMap>();
 	std::string value = "[1, 2, 3]";
@@ -127,6 +106,6 @@ void	test_json_read_map_array()
 	std::string	input = "{\"type\": \"TestJsonReadMap\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadMap>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + map_to_string(expected) + "', was '" + map_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

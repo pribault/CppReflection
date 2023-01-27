@@ -74,22 +74,7 @@ class	TestYamlReadList : public Reflectable
 ********************************************************************************
 */
 
-template	<typename T>
-std::string	vector_to_string(const std::vector<T>& vector)
-{
-	std::string	result = "[";
-
-	for (size_t i = 0; i < vector.size(); i++)
-	{
-		result.append(std::to_string(vector[i]));
-		if (i != vector.size() - 1)
-			result.append(", ");
-	}
-
-	return result.append("]");
-}
-
-void	test_yaml_read_list()
+GTEST_TEST(YamlReader, list)
 {
 	TypeManager::findType<TestYamlReadList>();
 	std::string	value = "\n- 1\n- 2\n- 3";
@@ -105,12 +90,12 @@ void	test_yaml_read_list()
 	std::string	input = "type: TestYamlReadList\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadList>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
 
-void	test_yaml_read_list_null()
+GTEST_TEST(YamlReader, list_fromNull)
 {
 	TypeManager::findType<TestYamlReadList>();
 	std::string	value = "~";
@@ -122,11 +107,11 @@ void	test_yaml_read_list_null()
 	std::string	input = "type: TestYamlReadList\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadList>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_yaml_read_list_map()
+GTEST_TEST(YamlReader, list_fromMap)
 {
 	TypeManager::findType<TestYamlReadList>();
 	std::string	value = "\n  a: 42\n  b: 43\n  c: 44";
@@ -138,6 +123,6 @@ void	test_yaml_read_list_map()
 	std::string	input = "type: TestYamlReadList\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadList>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from YAML input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

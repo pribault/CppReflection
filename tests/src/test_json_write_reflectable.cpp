@@ -83,7 +83,7 @@ class	TestJsonWriteReflectable : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_reflectable()
+GTEST_TEST(JsonWriter, reflectable)
 {
 	TypeManager::findType<TestJsonWriteReflectable>();
 
@@ -104,5 +104,5 @@ void	test_json_write_reflectable()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

@@ -71,7 +71,7 @@ class	TestYamlWriteString : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_string()
+GTEST_TEST(YamlWriter, string)
 {
 	TypeManager::findType<TestYamlWriteString>();
 
@@ -82,10 +82,10 @@ void	test_yaml_write_string()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_string_quotes()
+GTEST_TEST(YamlWriter, string_quotes)
 {
 	TypeManager::findType<TestYamlWriteString>();
 
@@ -96,5 +96,5 @@ void	test_yaml_write_string_quotes()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

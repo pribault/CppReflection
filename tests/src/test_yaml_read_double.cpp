@@ -75,7 +75,7 @@ class	TestYamlReadDouble : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_double()
+GTEST_TEST(YamlReader, double)
 {
 	TypeManager::findType<TestYamlReadDouble>();
 	std::string value = "42.424242";
@@ -87,11 +87,11 @@ void	test_yaml_read_double()
 	std::string	input = "type: TestYamlReadDouble\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadDouble>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<double>::epsilon(), "failed to retrieve double value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_yaml_read_double_null()
+GTEST_TEST(YamlReader, double_fromNull)
 {
 	TypeManager::findType<TestYamlReadDouble>();
 	std::string value = "~";
@@ -103,11 +103,11 @@ void	test_yaml_read_double_null()
 	std::string	input = "type: TestYamlReadDouble\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadDouble>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<double>::epsilon(), "failed to retrieve double value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_yaml_read_double_lowest()
+GTEST_TEST(YamlReader, double_fromLowest)
 {
 	TypeManager::findType<TestYamlReadDouble>();
 	double expected = std::numeric_limits<double>::min();
@@ -118,11 +118,11 @@ void	test_yaml_read_double_lowest()
 	std::string	input = "type: TestYamlReadDouble\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadDouble>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<double>::epsilon(), "failed to retrieve double value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_yaml_read_double_highest()
+GTEST_TEST(YamlReader, double_fromHighest)
 {
 	TypeManager::findType<TestYamlReadDouble>();
 	double expected = std::numeric_limits<double>::max();
@@ -133,11 +133,11 @@ void	test_yaml_read_double_highest()
 	std::string	input = "type: TestYamlReadDouble\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadDouble>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<double>::epsilon(), "failed to retrieve double value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_yaml_read_double_string()
+GTEST_TEST(YamlReader, double_fromString)
 {
 	TypeManager::findType<TestYamlReadDouble>();
 	std::string value = "Hello world!";
@@ -149,6 +149,6 @@ void	test_yaml_read_double_string()
 	std::string	input = "type: TestYamlReadDouble\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadDouble>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<double>::epsilon(), "failed to retrieve double value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }

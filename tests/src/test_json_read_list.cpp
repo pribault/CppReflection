@@ -74,22 +74,7 @@ class	TestJsonReadList : public Reflectable
 ********************************************************************************
 */
 
-template	<typename T>
-std::string	vector_to_string(const std::vector<T>& vector)
-{
-	std::string	result = "[";
-
-	for (size_t i = 0; i < vector.size(); i++)
-	{
-		result.append(std::to_string(vector[i]));
-		if (i != vector.size() - 1)
-			result.append(", ");
-	}
-
-	return result.append("]");
-}
-
-void	test_json_read_list()
+GTEST_TEST(JsonReader, list)
 {
 	TypeManager::findType<TestJsonReadList>();
 	std::string	value = "[1, 2, 3]";
@@ -105,11 +90,11 @@ void	test_json_read_list()
 	std::string	input = "{\"type\": \"TestJsonReadList\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadList>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_list_map()
+GTEST_TEST(JsonReader, list_fromMap)
 {
 	TypeManager::findType<TestJsonReadList>();
 	std::string	value = "{\"a\": 42, \"b\": 43, \"c\": 44}";
@@ -121,6 +106,6 @@ void	test_json_read_list_map()
 	std::string	input = "{\"type\": \"TestJsonReadList\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadList>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + vector_to_string(expected) + "', was '" + vector_to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

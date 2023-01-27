@@ -74,7 +74,7 @@ class	TestJsonWriteUint32 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_uint32()
+GTEST_TEST(JsonWriter, uint32)
 {
 	TypeManager::findType<TestJsonWriteUint32>();
 
@@ -85,10 +85,10 @@ void	test_json_write_uint32()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_uint32_min()
+GTEST_TEST(JsonWriter, uint32_min)
 {
 	TypeManager::findType<TestJsonWriteUint32>();
 
@@ -99,10 +99,10 @@ void	test_json_write_uint32_min()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_uint32_max()
+GTEST_TEST(JsonWriter, uint32_max)
 {
 	TypeManager::findType<TestJsonWriteUint32>();
 
@@ -113,5 +113,5 @@ void	test_json_write_uint32_max()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
