@@ -112,6 +112,18 @@ void	test_yaml_read_uint64_overflow();
 void	test_yaml_read_uint64_float();
 void	test_yaml_read_uint64_string();
 
+void	test_yaml_read_float();
+void	test_yaml_read_float_null();
+void	test_yaml_read_float_lowest();
+void	test_yaml_read_float_highest();
+void	test_yaml_read_float_string();
+
+void	test_yaml_read_double();
+void	test_yaml_read_double_null();
+void	test_yaml_read_double_lowest();
+void	test_yaml_read_double_highest();
+void	test_yaml_read_double_string();
+
 void	test_yaml_read_int8();
 void	test_yaml_read_int8_null();
 void	test_yaml_read_int8_lowest();
@@ -202,6 +214,14 @@ void	test_yaml_write_uint64();
 void	test_yaml_write_uint64_min();
 void	test_yaml_write_uint64_max();
 
+void	test_yaml_write_float();
+void	test_yaml_write_float_min();
+void	test_yaml_write_float_max();
+
+void	test_yaml_write_double();
+void	test_yaml_write_double_min();
+void	test_yaml_write_double_max();
+
 void	test_yaml_write_string();
 void	test_yaml_write_string_quotes();
 
@@ -253,6 +273,16 @@ void	test_json_read_uint64_highest();
 void	test_json_read_uint64_overflow();
 void	test_json_read_uint64_float();
 void	test_json_read_uint64_string();
+
+void	test_json_read_float();
+void	test_json_read_float_lowest();
+void	test_json_read_float_highest();
+void	test_json_read_float_string();
+
+void	test_json_read_double();
+void	test_json_read_double_lowest();
+void	test_json_read_double_highest();
+void	test_json_read_double_string();
 
 void	test_json_read_int8();
 void	test_json_read_int8_lowest();
@@ -334,6 +364,14 @@ void	test_json_write_uint32_max();
 void	test_json_write_uint64();
 void	test_json_write_uint64_min();
 void	test_json_write_uint64_max();
+
+void	test_json_write_float();
+void	test_json_write_float_min();
+void	test_json_write_float_max();
+
+void	test_json_write_double();
+void	test_json_write_double_min();
+void	test_json_write_double_max();
 
 void	test_json_write_string();
 void	test_json_write_string_quotes();
