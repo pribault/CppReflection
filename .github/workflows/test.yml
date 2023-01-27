@@ -2,17 +2,17 @@ name: Build
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "master", "develop" ]
 
 jobs:
   build:
-    name: ${{ matrix.name }}-${{ matrix.buildType }}-${{ matrix.linkage }}-${{ github.workflow }}
+    name: ${{ matrix.name }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        linkage: [Dynamic, Static]
-        buildType: [Release, Debug]
         os: [ubuntu-latest, windows-latest]
         include:
           # Common variables
@@ -26,14 +26,6 @@ jobs:
             name: ubuntu
             vcpkgPath: /usr/local/share/vcpkg
             vcpkgTriplet: x64-linux
-          # Build type variables
-          - buildType: Release
-          - buildType: Debug
-          # Linkage variables
-          - linkage: Dynamic
-            cmakeParameters: --dynamic
-          - linkage: Static
-            cmakeParameters: --static
 
     env:
       VCPKG_PATH: ${{ matrix.vcpkgPath }}
@@ -55,19 +47,10 @@ jobs:
       run: vcpkg install --triplet=${{ matrix.vcpkgTriplet }} yaml-cpp jsoncpp
 
     - name: Configure CMake
-      run: python3 ${{ github.workspace }}/scripts/cmake.py -b ${{ matrix.buildType }} ${{ matrix.cmakeParameters }}
+      run: python3 ${{ github.workspace }}/scripts/cmake.py
 
     - name: Build
-      run: python3 ${{ github.workspace }}/scripts/build.py -b ${{ matrix.buildType }}
+      run: python3 ${{ github.workspace }}/scripts/build.py
 
     - name: Run unit tests
-      run: python3 ${{ github.workspace }}/scripts/runTests.py -b ${{ matrix.buildType }}
-
-    - name: Release
-      run: python3 ${{ github.workspace }}/scripts/release.py -b ${{ matrix.buildType }}
-
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.os }}-${{ matrix.buildType }}-${{ matrix.linkage }}-artifacts
-        path: ${{ github.workspace }}/build/release/
+      run: python3 ${{ github.workspace }}/scripts/runTests.py
