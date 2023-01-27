@@ -415,6 +415,64 @@ void JsonReader::value(const IType *valueType, void *valueInstance)
 				break;
 		}
 	}
+	else if (*valueType == *TypeManager::findType<float>())
+	{
+		switch (node.type())
+		{
+			case Json::nullValue:
+				*((float*)valueInstance) = 0;
+				break;
+			case Json::intValue:
+			case Json::uintValue:
+			case Json::realValue:
+				try
+				{
+					*((float*)valueInstance) = node.asFloat();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
+				break;
+			default:
+				break;
+		}
+	}
+	else if (*valueType == *TypeManager::findType<double>())
+	{
+		switch (node.type())
+		{
+			case Json::nullValue:
+				*((double*)valueInstance) = 0;
+				break;
+			case Json::intValue:
+			case Json::uintValue:
+			case Json::realValue:
+				try
+				{
+					*((double*)valueInstance) = node.asDouble();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void JsonReader::beforeReflectable(Reflectable &reflectable)

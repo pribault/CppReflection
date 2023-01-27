@@ -404,6 +404,60 @@ void	YamlReader::value(const IType* valueType, void* valueInstance)
 				break;
 		}
 	}
+	else if (*valueType == *TypeManager::findType<float>())
+	{
+		switch (node.Type())
+		{
+			case YAML::NodeType::Null:
+				*((float*)valueInstance) = 0;
+				break;
+			case YAML::NodeType::Scalar:
+				try
+				{
+					*((float*)valueInstance) = node.as<float>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
+				break;
+			default:
+				break;
+		}
+	}
+	else if (*valueType == *TypeManager::findType<double>())
+	{
+		switch (node.Type())
+		{
+			case YAML::NodeType::Null:
+				*((double*)valueInstance) = 0;
+				break;
+			case YAML::NodeType::Scalar:
+				try
+				{
+					*((double*)valueInstance) = node.as<double>();
+				}
+#ifndef NDEBUG
+				catch (const std::exception& e)
+				{
+					std::cerr << "couldn't retrieve int64: '" << e.what() << "'" << std::endl;
+				}
+#else
+				catch (const std::exception&)
+				{
+				}
+#endif
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void	YamlReader::beforeReflectable(Reflectable& reflectable)

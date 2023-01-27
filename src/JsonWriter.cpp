@@ -113,6 +113,10 @@ void	JsonWriter::value(const IType* valueType, void* valueInstance)
 		*jsonValue = Json::Value(*(int64_t*)valueInstance);
 	else if (*valueType == *TypeManager::findType<bool>())
 		*jsonValue = Json::Value(*(bool*)valueInstance);
+	else if (*valueType == *TypeManager::findType<float>())
+		*jsonValue = Json::Value(*(float*)valueInstance);
+	else if (*valueType == *TypeManager::findType<double>())
+		*jsonValue = Json::Value(*(double*)valueInstance);
 	else
 		*jsonValue = Json::Value(Json::nullValue);
 }

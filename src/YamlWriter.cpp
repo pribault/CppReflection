@@ -120,6 +120,10 @@ void	YamlWriter::value(const IType* valueType, void* valueInstance)
 		*_emitter << *(int64_t*)valueInstance;
 	else if (*valueType == *TypeManager::findType<bool>())
 		*_emitter << *(bool*)valueInstance;
+	else if (*valueType == *TypeManager::findType<float>())
+		*_emitter << *(float*)valueInstance;
+	else if (*valueType == *TypeManager::findType<double>())
+		*_emitter << *(double*)valueInstance;
 	else
 		*_emitter << YAML::Null;
 }
