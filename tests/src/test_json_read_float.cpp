@@ -43,6 +43,7 @@
 
 // stl
 #include <cmath>
+#include <limits>
 
 /*
 ****************
