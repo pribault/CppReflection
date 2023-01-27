@@ -71,7 +71,7 @@ class	TestJsonReadUint64 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_uint64()
+GTEST_TEST(JsonReader, uint64)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "42";
@@ -83,11 +83,11 @@ void	test_json_read_uint64()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_lowest()
+GTEST_TEST(JsonReader, uint64_fromLowest)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "0";
@@ -99,11 +99,11 @@ void	test_json_read_uint64_lowest()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_underflow()
+GTEST_TEST(JsonReader, uint64_fromUnderflow)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "-1";
@@ -115,11 +115,11 @@ void	test_json_read_uint64_underflow()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_highest()
+GTEST_TEST(JsonReader, uint64_fromHighest)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "18446744073709551615";
@@ -131,11 +131,11 @@ void	test_json_read_uint64_highest()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_overflow()
+GTEST_TEST(JsonReader, uint64_fromOverflow)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "18446744073709551616";
@@ -147,11 +147,11 @@ void	test_json_read_uint64_overflow()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_float()
+GTEST_TEST(JsonReader, uint64_fromFloat)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "42.42424242";
@@ -163,11 +163,11 @@ void	test_json_read_uint64_float()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint64_string()
+GTEST_TEST(JsonReader, uint64_fromString)
 {
 	TypeManager::findType<TestJsonReadUint64>();
 	std::string value = "Hello world!";
@@ -179,6 +179,6 @@ void	test_json_read_uint64_string()
 	std::string	input = "{\"type\": \"TestJsonReadUint64\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint64>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint64 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

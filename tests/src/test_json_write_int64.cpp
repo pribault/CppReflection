@@ -74,7 +74,7 @@ class	TestJsonWriteInt64 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_int64()
+GTEST_TEST(JsonWriter, int64)
 {
 	TypeManager::findType<TestJsonWriteInt64>();
 
@@ -85,10 +85,10 @@ void	test_json_write_int64()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_int64_min()
+GTEST_TEST(JsonWriter, int64_min)
 {
 	TypeManager::findType<TestJsonWriteInt64>();
 
@@ -99,10 +99,10 @@ void	test_json_write_int64_min()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_int64_max()
+GTEST_TEST(JsonWriter, int64_max)
 {
 	TypeManager::findType<TestJsonWriteInt64>();
 
@@ -113,5 +113,5 @@ void	test_json_write_int64_max()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

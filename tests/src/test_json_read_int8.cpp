@@ -71,7 +71,7 @@ class	TestJsonReadInt8 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_int8()
+GTEST_TEST(JsonReader, int8)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "42";
@@ -83,11 +83,11 @@ void	test_json_read_int8()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_lowest()
+GTEST_TEST(JsonReader, int8_fromLowest)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "-128";
@@ -99,11 +99,11 @@ void	test_json_read_int8_lowest()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_underflow()
+GTEST_TEST(JsonReader, int8_fromUnderflow)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "-129";
@@ -115,11 +115,11 @@ void	test_json_read_int8_underflow()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_highest()
+GTEST_TEST(JsonReader, int8_fromHighest)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "127";
@@ -131,11 +131,11 @@ void	test_json_read_int8_highest()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_overflow()
+GTEST_TEST(JsonReader, int8_fromOverflow)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "128";
@@ -147,11 +147,11 @@ void	test_json_read_int8_overflow()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_float()
+GTEST_TEST(JsonReader, int8_fromFloat)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "42.42424242";
@@ -163,11 +163,11 @@ void	test_json_read_int8_float()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_int8_string()
+GTEST_TEST(JsonReader, int8_fromString)
 {
 	TypeManager::findType<TestJsonReadInt8>();
 	std::string value = "Hello world!";
@@ -179,6 +179,6 @@ void	test_json_read_int8_string()
 	std::string	input = "{\"type\": \"TestJsonReadInt8\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadInt8>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve int8 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

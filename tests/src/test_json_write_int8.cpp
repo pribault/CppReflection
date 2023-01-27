@@ -74,7 +74,7 @@ class	TestJsonWriteInt8 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_int8()
+GTEST_TEST(JsonWriter, int8)
 {
 	TypeManager::findType<TestJsonWriteInt8>();
 
@@ -85,10 +85,10 @@ void	test_json_write_int8()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_int8_min()
+GTEST_TEST(JsonWriter, int8_min)
 {
 	TypeManager::findType<TestJsonWriteInt8>();
 
@@ -99,10 +99,10 @@ void	test_json_write_int8_min()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_int8_max()
+GTEST_TEST(JsonWriter, int8_max)
 {
 	TypeManager::findType<TestJsonWriteInt8>();
 
@@ -113,5 +113,5 @@ void	test_json_write_int8_max()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

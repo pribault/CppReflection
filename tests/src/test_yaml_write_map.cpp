@@ -71,7 +71,7 @@ class	TestYamlWriteMap : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_map()
+GTEST_TEST(YamlWriter, map)
 {
 	TypeManager::findType<TestYamlWriteMap>();
 
@@ -91,5 +91,5 @@ value:\n\
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

@@ -71,7 +71,7 @@ class	TestJsonReadUint32 : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_uint32()
+GTEST_TEST(JsonReader, uint32)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "42";
@@ -83,11 +83,11 @@ void	test_json_read_uint32()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_lowest()
+GTEST_TEST(JsonReader, uint32_fromLowest)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "0";
@@ -99,11 +99,11 @@ void	test_json_read_uint32_lowest()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_underflow()
+GTEST_TEST(JsonReader, uint32_fromUnderflow)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "-1";
@@ -115,11 +115,11 @@ void	test_json_read_uint32_underflow()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_highest()
+GTEST_TEST(JsonReader, uint32_fromHighest)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "4294967295";
@@ -131,11 +131,11 @@ void	test_json_read_uint32_highest()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_overflow()
+GTEST_TEST(JsonReader, uint32_fromOverflow)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "4294967296";
@@ -147,11 +147,11 @@ void	test_json_read_uint32_overflow()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_float()
+GTEST_TEST(JsonReader, uint32_fromFloat)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "42.42424242";
@@ -163,11 +163,11 @@ void	test_json_read_uint32_float()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_uint32_string()
+GTEST_TEST(JsonReader, uint32_fromString)
 {
 	TypeManager::findType<TestJsonReadUint32>();
 	std::string value = "Hello world!";
@@ -179,6 +179,6 @@ void	test_json_read_uint32_string()
 	std::string	input = "{\"type\": \"TestJsonReadUint32\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadUint32>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve uint32 value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

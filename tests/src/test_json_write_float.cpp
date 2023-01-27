@@ -74,7 +74,7 @@ class	TestJsonWriteFloat : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_write_float()
+GTEST_TEST(JsonWriter, float)
 {
 	TypeManager::findType<TestJsonWriteFloat>();
 
@@ -85,10 +85,10 @@ void	test_json_write_float()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_float_min()
+GTEST_TEST(JsonWriter, float_min)
 {
 	TypeManager::findType<TestJsonWriteFloat>();
 
@@ -99,10 +99,10 @@ void	test_json_write_float_min()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_json_write_float_max()
+GTEST_TEST(JsonWriter, float_max)
 {
 	TypeManager::findType<TestJsonWriteFloat>();
 
@@ -113,5 +113,5 @@ void	test_json_write_float_max()
 
 	std::string result = JsonWriter::compute(test);
 
-	ASSERT(result == expected, "invalid JsonWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

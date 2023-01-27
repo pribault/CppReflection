@@ -80,96 +80,96 @@ class	TestTypeReflectable_Derived : public TestTypeReflectable_Base
 ********************************************************************************
 */
 
-void	test_type_reflectable()
+GTEST_TEST(Reflectable, type)
 {
 	IType*	baseType = TypeManager::findType<TestTypeReflectable_Base>();
 	IType*	derivedType = TypeManager::findType<TestTypeReflectable_Derived>();
 	IType*	stringType = TypeManager::findType<std::string>();
 	IType*	intType = TypeManager::findType<int>();
 
-	ASSERT(baseType, "TypeManager couldn't find TestTypeReflectable_Base type")
-	ASSERT(derivedType, "TypeManager couldn't find TestTypeReflectable_Derived type")
-	ASSERT(stringType, "TypeManager couldn't find std::string type")
-	ASSERT(intType, "TypeManager couldn't find int type")
+	GTEST_ASSERT_TRUE(baseType);
+	GTEST_ASSERT_TRUE(derivedType);
+	GTEST_ASSERT_TRUE(stringType);
+	GTEST_ASSERT_TRUE(intType);
 
 	// type checks
-	ASSERT(baseType->isReflectable(), "TestTypeReflectable_Base isn't reflectable")
-	ASSERT(!baseType->isList(), "TestTypeReflectable_Base is list")
-	ASSERT(!baseType->isMap(), "TestTypeReflectable_Base is map")
-	ASSERT(!baseType->isPointer(), "TestTypeReflectable_Base is pointer")
+	GTEST_ASSERT_TRUE(baseType->isReflectable());
+	GTEST_ASSERT_FALSE(baseType->isList());
+	GTEST_ASSERT_FALSE(baseType->isMap());
+	GTEST_ASSERT_FALSE(baseType->isPointer());
 
-	ASSERT(derivedType->isReflectable(), "TestTypeReflectable_Derived isn't reflectable")
-	ASSERT(!derivedType->isList(), "TestTypeReflectable_Derived is list")
-	ASSERT(!derivedType->isMap(), "TestTypeReflectable_Derived is map")
-	ASSERT(!derivedType->isPointer(), "TestTypeReflectable_Derived is pointer")
+	GTEST_ASSERT_TRUE(derivedType->isReflectable());
+	GTEST_ASSERT_FALSE(derivedType->isList());
+	GTEST_ASSERT_FALSE(derivedType->isMap());
+	GTEST_ASSERT_FALSE(derivedType->isPointer());
 }
 
-void	test_type_reflectable_inheritance()
+GTEST_TEST(Reflectable, typeInheritance)
 {
 	IType*	baseType = TypeManager::findType<TestTypeReflectable_Base>();
 	IType*	derivedType = TypeManager::findType<TestTypeReflectable_Derived>();
 	IType*	stringType = TypeManager::findType<std::string>();
 	IType*	intType = TypeManager::findType<int>();
 
-	ASSERT(baseType, "TypeManager couldn't find TestTypeReflectable_Base type")
-	ASSERT(derivedType, "TypeManager couldn't find TestTypeReflectable_Derived type")
-	ASSERT(stringType, "TypeManager couldn't find std::string type")
-	ASSERT(intType, "TypeManager couldn't find int type")
+	GTEST_ASSERT_TRUE(baseType);
+	GTEST_ASSERT_TRUE(derivedType);
+	GTEST_ASSERT_TRUE(stringType);
+	GTEST_ASSERT_TRUE(intType);
 
 	IReflectableType*	reflectableBaseType = static_cast<IReflectableType*>(baseType);
 	IReflectableType*	reflectableDerivedType = static_cast<IReflectableType*>(derivedType);
 
 	// inheritance checks
-	ASSERT(reflectableBaseType->getNbParents() == 0, "Invalid number of parents for TestTypeReflectable_Base, expecting 0 but was " + std::to_string(reflectableBaseType->getNbParents()))
-	ASSERT(reflectableDerivedType->getNbParents() == 1, "Invalid number of parents for TestTypeReflectable_Derived, expecting 1 but was " + std::to_string(reflectableDerivedType->getNbParents()))
-	ASSERT(reflectableDerivedType->inherits(reflectableBaseType), "TestTypeReflectable_Derived doesn't inherits TestTypeReflectable_Base")
+	GTEST_ASSERT_EQ(reflectableBaseType->getNbParents(), 0);
+	GTEST_ASSERT_EQ(reflectableDerivedType->getNbParents(), 1);
+	GTEST_ASSERT_TRUE(reflectableDerivedType->inherits(reflectableBaseType));
 }
 
-void	test_type_reflectable_attributes()
+GTEST_TEST(Reflectable, typeAttributes)
 {
 	IType*	baseType = TypeManager::findType<TestTypeReflectable_Base>();
 	IType*	derivedType = TypeManager::findType<TestTypeReflectable_Derived>();
 	IType*	stringType = TypeManager::findType<std::string>();
 	IType*	intType = TypeManager::findType<int>();
 
-	ASSERT(baseType, "TypeManager couldn't find TestTypeReflectable_Base type")
-	ASSERT(derivedType, "TypeManager couldn't find TestTypeReflectable_Derived type")
-	ASSERT(stringType, "TypeManager couldn't find std::string type")
-	ASSERT(intType, "TypeManager couldn't find int type")
+	GTEST_ASSERT_TRUE(baseType);
+	GTEST_ASSERT_TRUE(derivedType);
+	GTEST_ASSERT_TRUE(stringType);
+	GTEST_ASSERT_TRUE(intType);
 
 	IReflectableType*	reflectableBaseType = static_cast<IReflectableType*>(baseType);
 	IReflectableType*	reflectableDerivedType = static_cast<IReflectableType*>(derivedType);
 
 	// attributes checks
-	ASSERT(reflectableBaseType->getNbAttributes() == 1, "Invalid number of attributes for TestTypeReflectable_Base, expecting 1 but was " + std::to_string(reflectableBaseType->getNbAttributes()))
-	ASSERT(reflectableDerivedType->getNbAttributes() == 1, "Invalid number of attributes for TestTypeReflectable_Derived, expecting 1 but was " + std::to_string(reflectableDerivedType->getNbAttributes()))
+	GTEST_ASSERT_EQ(reflectableBaseType->getNbAttributes(), 1);
+	GTEST_ASSERT_EQ(reflectableDerivedType->getNbAttributes(), 1);
 
 	const Attribute*	baseAttr = reflectableBaseType->getAttribute(0);
-	ASSERT(baseAttr, "null attribute for TestTypeReflectable_Base")
-	ASSERT(baseAttr->getName() == "value_base", "Invalid attribute name for TestTypeReflectable_Base, expecting \"value_base\" but was \"" + baseAttr->getName() + "\"")
-	ASSERT(*baseAttr->getType() == *stringType, "Invalid attribute type for TestTypeReflectable_Base, expecting \"" + stringType->getName() + "\" but was \"" + baseAttr->getType()->getName() + "\"")
+	GTEST_ASSERT_TRUE(baseAttr);
+	GTEST_ASSERT_EQ(baseAttr->getName(), "value_base");
+	GTEST_ASSERT_EQ(*baseAttr->getType(), *stringType);
 
 	const Attribute*	derivedAttr = reflectableDerivedType->getAttribute(0);
-	ASSERT(derivedAttr, "null attribute for TestTypeReflectable_Derived")
-	ASSERT(derivedAttr->getName() == "value_derived", "Invalid attribute name for TestTypeReflectable_Derived, expecting \"value_derived\" but was \"" + derivedAttr->getName() + "\"")
-	ASSERT(*derivedAttr->getType() == *intType, "Invalid attribute type for TestTypeReflectable_Derived, expecting \"" + intType->getName() + "\" but was \"" + derivedAttr->getType()->getName() + "\"")
+	GTEST_ASSERT_TRUE(derivedAttr);
+	GTEST_ASSERT_EQ(derivedAttr->getName(), "value_derived");
+	GTEST_ASSERT_EQ(*derivedAttr->getType(), *intType);
 }
 
-void	test_type_pointer()
+GTEST_TEST(Reflectable, pointerType)
 {
 	IType*	baseType = TypeManager::findType<TestTypeReflectable_Base>();
 	IType*	type = TypeManager::findType<TestTypeReflectable_Base*>();
 
-	ASSERT(baseType, "TypeManager couldn't find TestTypeReflectable_Base type")
-	ASSERT(type, "TypeManager couldn't find TestTypeReflectable_Base* type")
-	ASSERT(!baseType->isPointer(), "TestTypeReflectable_Base is a pointer")
-	ASSERT(type->isPointer(), "TestTypeReflectable_Base* is not a pointer")
+	GTEST_ASSERT_TRUE(baseType);
+	GTEST_ASSERT_TRUE(type);
+	GTEST_ASSERT_FALSE(baseType->isPointer());
+	GTEST_ASSERT_TRUE(type->isPointer());
 
 	IPointerType*	pointerType = static_cast<IPointerType*>(type);
 
 	const IType*	subType = pointerType->getSubType();
 
-	ASSERT(subType, "sub type is null")
-	ASSERT(!subType->isPointer(), "sub type is a pointer")
-	ASSERT(*baseType == *subType, "sub type mismatch, expected '" + baseType->getName() + "' but was '" + subType->getName() + "'")
+	GTEST_ASSERT_TRUE(subType);
+	GTEST_ASSERT_FALSE(subType->isPointer());
+	GTEST_ASSERT_EQ(*baseType, *subType);
 }

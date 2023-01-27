@@ -71,7 +71,7 @@ class	TestYamlWriteBoolean : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_boolean()
+GTEST_TEST(YamlWriter, boolean)
 {
 	TypeManager::findType<TestYamlWriteBoolean>();
 
@@ -82,5 +82,5 @@ void	test_yaml_write_boolean()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }

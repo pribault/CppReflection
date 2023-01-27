@@ -18,11 +18,11 @@ Before compiling the project, you need to install the following dependencies :
 The environment variable VCPKG_PATH needs to be defined to the vcpkg install directory.
 You also need to install some dependencies using vcpkg, on Windows:
 
-`vcpkg install --triplet=x64-windows yaml-cpp jsoncpp`
+`vcpkg install --triplet=x64-windows yaml-cpp jsoncpp gtest`
 
 On Linux systems:
 
-`vcpkg install --triplet=x64-linux yaml-cpp jsoncpp`
+`vcpkg install --triplet=x64-linux yaml-cpp jsoncpp gtest`
 
 ### Build
 

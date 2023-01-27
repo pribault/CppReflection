@@ -75,7 +75,7 @@ class	TestYamlReadFloat : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_read_float()
+GTEST_TEST(YamlReader, float)
 {
 	TypeManager::findType<TestYamlReadFloat>();
 	std::string value = "42.424242";
@@ -87,11 +87,11 @@ void	test_yaml_read_float()
 	std::string	input = "type: TestYamlReadFloat\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadFloat>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }
 
-void	test_yaml_read_float_null()
+GTEST_TEST(YamlReader, float_fromNull)
 {
 	TypeManager::findType<TestYamlReadFloat>();
 	std::string value = "~";
@@ -103,11 +103,11 @@ void	test_yaml_read_float_null()
 	std::string	input = "type: TestYamlReadFloat\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadFloat>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }
 
-void	test_yaml_read_float_lowest()
+GTEST_TEST(YamlReader, float_fromLowest)
 {
 	TypeManager::findType<TestYamlReadFloat>();
 	float expected = std::numeric_limits<float>::min();
@@ -118,11 +118,11 @@ void	test_yaml_read_float_lowest()
 	std::string	input = "type: TestYamlReadFloat\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadFloat>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }
 
-void	test_yaml_read_float_highest()
+GTEST_TEST(YamlReader, float_fromHighest)
 {
 	TypeManager::findType<TestYamlReadFloat>();
 	float expected = std::numeric_limits<float>::max();
@@ -133,11 +133,11 @@ void	test_yaml_read_float_highest()
 	std::string	input = "type: TestYamlReadFloat\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadFloat>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }
 
-void	test_yaml_read_float_string()
+GTEST_TEST(YamlReader, float_fromString)
 {
 	TypeManager::findType<TestYamlReadFloat>();
 	std::string value = "Hello world!";
@@ -149,6 +149,6 @@ void	test_yaml_read_float_string()
 	std::string	input = "type: TestYamlReadFloat\nvalue: " + value;
 
 	test = YamlReader::load<TestYamlReadFloat>(input);
-	ASSERT(test, "YamlReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from YAML input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }

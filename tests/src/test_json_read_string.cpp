@@ -71,7 +71,7 @@ class	TestJsonReadString : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_string()
+GTEST_TEST(JsonReader, string)
 {
 	TypeManager::findType<TestJsonReadString>();
 	std::string value = "\"Hello world!\"";
@@ -83,11 +83,11 @@ void	test_json_read_string()
 	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadString>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_string_array()
+GTEST_TEST(JsonReader, string_fromArray)
 {
 	TypeManager::findType<TestJsonReadString>();
 	std::string value = "[42, 43, 44]";
@@ -99,11 +99,11 @@ void	test_json_read_string_array()
 	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadString>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }
 
-void	test_json_read_string_map()
+GTEST_TEST(JsonReader, string_fromMap)
 {
 	TypeManager::findType<TestJsonReadString>();
 	std::string value = "{\"a\": 42, \"b\": 43, \"c\": 44}";
@@ -115,6 +115,6 @@ void	test_json_read_string_map()
 	std::string	input = "{\"type\": \"TestJsonReadString\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadString>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_EQ(test->value, expected);
 }

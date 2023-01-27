@@ -44,7 +44,7 @@ jobs:
         vcpkgGitCommitId: ${{ matrix.vcpkgCommitId }}
 
     - name: Install dependencies
-      run: vcpkg install --triplet=${{ matrix.vcpkgTriplet }} yaml-cpp jsoncpp
+      run: vcpkg install --triplet=${{ matrix.vcpkgTriplet }} yaml-cpp jsoncpp gtest
 
     - name: Configure CMake
       run: python3 ${{ github.workspace }}/scripts/cmake.py

@@ -73,7 +73,7 @@ class	TestJsonReadPointer : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_pointer()
+GTEST_TEST(JsonReader, pointer)
 {
 	TypeManager::findType<TestJsonReadPointer>();
 	std::string value = "\"Hello world!\"";
@@ -85,7 +85,7 @@ void	test_json_read_pointer()
 	std::string	input = "{\"type\": \"TestJsonReadPointer\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadPointer>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(test->value, "null pointer returned")
-	ASSERT(*test->value == expected, "failed to retrieve string value from JSON input, expecting '" + expected + "', was '" + *test->value + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_TRUE(test->value);
+	GTEST_ASSERT_EQ(*test->value, expected);
 }

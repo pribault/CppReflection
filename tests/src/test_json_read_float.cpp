@@ -75,7 +75,7 @@ class	TestJsonReadFloat : public Reflectable
 ********************************************************************************
 */
 
-void	test_json_read_float()
+GTEST_TEST(JsonReader, float)
 {
 	TypeManager::findType<TestJsonReadFloat>();
 	std::string value = "42.424242";
@@ -87,11 +87,11 @@ void	test_json_read_float()
 	std::string	input = "{\"type\": \"TestJsonReadFloat\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadFloat>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<float>::epsilon());
 }
 
-void	test_json_read_float_lowest()
+GTEST_TEST(JsonReader, float_fromLowest)
 {
 	TypeManager::findType<TestJsonReadFloat>();
 	float expected = std::numeric_limits<float>::min();
@@ -102,11 +102,11 @@ void	test_json_read_float_lowest()
 	std::string	input = "{\"type\": \"TestJsonReadFloat\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadFloat>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_json_read_float_highest()
+GTEST_TEST(JsonReader, float_fromHighest)
 {
 	TypeManager::findType<TestJsonReadFloat>();
 	float expected = std::numeric_limits<float>::max();
@@ -117,11 +117,11 @@ void	test_json_read_float_highest()
 	std::string	input = "{\"type\": \"TestJsonReadFloat\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadFloat>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }
 
-void	test_json_read_float_string()
+GTEST_TEST(JsonReader, float_fromString)
 {
 	TypeManager::findType<TestJsonReadFloat>();
 	std::string value = "Hello world!";
@@ -133,6 +133,6 @@ void	test_json_read_float_string()
 	std::string	input = "{\"type\": \"TestJsonReadFloat\", \"value\": " + value + "}";
 
 	test = JsonReader::load<TestJsonReadFloat>(input);
-	ASSERT(test, "JsonReader::load returned a null object")
-	ASSERT(std::fabs(test->value - expected) <= std::numeric_limits<float>::epsilon(), "failed to retrieve float value from JSON input, expecting '" + std::to_string(expected) + "', was '" + std::to_string(test->value) + "'")
+	GTEST_ASSERT_TRUE(test);
+	GTEST_ASSERT_LE(std::fabs(test->value - expected), std::numeric_limits<double>::epsilon());
 }

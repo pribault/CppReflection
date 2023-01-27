@@ -71,7 +71,7 @@ class	TestYamlWritePointer : public Reflectable
 ********************************************************************************
 */
 
-void	test_yaml_write_pointer()
+GTEST_TEST(YamlWriter, pointer)
 {
 	TypeManager::findType<TestYamlWritePointer>();
 
@@ -82,10 +82,10 @@ void	test_yaml_write_pointer()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
 
-void	test_yaml_write_pointer_null()
+GTEST_TEST(YamlWriter, pointer_null)
 {
 	TypeManager::findType<TestYamlWritePointer>();
 
@@ -96,5 +96,5 @@ void	test_yaml_write_pointer_null()
 
 	std::string result = YamlWriter::compute(test);
 
-	ASSERT(result == expected, "invalid YamlWriter result, expecting '\n" + expected + "\n', was '\n" + result + "\n'")
+	GTEST_ASSERT_EQ(result, expected);
 }
