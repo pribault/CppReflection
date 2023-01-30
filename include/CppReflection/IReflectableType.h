@@ -64,6 +64,11 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
+	/**
+	 * @class IReflectableType IReflectableType.h CppReflection/IReflectableType.h
+	 * @brief A specialization of IType used to represent reflectable types\n
+	 * This type can store additionnal informations like parents and attributes
+	 */
 	class	IReflectableType : public IType
 	{
 
@@ -81,28 +86,113 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IReflectableType object
+			 * 
+			 * @param size The size of an instance created using this type
+			 * @param typeInfo The type info related to this type
+			 */
 			IReflectableType(size_t size, const std::type_info* typeInfo);
+
+			/**
+			 * @brief Destroy the IReflectableType object
+			 */
 			virtual ~IReflectableType();
 
-			virtual bool				isReflectable() const;
+			/**
+			 * @brief Check if this type is reflectable (can be cast to IReflectableType)
+			 * 
+			 * @return True if this type is reflectable, false otherwise
+			 */
+			bool						isReflectable() const override;
 
-			virtual void				iterate(Iterator& iterator, void* instance) const;
+			/**
+			 * @brief Iterate over this type using the given Iterator
+			 * 
+			 * @param iterator The iterator to use
+			 * @param instance The object instance
+			 */
+			void						iterate(Iterator& iterator, void* instance) const override;
 
+			/**
+			 * @brief Check if this type inherits from the given type
+			 * 
+			 * @param other The type to check inheritance with
+			 * @return True if this type inherits from the given type
+			 */
 			bool						inherits(const IType* other) const;
 
+			/**
+			 * @brief Get the Pointer Type object
+			 * 
+			 * @return const IPointerType* 
+			 */
 			virtual const IPointerType*	getPointerType() const = 0;
 
-			// parents
+			/**
+			 * @brief Add a parent type
+			 * 
+			 * @param parent The parent type to add
+			 */
 			void						addParent(IType* parent);
+
+			/**
+			 * @brief Remove a parent type
+			 * 
+			 * @param index The index of the parent to remove
+			 */
 			void						removeParent(size_t index);
+
+			/**
+			 * @brief Get the number of parent types
+			 * 
+			 * @return size_t The number of parent types
+			 */
 			size_t						getNbParents() const;
+
+			/**
+			 * @brief Get the parent type at the given index
+			 * 
+			 * @param index The parent type index
+			 * @return const IType* The parent type
+			 */
 			const IType*				getParent(size_t index) const;
 
-			// attributes
+			/**
+			 * @brief Add an attribute
+			 * 
+			 * @param attribute The attribute to add
+			 */
 			void						addAttribute(Attribute* attribute);
+
+			/**
+			 * @brief Remove an attribute
+			 * 
+			 * @param index The index of the attribute to remove
+			 */
 			void						removeAttribute(size_t index);
+
+			/**
+			 * @brief Get the number of attributes
+			 * 
+			 * @return size_t The number of attributes
+			 */
 			size_t						getNbAttributes() const;
+
+			/**
+			 * @brief Get the attribute at the given index
+			 * 
+			 * @param index The attribute index
+			 * @return const Attribute* The attribute
+			 */
 			const Attribute*			getAttribute(size_t index) const;
+
+			/**
+			 * @brief Find an attribute index from a name
+			 * 
+			 * @param name The name of the attribute to find
+			 * @return size_t The attribute index
+			 */
 			size_t						findAttribute(const std::string& name) const;
 
 		/*
@@ -119,8 +209,17 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IReflectableType object
+			 */
 			IReflectableType();
 
+			/**
+			 * @brief Iterate over this type using the given Iterator
+			 * 
+			 * @param iterator The iterator to use
+			 * @param instance The object instance
+			 */
 			void	iterate(Iterator& iterator, Reflectable& instance) const;
 
 		/*

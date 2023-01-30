@@ -48,6 +48,10 @@
 
 namespace	CppReflection
 {
+	/**
+	 * @class IListType IListType.h CppReflection/IListType.h
+	 * @brief A specialization of IType used to represent list types
+	 */
 	class		IListType : public IType
 	{
 
@@ -65,12 +69,31 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Destroy the IListType object
+			 */
 			virtual ~IListType();
 
+			/**
+			 * @brief Get the type of the objects stored by this list type
+			 * 
+			 * @return const IType* The type of the objects stored by this list type
+			 */
 			const IType*	getSubType() const;
 
-			virtual bool	isList() const;
+			/**
+			 * @brief Check if this type is list (can be cast to IListType)
+			 * 
+			 * @return True if this type is list, false otherwise
+			 */
+			bool			isList() const override;
 
+			/**
+			 * @brief Insert a new element in the given list instance
+			 * 
+			 * @param instance The list instance to insert a new element inside
+			 * @param valueInstance The element instance to insert inside the list
+			 */
 			virtual void	insert(void* instance, const void* valueInstance) const = 0;
 
 		/*
@@ -87,6 +110,13 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IListType object
+			 * 
+			 * @param size The size of an instance created using this type
+			 * @param typeInfo The type info related to this type
+			 * @param subType The type of the objects stored by this list type
+			 */
 			IListType(size_t size, const std::type_info* typeInfo, IType* subType);
 
 			/*
@@ -95,6 +125,9 @@ namespace	CppReflection
 			****************
 			*/
 
+			/**
+			 * @brief The type of the objects stored by this list type
+			 */
 			IType*	_subType;
 
 		/*
@@ -111,6 +144,9 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IListType object
+			 */
 			IListType();
 
 	};

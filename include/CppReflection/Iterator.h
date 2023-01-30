@@ -54,6 +54,11 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
+	/**
+	 * @class Iterator Iterator.h CppReflection/Iterator.h
+	 * @brief Base class for serializers and deserializers\n
+	 * This class is made to iterate over reflectables and their attributes
+	 */
 	class	Iterator
 	{
 
@@ -71,22 +76,87 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new Iterator object
+			 */
 			Iterator();
+
+			/**
+			 * @brief Destroy the Iterator object
+			 */
 			~Iterator();
 
-			virtual void	value(const IType* valueType, void* valueInstance);
+			/**
+			 * @brief Method called by fundamental types to iterate over them (booleans, signed/unsigned integers, floating point numbers, strings)
+			 * 
+			 * @param valueType The value type
+			 * @param valueInstance The value instance
+			 */
+			virtual void	value(const IType* valueType, void* valueInstance) = 0;
 
-			virtual void	beforeReflectable(Reflectable& reflectable);
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance);
-			virtual void	afterReflectable();
+			/**
+			 * @brief Method called by IReflectableType::iterate before iterating over a Reflectable
+			 * 
+			 * @param reflectable The reflectable to iterate on
+			 */
+			virtual void	beforeReflectable(Reflectable& reflectable) = 0;
 
-			virtual void	beforeList(const IListType* listType, void* listInstance);
-			virtual void	listValue(const IType* valueType, void* valueInstance);
-			virtual void	afterList();
+			/**
+			 * @brief Method called by IReflectableType::iterate to iterate over a Reflectable attribute
+			 * 
+			 * @param attribute The attribute
+			 * @param attributeInstance The attribute instance to iterate on
+			 */
+			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) = 0;
 
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance);
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance);
-			virtual void	afterMap();
+			/**
+			 * @brief Method called by IReflectableType::iterate after iterating over a Reflectable
+			 */
+			virtual void	afterReflectable() = 0;
+
+			/**
+			 * @brief Method called by list types before iterating over a list
+			 * 
+			 * @param listType The list type
+			 * @param listInstance The list instance to iterate on
+			 */
+			virtual void	beforeList(const IListType* listType, void* listInstance) = 0;
+
+			/**
+			 * @brief Method called by list types to iterate over a list element
+			 * 
+			 * @param valueType The element type
+			 * @param valueInstance The element instance to iterate on
+			 */
+			virtual void	listValue(const IType* valueType, void* valueInstance) = 0;
+
+			/**
+			 * @brief Method called by list types after iterating over a list
+			 */
+			virtual void	afterList() = 0;
+
+			/**
+			 * @brief Method called by map types before iterating over a map
+			 * 
+			 * @param mapType The map type
+			 * @param mapInstance The map instance to iterate on
+			 */
+			virtual void	beforeMap(const IMapType* mapType, void* mapInstance) = 0;
+
+			/**
+			 * @brief Method called by map types to iterate over a map pair
+			 * 
+			 * @param keyType The key type
+			 * @param keyInstance The key instance to iterate on
+			 * @param valueType The value type
+			 * @param valueInstance The value instance to iterate on
+			 */
+			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) = 0;
+
+			/**
+			 * @brief Method called by map types after iterating over a map
+			 */
+			virtual void	afterMap() = 0;
 
 	};
 }

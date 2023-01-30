@@ -48,6 +48,10 @@
 
 namespace	CppReflection
 {
+	/**
+	 * @class IPointerType IPointerType.h CppReflection/IPointerType.h
+	 * @brief A specialization of IType used to represent pointer types
+	 */
 	class		IPointerType : public IType
 	{
 
@@ -65,13 +69,32 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Destroy the IPointerType object
+			 */
 			virtual ~IPointerType();
 
+			/**
+			 * @brief Get the pointed type
+			 * 
+			 * @return const IType* The pointed type
+			 */
 			const IType*	getSubType() const;
 
-			virtual bool	isPointer() const;
+			/**
+			 * @brief Check if this type is pointer (can be cast to IPointerType)
+			 * 
+			 * @return True if this type is pointer, false otherwise
+			 */
+			bool			isPointer() const override;
 
-			virtual void	iterate(Iterator& iterator, void* instance) const;
+			/**
+			 * @brief Iterate over this type using the given Iterator
+			 * 
+			 * @param iterator The iterator to use
+			 * @param instance The object instance
+			 */
+			void			iterate(Iterator& iterator, void* instance) const override;
 
 		/*
 		************************************************************************
@@ -87,6 +110,13 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IPointerType object
+			 * 
+			 * @param size The size of an instance created using this type
+			 * @param typeInfo The type info related to this type
+			 * @param subType The pointed type
+			 */
 			IPointerType(size_t size, const std::type_info* typeInfo, IType* subType);
 
 			/*
@@ -95,6 +125,9 @@ namespace	CppReflection
 			****************
 			*/
 
+			/**
+			 * @brief The pointed type
+			 */
 			IType*	_subType;
 
 		/*
@@ -111,6 +144,9 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IPointerType object
+			 */
 			IPointerType();
 
 	};

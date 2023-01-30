@@ -67,6 +67,10 @@ namespace	YAML
 
 namespace	CppReflection
 {
+	/**
+	 * @class YamlWriter YamlWriter.h CppReflection/YamlWriter.h
+	 * @brief Yaml serializer
+	 */
 	class	YamlWriter : public Iterator
 	{
 
@@ -84,21 +88,27 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Serialize the given reflectable into a yaml string
+			 * 
+			 * @param reflectable The reflectable to serialize
+			 * @return std::string The resulting yaml string
+			 */
 			static std::string		compute(const Reflectable& reflectable);
 
-			virtual void	value(const IType* valueType, void* valueInstance) override;
+			void	value(const IType* valueType, void* valueInstance) override;
 
-			virtual void	beforeReflectable(Reflectable& reflectable) override;
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
-			virtual void	afterReflectable() override;
+			void	beforeReflectable(Reflectable& reflectable) override;
+			void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
+			void	afterReflectable() override;
 
-			virtual void	beforeList(const IListType* listType, void* listInstance) override;
-			virtual void	listValue(const IType* valueType, void* valueInstance) override;
-			virtual void	afterList() override;
+			void	beforeList(const IListType* listType, void* listInstance) override;
+			void	listValue(const IType* valueType, void* valueInstance) override;
+			void	afterList() override;
 
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance) override;
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
-			virtual void	afterMap() override;
+			void	beforeMap(const IMapType* mapType, void* mapInstance) override;
+			void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
+			void	afterMap() override;
 
 		/*
 		************************************************************************
@@ -114,9 +124,22 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new YamlWriter object
+			 */
 			YamlWriter();
+
+			/**
+			 * @brief Destroy the YamlWriter object
+			 */
 			~YamlWriter();
 
+			/**
+			 * @brief Internal method to serialize a given reflectable into a yaml string
+			 * 
+			 * @param reflectable The reflectable to serialize
+			 * @return std::string The resulting yaml string
+			 */
 			std::string		internalCompute(const Reflectable& reflectable);
 
 		/*

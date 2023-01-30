@@ -66,9 +66,9 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*	create() const;
-			virtual void	initialize(void* instance) const;
-			virtual void	remove(void* instance) const;
+			void*	create() const override;
+			void	initialize(void* instance) const override;
+			void	remove(void* instance) const override;
 
 			static PointerType<T>*	get();
 
