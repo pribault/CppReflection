@@ -48,6 +48,10 @@
 
 namespace	CppReflection
 {
+	/**
+	 * @class IMapType IMapType.h CppReflection/IMapType.h
+	 * @brief A specialization of IType used to represent map types
+	 */
 	class		IMapType : public IType
 	{
 
@@ -65,13 +69,39 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Destroy the IMapType object
+			 */
 			virtual ~IMapType();
 
+			/**
+			 * @brief Get the type of the key objects of this map type
+			 * 
+			 * @return const IType* Get the type of the key objects of this map type
+			 */
 			const IType*	getKeyType() const;
+
+			/**
+			 * @brief Get the type of the value objects of this map type
+			 * 
+			 * @return const IType* Get the type of the value objects of this map type
+			 */
 			const IType*	getValueType() const;
 
-			virtual bool	isMap() const;
+			/**
+			 * @brief Check if this type is map (can be cast to IMapType)
+			 * 
+			 * @return True if this type is map, false otherwise
+			 */
+			bool			isMap() const override;
 
+			/**
+			 * @brief Insert a new key value pair in the given map instance
+			 * 
+			 * @param mapInstance The map instance to insert a new element inside
+			 * @param keyInstance The key instance to insert inside the map
+			 * @param valueInstance The value instance to insert inside the map
+			 */
 			virtual void	insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const = 0;
 
 		/*
@@ -88,6 +118,14 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IMapType object
+			 * 
+			 * @param size The size of an instance created using this type
+			 * @param typeInfo The type info related to this type
+			 * @param keyType The type of the key objects of this map type
+			 * @param valueType The type of the value objects of this map type
+			 */
 			IMapType(size_t size, const std::type_info* typeInfo, IType* keyType, IType* valueType);
 
 			/*
@@ -96,7 +134,14 @@ namespace	CppReflection
 			****************
 			*/
 
+			/**
+			 * @brief The type of the key objects of this map type
+			 */
 			IType*	_keyType;
+
+			/**
+			 * @brief The type of the value objects of this map type
+			 */
 			IType*	_valueType;
 
 		/*
@@ -113,6 +158,9 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new IMapType object
+			 */
 			IMapType();
 
 	};

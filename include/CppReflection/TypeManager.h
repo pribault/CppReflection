@@ -73,6 +73,10 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
+	/**
+	 * @class TypeManager TypeManager.h CppReflection/TypeManager.h
+	 * @brief Singleton used to store all types, allowing type creation, deduction and retrieval
+	 */
 	class	TypeManager
 	{
 
@@ -90,15 +94,46 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Get the type manager instance
+			 * 
+			 * @return TypeManager* The type manager instance
+			 */
 			static TypeManager*	get();
 
+			/**
+			 * @brief Deduce type from a given template parameter
+			 * @tparam T The type to deduce
+			 * 
+			 * @return IType* The corresponding type
+			 */
 			template		<typename T>
 			static typename std::enable_if<IF_POINTER, IType*>::type						findType();
+
+			/**
+			 * @brief Deduce type from a given template parameter
+			 * @tparam T The type to deduce
+			 * 
+			 * @return IType* The corresponding type
+			 */
 			template		<typename T>
 			static typename std::enable_if<IF_REFLECTABLE && !IF_POINTER, IType*>::type		findType();
+
+			/**
+			 * @brief Deduce type from a given template parameter
+			 * @tparam T The type to deduce
+			 * 
+			 * @return IType* The corresponding type
+			 */
 			template		<typename T>
 			static typename std::enable_if<!IF_REFLECTABLE && !IF_POINTER, IType*>::type	findType();
 
+			/**
+			 * @brief Retrieve a type from a given name
+			 * 
+			 * @param typeName The name of the type to retrieve
+			 * @return IType* The corresponding type
+			 */
 			static IType*	findType(const std::string& typeName);
 
 		/*
@@ -115,6 +150,9 @@ namespace	CppReflection
 			***********
 			*/
 
+			/**
+			 * @brief The type map, associating types with their name
+			 */
 			typedef std::map<std::string, IType*>	TypeMap;
 
 		/*

@@ -68,6 +68,10 @@ namespace	Json
 
 namespace	CppReflection
 {
+	/**
+	 * @class JsonWriter JsonWriter.h CppReflection/JsonWriter.h
+	 * @brief Json serializer
+	 */
 	class	JsonWriter : public Iterator
 	{
 
@@ -85,21 +89,27 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Serialize the given reflectable into a json string
+			 * 
+			 * @param reflectable The reflectable to serialize
+			 * @return std::string The resulting json string
+			 */
 			static std::string		compute(const Reflectable& reflectable);
 
-			virtual void	value(const IType* valueType, void* valueInstance) override;
+			void	value(const IType* valueType, void* valueInstance) override;
 
-			virtual void	beforeReflectable(Reflectable& reflectable) override;
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
-			virtual void	afterReflectable() override;
+			void	beforeReflectable(Reflectable& reflectable) override;
+			void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
+			void	afterReflectable() override;
 
-			virtual void	beforeList(const IListType* listType, void* listInstance) override;
-			virtual void	listValue(const IType* valueType, void* valueInstance) override;
-			virtual void	afterList() override;
+			void	beforeList(const IListType* listType, void* listInstance) override;
+			void	listValue(const IType* valueType, void* valueInstance) override;
+			void	afterList() override;
 
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance) override;
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
-			virtual void	afterMap() override;
+			void	beforeMap(const IMapType* mapType, void* mapInstance) override;
+			void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
+			void	afterMap() override;
 
 		/*
 		************************************************************************
@@ -115,9 +125,22 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new JsonWriter object
+			 */
 			JsonWriter();
+
+			/**
+			 * @brief Destroy the JsonWriter object
+			 */
 			~JsonWriter();
 
+			/**
+			 * @brief Internal method to serialize a given reflectable into a json string
+			 * 
+			 * @param reflectable The reflectable to serialize
+			 * @return std::string The resulting json string
+			 */
 			std::string		internalCompute(const Reflectable& reflectable);
 
 		/*

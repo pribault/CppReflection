@@ -63,6 +63,10 @@ namespace	Json
 
 namespace	CppReflection
 {
+	/**
+	 * @class JsonReader JsonReader.h CppReflection/JsonReader.h
+	 * @brief Json deserializer
+	 */
 	class	JsonReader : public Iterator
 	{
 
@@ -80,23 +84,37 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Load a reflectable from the given json string
+			 * 
+			 * @param input The json string to deserialize
+			 * @return Reflectable* The resulting Reflectable
+			 */
 			static Reflectable*	load(const std::string& input);
+
+			/**
+			 * @brief Load a reflectable from the given json string
+			 * 
+			 * @tparam T The type to load
+			 * @param input The json string to deserialize
+			 * @return T* The resulting Reflectable
+			 */
 			template		<typename T>
 			static T*			load(const std::string& input);
 
-			virtual void	value(const IType* valueType, void* valueInstance) override;
+			void	value(const IType* valueType, void* valueInstance) override;
 
-			virtual void	beforeReflectable(Reflectable& reflectable) override;
-			virtual void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
-			virtual void	afterReflectable() override;
+			void	beforeReflectable(Reflectable& reflectable) override;
+			void	reflectableAttribute(const Attribute* attribute, void* attributeInstance) override;
+			void	afterReflectable() override;
 
-			virtual void	beforeList(const IListType* listType, void* listInstance) override;
-			virtual void	listValue(const IType* valueType, void* valueInstance) override;
-			virtual void	afterList() override;
+			void	beforeList(const IListType* listType, void* listInstance) override;
+			void	listValue(const IType* valueType, void* valueInstance) override;
+			void	afterList() override;
 
-			virtual void	beforeMap(const IMapType* mapType, void* mapInstance) override;
-			virtual void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
-			virtual void	afterMap() override;
+			void	beforeMap(const IMapType* mapType, void* mapInstance) override;
+			void	mapPair(const IType* keyType, void* keyInstance, const IType* valueType, void* valueInstance) override;
+			void	afterMap() override;
 
 		/*
 		************************************************************************
@@ -112,9 +130,22 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new JsonReader object
+			 */
 			JsonReader();
+
+			/**
+			 * @brief Destroy the JsonReader object
+			 */
 			~JsonReader();
 
+			/**
+			 * @brief Internal method to load a reflectable from a json string
+			 * 
+			 * @param input The json string
+			 * @return Reflectable* The resulting Reflectable
+			 */
 			Reflectable*		internalLoad(const std::string& input);
 
 		/*

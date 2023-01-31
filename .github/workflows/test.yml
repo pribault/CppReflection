@@ -54,3 +54,20 @@ jobs:
 
     - name: Run unit tests
       run: python3 ${{ github.workspace }}/scripts/runTests.py
+
+  genDoc:
+    name: generate-documentation-${{ github.workflow }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get install -y doxygen
+
+    - name: Test doc generation
+      run: python3 ${{ github.workspace }}/scripts/genDoc.py

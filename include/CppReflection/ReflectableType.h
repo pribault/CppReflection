@@ -72,11 +72,11 @@ namespace	CppReflection
 			ReflectableType();
 			virtual ~ReflectableType();
 
-			virtual void*	create() const override;
+			void*	create() const override;
 
 			static ReflectableType<T>*	get();
 			
-			virtual const IPointerType*	getPointerType() const override;
+			const IPointerType*			getPointerType() const override;
 
 		/*
 		************************************************************************

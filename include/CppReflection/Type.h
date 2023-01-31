@@ -84,11 +84,11 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*	create() const;
+			void*			create() const override;
 
 			static Type<T>*	get();
 
-			virtual void	iterate(Iterator& iterator, void* instance) const;
+			void			iterate(Iterator& iterator, void* instance) const override;
 
 		/*
 		************************************************************************
@@ -135,13 +135,13 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*					create() const;
+			void*							create() const override;
 
 			static Type<std::vector<T>>*	get();
 
-			virtual void					iterate(Iterator& iterator, void* instance) const;
+			void							iterate(Iterator& iterator, void* instance) const override;
 
-			virtual void					insert(void* instance, const void* valueInstance) const;
+			void							insert(void* instance, const void* valueInstance) const override;
 
 		/*
 		************************************************************************
@@ -188,13 +188,13 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*					create() const;
+			void*							create() const override;
 
 			static Type<std::list<T>>*		get();
 
-			virtual void					iterate(Iterator& iterator, void* instance) const;
+			void							iterate(Iterator& iterator, void* instance) const override;
 
-			virtual void					insert(void* instance, const void* valueInstance) const;
+			void							insert(void* instance, const void* valueInstance) const override;
 
 		/*
 		************************************************************************
@@ -241,13 +241,13 @@ namespace	CppReflection
 			*************
 			*/
 
-			virtual void*					create() const;
+			void*							create() const override;
 
 			static Type<std::map<K, V>>*	get();
 
-			virtual void					iterate(Iterator& iterator, void* instance) const;
+			void							iterate(Iterator& iterator, void* instance) const override;
 
-			virtual void					insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const;
+			void							insert(void* mapInstance, const void *keyInstance, const void* valueInstance) const override;
 
 		/*
 		************************************************************************

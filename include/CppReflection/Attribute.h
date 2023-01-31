@@ -59,6 +59,10 @@ namespace	CppReflection
 
 namespace	CppReflection
 {
+	/**
+	 * @class Attribute Attribute.h CppReflection/Attribute.h
+	 * @brief Representation of a class attribute relative to a parent IType
+	 */
 	class	Attribute
 	{
 
@@ -76,12 +80,47 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new Attribute object
+			 * 
+			 * @param parentClass The parent class
+			 * @param name The attribute name
+			 * @param offset The attribute offset relative to an instance
+			 * @param type The attribute type
+			 */
 			Attribute(const IType* parentClass, const std::string& name, off_t offset, const IType* type);
+
+			/**
+			 * @brief Destroy the Attribute object
+			 */
 			~Attribute();
 
+			/**
+			 * @brief Get the parent class type
+			 * 
+			 * @return const IType* The parent class type
+			 */
 			const IType*			getParentClass() const;
+
+			/**
+			 * @brief Get the attribute name
+			 * 
+			 * @return const std::string& The attribute name
+			 */
 			const std::string&		getName() const;
+
+			/**
+			 * @brief Get the attribute offset relative to an instance
+			 * 
+			 * @return off_t The attribute offset
+			 */
 			off_t					getOffset() const;
+
+			/**
+			 * @brief Get the attribute type
+			 * 
+			 * @return const IType* The attribute type
+			 */
 			const IType*			getType() const;
 
 		/*
@@ -98,6 +137,9 @@ namespace	CppReflection
 			*************
 			*/
 
+			/**
+			 * @brief Construct a new Attribute object
+			 */
 			Attribute();
 
 		/*

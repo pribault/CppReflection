@@ -79,6 +79,10 @@ namespace	CppReflection
 	template	<typename ... Parents>
 	void		addParents(IReflectableType* type);
 
+	/**
+	 * @class Reflectable Reflectable.h CppReflection/Reflectable.h
+	 * @brief Base class for all reflectable objects
+	 */
 	class	Reflectable
 	{
 
@@ -96,9 +100,21 @@ namespace	CppReflection
 			*************
 			*/
 
-			Reflectable();
-			virtual ~Reflectable();
+			/**
+			 * @brief Construct a new Reflectable object
+			 */
+			Reflectable() = default;
 
+			/**
+			 * @brief Destroy the Reflectable object
+			 */
+			virtual ~Reflectable() = default;
+
+			/**
+			 * @brief Get the reflectable type
+			 * 
+			 * @return const IReflectableType* The reflectable type
+			 */
 			virtual const IReflectableType*	getType() const = 0;
 
 	};
