@@ -59,15 +59,6 @@ jobs:
     - name: Run unit tests
       run: python3 ${{ github.workspace }}/scripts/runTests.py
 
-    - name: Release
-      run: python3 ${{ github.workspace }}/scripts/release.py
-
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.os }}-${{ matrix.buildType }}-${{ matrix.linkage }}-artifacts
-        path: ${{ github.workspace }}/build/release/
-
   genDoc:
     name: generate-documentation-${{ github.workflow }}
     runs-on: ubuntu-latest
