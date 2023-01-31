@@ -60,7 +60,7 @@ jobs:
       run: python3 ${{ github.workspace }}/scripts/runTests.py
 
     - name: Release
-      run: python3 ${{ github.workspace }}/scripts/release.py -b ${{ matrix.buildType }}
+      run: python3 ${{ github.workspace }}/scripts/release.py
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v3
