@@ -21,7 +21,7 @@ Before compiling the project, you need to install the following dependencies :
 - <b>python3</b>
 - <b>cmake</b>
 - <b>vcpkg</b>
-- a c++ compiler depending on your platform (<b>msvc</b> for Windows, <b>clang++</b> or <b>g++</b> for Unix systems)
+- a c++ compiler depending on your platform (<b>msvc</b> for Windows, <b>clang++</b> or <b>g++</b> for Unix systems), minimum c++ version: 11
 
 The environment variable VCPKG_PATH needs to be defined to the vcpkg install directory.
 You also need to install some dependencies using vcpkg, on Windows:
