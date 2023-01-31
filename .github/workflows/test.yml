@@ -69,5 +69,5 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y doxygen
 
-    - name: Run unit tests
+    - name: Test doc generation
       run: python3 ${{ github.workspace }}/scripts/genDoc.py
