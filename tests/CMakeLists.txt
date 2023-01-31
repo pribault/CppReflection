@@ -25,6 +25,11 @@ include_directories(
 
 add_executable(unit_tests ${SOURCES})
 
+set_target_properties(unit_tests
+	PROPERTIES
+	CXX_STANDARD 11
+)
+
 target_link_libraries(unit_tests PRIVATE
 	CppReflection
 	GTest::gtest

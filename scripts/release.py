@@ -58,7 +58,7 @@ def releaseWindows(buildType):
 def releaseUnix():
 	binDir = os.path.join(buildDir, "bin")
 	copy(binDir, "^\\w+$", releaseBinDir)
-	copy(binDir, "^.+\\.(?P<ext>so|a)$", releaseLibDir)
+	copy(binDir, "^.+\\.(?P<ext>so|a|dylib)$", releaseLibDir)
 
 if __name__ == '__main__':
 

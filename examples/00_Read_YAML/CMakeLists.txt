@@ -22,6 +22,11 @@ include_directories(
 
 add_executable(00_Read_YAML ${SOURCES})
 
+set_target_properties(00_Read_YAML
+	PROPERTIES
+	CXX_STANDARD 11
+)
+
 target_link_libraries(00_Read_YAML PRIVATE
 	CppReflection
 )
