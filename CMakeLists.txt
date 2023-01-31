@@ -46,6 +46,7 @@ endif()
 set_target_properties(CppReflection
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY ${CPPREFLECTION_OUTPUT_DIR}
+	CXX_STANDARD 11
 )
 
 target_link_libraries(CppReflection PRIVATE yaml-cpp)
